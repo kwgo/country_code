@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Country Code</string>
+    <string name="app_author">JChip Game</string>
+
+    <string-array name="grid_sort_items">
+        <item>Sort</item>
+        <item>Country</item>
+        <item>Official</item>
+        <item>Alpha 2</item>
+        <item>Alpha 3</item>
+        <item>Numeric</item>
+        <item>Currency</item>
+        <item>Symbol</item>
+        <item>Call code</item>
+        <item>Timezone</item>
+        <item>Capital</item>
+    </string-array>
+</resources>
