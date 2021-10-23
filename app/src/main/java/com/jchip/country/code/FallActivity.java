@@ -101,7 +101,7 @@ public class FallActivity extends AppCompatActivity {
                 view.setTextColor(position == 0 ? Color.LTGRAY : (isEnabled(position) ? Color.BLACK : Color.LTGRAY));
                 view.setText(position > 0 ? view.getText() : "");
                 view.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                view.setPadding(30, 0, 40, position == 0 ? -8 : 10);
+                view.setPadding(30, 0, 30, position == 0 ? -8 : 8);
                 return view;
             }
         });
@@ -142,7 +142,7 @@ public class FallActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int maxLength = isPortrait() ? 12 : 30;
+                int maxLength = FallHelper.getInputCount(isPortrait());
                 searchText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
                 FallUtility.runOnUiWorker(FallActivity.this, () -> {
                     onSearch();
@@ -161,15 +161,30 @@ public class FallActivity extends AppCompatActivity {
         GridLayout.LayoutParams rightParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_right).getLayoutParams();
         String[] info = this.info.get(item);
         String[] header = FallHelper.getISOHeader();
-        for (int row = 0; row < header.length; row++) {
-            addTextView(detailView, row, 0, header[row], leftParams);
-            addTextView(detailView, row, 1, info[row], rightParams);
+        int[] detailIndexes = FallHelper.detailIndexes;
+        for (int index = 0; index < detailIndexes.length; index++) {
+            addTextView(detailView, index, 0, header[detailIndexes[index]], leftParams);
+            String detailText = info[detailIndexes[index]].trim();
+            if (detailIndexes[index] == FallHelper.CURRENCY) {
+                detailText += " (" + info[FallHelper.SYMBOL].trim() + ")";
+            } else if (detailIndexes[index] == FallHelper.CALL_CODE) {
+                detailText = "+" + detailText.replace("-", " ");
+            } else if (detailIndexes[index] == FallHelper.TIMEZONE) {
+                detailText = "UTC" + detailText;
+            } else if (detailIndexes[index] == FallHelper.FRACTION) {
+                if (!"(none)".equals(detailText)) {
+                    detailText += " (" + info[FallHelper.BASIC_NUMBER].trim() + ")";
+                }
+            }
+            addTextView(detailView, index, 1, detailText, rightParams);
         }
 
         int sourceId = getResources().getIdentifier("flag_" + item.toLowerCase(), "drawable", getPackageName());
         ImageView imageView = (ImageView) popupView.findViewById(R.id.grid_image);
         imageView.setImageResource(sourceId);
         imageView.setClipToOutline(true);
+        TextView textView = (TextView) popupView.findViewById(R.id.grid_text);
+        textView.setText(info[FallHelper.FLAG_RATIO]);
 
         FallUtility.closeWindow(this.detailWindow);
         this.detailWindow = FallUtility.popupWindow(this.gridView, popupView);
@@ -218,7 +233,7 @@ public class FallActivity extends AppCompatActivity {
         textView.setText(text);
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setPadding(0, 2, 0, 2);
-        textView.setMaxLines(2);
+        textView.setSingleLine(true);
         GridLayout.LayoutParams params = new GridLayout.LayoutParams(layoutParams);
         params.rowSpec = GridLayout.spec(row);
         view.addView(textView, params);

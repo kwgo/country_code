@@ -14,5 +14,6 @@
         <item>Call code</item>
         <item>Timezone</item>
         <item>Capital</item>
+        <item>Population</item>
     </string-array>
 </resources>

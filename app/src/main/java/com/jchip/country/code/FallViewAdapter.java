@@ -60,10 +60,10 @@ public class FallViewAdapter extends RecyclerView.Adapter<FallViewAdapter.ViewHo
             this.item = gridInfo.get(row);
             String[] iso = info.get(this.item);
             int itemIndex = FallHelper.getItemIndex(isPortrait, col);
-            boolean isTop = col < FallHelper.BOTTOM_COLUMN_INDEX;
+            boolean isTop = col < FallHelper.getBottomLineIndex(isPortrait);
             boolean isImage = itemIndex == FallHelper.IMAGE;
             if (isImage) {
-                String imageName = "flag_" + iso[FallHelper.ALPHA_2].toLowerCase();
+                String imageName = "flag_" + this.item.toLowerCase();
                 int sourceId = activity.getResources().getIdentifier(imageName, "drawable", activity.getPackageName());
                 if (isTop) {
                     topImage.setImageResource(sourceId);
@@ -71,10 +71,17 @@ public class FallViewAdapter extends RecyclerView.Adapter<FallViewAdapter.ViewHo
                     bottomImage.setImageResource(sourceId);
                 }
             } else {
+                String text = iso[itemIndex].trim();
+                if (!isPortrait && itemIndex == FallHelper.CALL_CODE) {
+                    text = "+" + text;
+                }
+                if (!isPortrait && itemIndex == FallHelper.TIMEZONE) {
+                    text = "UTC" + text;
+                }
                 if (isTop) {
-                    topText.setText(iso[itemIndex]);
+                    topText.setText(text);
                 } else {
-                    bottomText.setText(iso[itemIndex]);
+                    bottomText.setText(text);
                 }
             }
             topImage.setVisibility(isImage && isTop ? View.VISIBLE : View.GONE);

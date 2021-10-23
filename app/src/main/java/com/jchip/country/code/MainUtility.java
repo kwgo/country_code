@@ -66,4 +66,13 @@ public abstract class MainUtility {
             timer.cancel();
         }
     }
+
+    public static int parseInteger(String value, int defaultValue) {
+        value = value.trim().replace(",", "");
+        try {
+            return Integer.parseInt(value);
+        } catch (Exception ex) {
+            return defaultValue;
+        }
+    }
 }
