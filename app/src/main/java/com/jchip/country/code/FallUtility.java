@@ -1,7 +1,12 @@
 package com.jchip.country.code;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.DisplayMetrics;
+
+import java.util.Locale;
 
 public abstract class FallUtility extends MainUtility {
     public static void runOnUiWorker(FallActivity activity, Runnable worker) {
@@ -13,6 +18,16 @@ public abstract class FallUtility extends MainUtility {
             });
         }).start();
     }
+
+    @SuppressWarnings("deprecation")
+    public static void setApplicationLanguage(FallActivity activity, String languageCode) {
+        Resources resources = activity.getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(new Locale(languageCode.toLowerCase()));
+        resources.updateConfiguration(configuration, displayMetrics);
+    }
+
 
     public static String getImageRatio(FallActivity activity, int sourceId) {
         Bitmap image = BitmapFactory.decodeResource(activity.getResources(), sourceId);

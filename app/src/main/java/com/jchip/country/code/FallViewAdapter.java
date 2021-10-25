@@ -72,6 +72,11 @@ public class FallViewAdapter extends RecyclerView.Adapter<FallViewAdapter.ViewHo
                 }
             } else {
                 String text = iso[itemIndex].trim();
+                if (itemIndex == FallHelper.COUNTRY || itemIndex == FallHelper.OFFICIAL || itemIndex == FallHelper.CAPITAL) {
+                    String key = (itemIndex == FallHelper.CAPITAL ? "capital_" : (itemIndex == FallHelper.OFFICIAL ? "official_" : "short_")) + this.item.toLowerCase();
+                    int sourceId = activity.getResources().getIdentifier(key, "string", activity.getPackageName());
+                    text = activity.getResources().getString(sourceId);
+                }
                 if (!isPortrait && itemIndex == FallHelper.CALL_CODE) {
                     text = "+" + text;
                 }

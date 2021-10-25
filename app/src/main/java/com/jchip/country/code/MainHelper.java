@@ -1,5 +1,7 @@
 package com.jchip.country.code;
 
+import android.app.Activity;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -81,6 +83,29 @@ public abstract class MainHelper {
         return searchInfo;
     }
 
+    public static List<String> searchCountryInfo(Activity activity, Map<String, String[]> info, String searchText, boolean isPortrait) {
+        List<String> searchInfo = new ArrayList<>();
+        if (!searchText.trim().isEmpty()) {
+            for (int searchIndex : searchIndexes) {
+                for (String item : info.keySet()) {
+                    if (!searchInfo.contains(item)) {
+                        String[] phases = info.get(item);
+                        String phaseText = phases[searchIndex];
+                        if (searchIndex == COUNTRY || searchIndex == OFFICIAL || searchIndex == CAPITAL) {
+                            String key = (searchIndex == FallHelper.CAPITAL ? "capital_" : (searchIndex == FallHelper.OFFICIAL ? "official_" : "short_")) + item.toLowerCase();
+                            int sourceId = activity.getResources().getIdentifier(key, "string", activity.getPackageName());
+                            phaseText = activity.getResources().getString(sourceId);
+                        }
+                        if (phaseText.toUpperCase().contains(searchText)) {
+                            searchInfo.add(item);
+                        }
+                    }
+                }
+            }
+        }
+        return searchInfo;
+    }
+
     private static class InfoComparator implements Comparator<String> {
         private Map<String, String[]> info;
         private int index;
@@ -116,7 +141,7 @@ public abstract class MainHelper {
         info.put("AD", new String[]{"Andorra", "The Principality of Andorra", "UN member state", "AD", "AND", "020", ".ad", "Andorra la Vella", "+01:00", "376", "EUR", "€", "Euro", "Cent", "100", "Andorra", "7:10 (1.429)", "78,015"});
         info.put("AE", new String[]{"United Arab Emirates", "The United Arab Emirates", "UN member state", "AE", "ARE", "784", ".ae", "Abu Dhabi", "+04:00", "971", "AED", "د.إ", "United Arab Emirates dirham", "Fils", "100", "United Arab Emirates", "1:2 (2)", "9,503,738"});
         info.put("AF", new String[]{"Afghanistan", "The Islamic Republic of Afghanistan", "UN member state", "AF", "AFG", "004", ".af", "Kabul", "+04:30", "93", "AFN", "؋", "Afghan afghani", "Pul", "100", "Afghanistan", "2:3 (1.5)", "32,890,171"});
-        info.put("AG", new String[]{"Antigua and Barbuda", "Antigua and Barbuda", "UN member state", "AG", "ATG", "028", ".ag", "St. John''s", "-04:00", "1-268", "XCD", "$", "Eastern Caribbean dollar", "Cent", "100", "Antigua and Barbuda", "2:3 (1.5)", "99,337"});
+        info.put("AG", new String[]{"Antigua and Barbuda", "Antigua and Barbuda", "UN member state", "AG", "ATG", "028", ".ag", "St. John's", "-04:00", "1-268", "XCD", "$", "Eastern Caribbean dollar", "Cent", "100", "Antigua and Barbuda", "2:3 (1.5)", "99,337"});
         info.put("AI", new String[]{"Anguilla", "Anguilla", "United Kingdom", "AI", "AIA", "660", ".ai", "The Valley", "-04:00", "1-264", "XCD", "$", "Eastern Caribbean dollar", "Cent", "100", "Anguilla", "1:2 (2)", "15,000"});
         info.put("AL", new String[]{"Albania", "The Republic of Albania", "UN member state", "AL", "ALB", "008", ".al", "Tirana", "+02:00", "355", "ALL", "L", "Albanian lek", "Qindarkë", "100", "Albania", "5:7 (1.4)", "2,829,741"});
         info.put("AM", new String[]{"Armenia", "The Republic of Armenia", "UN member state", "AM", "ARM", "051", ".am", "Yerevan", "+04:00", "374", "AMD", "֏", "Armenian dram", "Luma", "100", "Armenia", "1:2 (2)", "2,963,900"});
@@ -193,7 +218,7 @@ public abstract class MainHelper {
         info.put("FR", new String[]{"France", "The French Republic", "UN member state", "FR", "FRA", "250", ".fr", "Paris", "+01:00", "33", "EUR", "€", "Euro", "Cent", "100", "France", "2:3 (1.5)", "67,486,000"});
         info.put("GA", new String[]{"Gabon", "The Gabonese Republic", "UN member state", "GA", "GAB", "266", ".ga", "Libreville", "+01:00", "241", "XAF", "Fr", "Central African CFA franc", "Centime", "100", "Gabon", "3:4 (1.333)", "2,233,272"});
         info.put("GB", new String[]{"United Kingdom", "The United Kingdom of Great Britain and Northern Ireland", "UN member state", "GB", "GBR", "826", ".uk", "London", "+00:00", "44", "GBP", "£", "British pound", "Penny", "100", "United Kingdom", "1:2 (2)", "67,081,234"});
-        info.put("GD", new String[]{"Grenada", "Grenada", "UN member state", "GD", "GRD", "308", ".gd", "St. George''s", "-04:00", "1-473", "XCD", "$", "Eastern Caribbean dollar", "Cent", "100", "Grenada", "3:5 (1.667)", "113,000"});
+        info.put("GD", new String[]{"Grenada", "Grenada", "UN member state", "GD", "GRD", "308", ".gd", "St. George's", "-04:00", "1-473", "XCD", "$", "Eastern Caribbean dollar", "Cent", "100", "Grenada", "3:5 (1.667)", "113,000"});
         info.put("GE", new String[]{"Georgia", "Georgia", "UN member state", "GE", "GEO", "268", ".ge", "Tbilisi", "+04:00", "995", "GEL", "₾", "Georgian lari", "Tetri", "100", "Georgia", "2:3 (1.5)", "3,728,573"});
         info.put("GF", new String[]{"French Guiana", "Guyane", "France", "GF", "GUF", "254", ".gf", "Cayenne", "-03:00", "594", "EUR", "€", "Euro", "Cent", "100", "French Guiana", "2:3 (1.5)", "294,071"});
         info.put("GG", new String[]{"Guernsey", "The Bailiwick of Guernsey", "British Crown", "GG", "GGY", "831", ".gg", "Saint Peter Port", "+00:00", "44", "GBP", "£", "British pound", "Penny", "100", "Guernsey", "2:3 (1.5)", "63,124"});

@@ -52,6 +52,7 @@ public class FallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //FallUtility.setApplicationLanguage(this, "zh");
         setContentView(R.layout.fall_active);
 
         this.gridView = findViewById(R.id.grid_view);
@@ -160,12 +161,22 @@ public class FallActivity extends AppCompatActivity {
         GridLayout.LayoutParams leftParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_left).getLayoutParams();
         GridLayout.LayoutParams rightParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_right).getLayoutParams();
         String[] info = this.info.get(item);
-        String[] header = FallHelper.getISOHeader();
+        //String[] header = FallHelper.getISOHeader();
         int[] detailIndexes = FallHelper.detailIndexes;
         for (int index = 0; index < detailIndexes.length; index++) {
-            addTextView(detailView, index, 0, header[detailIndexes[index]], leftParams);
+            String header = getResources().getString(FallHelper.getHeaderIndex(detailIndexes[index]));
+            //addTextView(detailView, index, 0, header[detailIndexes[index]], leftParams);
+            addTextView(detailView, index, 0, header, leftParams);
             String detailText = info[detailIndexes[index]].trim();
-            if (detailIndexes[index] == FallHelper.CURRENCY) {
+            if (detailIndexes[index] == FallHelper.COUNTRY || detailIndexes[index] == FallHelper.OFFICIAL || detailIndexes[index] == FallHelper.CAPITAL) {
+                String key = (detailIndexes[index] == FallHelper.CAPITAL ? "capital_" : (detailIndexes[index] == FallHelper.OFFICIAL ? "official_" : "short_")) + item.toLowerCase();
+                int sourceId = getResources().getIdentifier(key, "string", getPackageName());
+                detailText = getResources().getString(sourceId);
+            } else if (detailIndexes[index] == FallHelper.SOVEREIGNTY) {
+                String key = "sovereignty_" + detailText.toLowerCase().replace(" ", "_");
+                int sourceId = getResources().getIdentifier(key, "string", getPackageName());
+                detailText = getResources().getString(sourceId);
+            } else if (detailIndexes[index] == FallHelper.CURRENCY) {
                 detailText += " (" + info[FallHelper.SYMBOL].trim() + ")";
             } else if (detailIndexes[index] == FallHelper.CALL_CODE) {
                 detailText = "+" + detailText.replace("-", " ");
@@ -200,7 +211,7 @@ public class FallActivity extends AppCompatActivity {
         if (searchText.isEmpty()) {
             this.gridInfo = FallHelper.sortCountryInfo(info, new ArrayList(info.keySet()), FallHelper.SORT_COUNTRY);
         } else {
-            this.gridInfo = FallHelper.searchCountryInfo(this.info, searchText, isPortrait());
+            this.gridInfo = FallHelper.searchCountryInfo(this, this.info, searchText, isPortrait());
         }
         this.onSort();
     }
@@ -247,6 +258,11 @@ public class FallActivity extends AppCompatActivity {
     private boolean isPortrait() {
         int orientation = this.getResources().getConfiguration().orientation;
         return orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+    private boolean isDirectionRTL() {
+        Configuration configuration = getResources().getConfiguration();
+        return configuration.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 
     private int dp2px(int dp) {

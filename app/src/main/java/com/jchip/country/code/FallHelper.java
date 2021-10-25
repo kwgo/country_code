@@ -21,9 +21,35 @@ public abstract class FallHelper extends MainHelper {
     public static final int[] portraitIndexes = new int[]{IMAGE, ALPHA_2, COUNTRY, IMAGE, CURRENCY, CALL_CODE, TIMEZONE, CAPITAL};
     public static final int[] landscapeIndexes = new int[]{IMAGE, ALPHA_2, ALPHA_3, OFFICIAL, IMAGE, NUMERIC, CURRENCY, SYMBOL, CALL_CODE, POPULATION, TIMEZONE, CAPITAL};
 
+    //public static final int[] portraitOffsets = new int[]{0, 0, -40, 0, 0, -40, -75, -95};
     public static final int[] portraitOffsets = new int[]{0, 0, -38, 0, 0, -38, -70, -88};
-    //   public static final int[] portraitOffsets = new int[]{0, 0, -40, 0, 0, -40, -75, -95};
     public static final int[] landscapeOffsets = new int[]{0, 5, -45, -85, 0, 5, -45, -85, -110, -135, -120, -125};
+    //public static final int[] landscapeOffsets = new int[]{0, 5, -45, -85, 0, 5, -45, -85, -110, -135, -120, -125};
+
+    public static final int[] headerIndexes = new int[]{
+            R.string.head_country_name,
+            R.string.head_official_name,
+            R.string.head_sovereignty,
+            R.string.head_alpha2_code,
+            R.string.head_alpha3_code,
+            R.string.head_numeric_code,
+            R.string.head_internet_cctld,
+            R.string.head_capital,
+            R.string.head_timezone,
+            R.string.head_call_code,
+            R.string.head_currency,
+            R.string.head_symbol,
+            R.string.head_currency_name,
+            R.string.head_fractional_unit,
+            R.string.head_basic_number,
+            R.string.head_country_short,
+            R.string.head_flag_ratio,
+            R.string.head_population
+    };
+
+    public static int getHeaderIndex(int index) {
+        return headerIndexes[index];
+    }
 
     public static int getInputCount(boolean isPortrait) {
         return isPortrait ? PORTRAIT_INPUT_COUNT : LANDSCAPE_INPUT_COUNT;

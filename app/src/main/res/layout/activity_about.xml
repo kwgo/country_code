@@ -25,7 +25,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="2dp"
             android:singleLine="true"
-            android:text="App name"
+            android:text="@string/about_app_name"
             android:textStyle="bold" />
 
         <TextView
@@ -51,7 +51,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="2dp"
             android:singleLine="true"
-            android:text="Version"
+            android:text="@string/about_version"
             android:textStyle="bold" />
 
         <TextView
@@ -78,7 +78,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="2dp"
             android:singleLine="true"
-            android:text="Author"
+            android:text="@string/about_author"
             android:textStyle="bold" />
 
         <TextView
@@ -104,7 +104,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="2dp"
             android:singleLine="true"
-            android:text="Git source"
+            android:text="@string/about_source"
             android:textStyle="bold" />
 
         <TextView
@@ -118,7 +118,7 @@
             android:layout_marginBottom="2dp"
             android:autoLink="web"
             android:singleLine="true"
-            android:text="github.com/jchipgame/country"
+            android:text="@string/about_git_site"
             android:textStyle="bold" />
 
         <TextView
@@ -131,7 +131,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="2dp"
             android:singleLine="true"
-            android:text="Contact"
+            android:text="@string/about_contact"
             android:textStyle="bold" />
 
         <TextView
@@ -145,7 +145,7 @@
             android:layout_marginBottom="2dp"
             android:autoLink="email"
             android:singleLine="true"
-            android:text="jchipgame@gmail.com"
+            android:text="@string/about_email"
             android:textStyle="bold" />
 
         <TextView
@@ -160,7 +160,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="0dp"
             android:singleLine="true"
-            android:text="Owned Sokoban (Boxman) Classic"
+            android:text="@string/about_owned"
             android:textAlignment="center"
             android:textStyle="bold" />
 
@@ -197,7 +197,7 @@
             android:layout_marginBottom="2dp"
             android:hint="click to play"
             android:singleLine="true"
-            android:text="(click image to play)"
+            android:text="@string/about_play"
             android:textAlignment="center"
             android:textSize="12dp" />
     </GridLayout>
