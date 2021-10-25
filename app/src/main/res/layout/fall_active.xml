@@ -21,30 +21,30 @@
                 android:id="@+id/grid_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="left"
-                android:hint="Search"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="start"
+                android:hint="@string/grid_search"
                 android:inputType="text"
                 android:maxLength="12"
-                android:maxLines="1"
                 android:singleLine="true"
+                android:textAlignment="viewStart"
                 android:textSize="20dp" />
 
             <Spinner
                 android:id="@+id/grid_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true" />
 
             <ProgressBar
                 android:id="@+id/grid_processing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:visibility="invisible" />
 
             <ImageView
@@ -52,10 +52,10 @@
                 android:layout_width="36dp"
                 android:layout_height="24dp"
                 android:layout_centerVertical="true"
-                android:layout_gravity="right"
-                android:layout_marginLeft="40dp"
-                android:layout_toLeftOf="@id/grid_sort"
-                android:scaleType="fitXY"
+                android:layout_gravity="end"
+                android:layout_marginStart="24dp"
+                android:layout_toStartOf="@id/grid_sort"
+                android:scaleType="fitEnd"
                 android:src="@drawable/grid_dots" />
 
         </RelativeLayout>

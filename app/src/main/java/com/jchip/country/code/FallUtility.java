@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import java.util.Locale;
 
@@ -13,7 +14,11 @@ public abstract class FallUtility extends MainUtility {
         activity.runOnUiThread(() -> activity.showProcessing(true));
         new Thread(() -> {
             activity.runOnUiThread(() -> {
-                worker.run();
+                try {
+                    worker.run();
+                } catch (Exception ex) {
+                    Log.d("", ex.toString());
+                }
                 activity.showProcessing(false);
             });
         }).start();

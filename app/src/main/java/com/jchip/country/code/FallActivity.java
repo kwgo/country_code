@@ -52,8 +52,8 @@ public class FallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //FallUtility.setApplicationLanguage(this, "zh");
         setContentView(R.layout.fall_active);
+        //FallUtility.setApplicationLanguage(this, "ar");
 
         this.gridView = findViewById(R.id.grid_view);
 
@@ -203,7 +203,7 @@ public class FallActivity extends AppCompatActivity {
 
     private void onSort() {
         int sortIndex = this.sortSpinner.getSelectedItemPosition() - 1;
-        this.gridInfo = FallHelper.sortCountryInfo(this.info, this.gridInfo, sortIndex);
+        this.gridInfo = FallHelper.sortCountryInfo(this, this.info, this.gridInfo, sortIndex);
     }
 
     private void onSearch() {

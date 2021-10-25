@@ -1,12 +1,15 @@
 package com.jchip.country.code;
 
 import android.app.Activity;
+import android.util.Log;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public abstract class MainHelper {
@@ -61,7 +64,14 @@ public abstract class MainHelper {
 
     public static List<String> sortCountryInfo(Map<String, String[]> info, List<String> listInfo, int sortIndex) {
         if (sortIndex >= 0) {
-            Collections.sort(listInfo, new InfoComparator(info, sortIndexes[sortIndex]));
+            Collections.sort(listInfo, new InfoComparator(null, info, sortIndexes[sortIndex]));
+        }
+        return listInfo;
+    }
+
+    public static List<String> sortCountryInfo(Activity activity, Map<String, String[]> info, List<String> listInfo, int sortIndex) {
+        if (sortIndex >= 0) {
+            Collections.sort(listInfo, new InfoComparator(activity, info, sortIndexes[sortIndex]));
         }
         return listInfo;
     }
@@ -107,16 +117,28 @@ public abstract class MainHelper {
     }
 
     private static class InfoComparator implements Comparator<String> {
+        private Activity activity;
         private Map<String, String[]> info;
         private int index;
 
-        public InfoComparator(Map<String, String[]> info, int index) {
+        public InfoComparator(Activity activity, Map<String, String[]> info, int index) {
+            this.activity = activity;
             this.info = info;
             this.index = index;
         }
 
         public int compare(String key1, String key2) {
-            if (index == POPULATION) {
+            if (index == COUNTRY || index == OFFICIAL || index == CAPITAL) {
+                if (activity != null && activity.getResources() != null) {
+                    String item1 = (index == FallHelper.CAPITAL ? "capital_" : (index == FallHelper.OFFICIAL ? "official_" : "short_")) + key1.toLowerCase();
+                    String item2 = (index == FallHelper.CAPITAL ? "capital_" : (index == FallHelper.OFFICIAL ? "official_" : "short_")) + key2.toLowerCase();
+                    int sourceId1 = activity.getResources().getIdentifier(item1, "string", activity.getPackageName());
+                    int sourceId2 = activity.getResources().getIdentifier(item2, "string", activity.getPackageName());
+                    Locale locale = activity.getResources().getConfiguration().getLocales().get(0);
+                    Collator collator = Collator.getInstance(locale);
+                    return collator.compare(activity.getResources().getString(sourceId1), activity.getResources().getString(sourceId2));
+                }
+            } else if (index == POPULATION) {
                 int value1 = MainUtility.parseInteger(info.get(key1)[index], 0);
                 int value2 = MainUtility.parseInteger(info.get(key2)[index], 0);
                 return value2 - value1;
@@ -128,7 +150,7 @@ public abstract class MainHelper {
 //                }
 //                return info.get(key1)[index].compareTo(info.get(key2)[index]);
             }
-            return info.get(key1)[index].compareTo(info.get(key2)[index]);
+            return info.get(key1)[index].compareToIgnoreCase(info.get(key2)[index]);
         }
     }
 
