@@ -1,6 +1,8 @@
 package com.jchip.country.code;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.os.Build;
 import android.util.Log;
 
 import java.text.Collator;
@@ -134,7 +136,12 @@ public abstract class MainHelper {
                     String item2 = (index == FallHelper.CAPITAL ? "capital_" : (index == FallHelper.OFFICIAL ? "official_" : "short_")) + key2.toLowerCase();
                     int sourceId1 = activity.getResources().getIdentifier(item1, "string", activity.getPackageName());
                     int sourceId2 = activity.getResources().getIdentifier(item2, "string", activity.getPackageName());
-                    Locale locale = activity.getResources().getConfiguration().getLocales().get(0);
+                    Locale locale;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        locale = Resources.getSystem().getConfiguration().getLocales().get(0);
+                    } else {
+                        locale = Resources.getSystem().getConfiguration().locale;
+                    }
                     Collator collator = Collator.getInstance(locale);
                     return collator.compare(activity.getResources().getString(sourceId1), activity.getResources().getString(sourceId2));
                 }
