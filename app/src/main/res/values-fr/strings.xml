@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Code postal</string>
+    <string name="app_name">Pays</string>
     <string name="app_author">Jeu JChip</string>
 
     <string name="grid_search">Chercher</string>

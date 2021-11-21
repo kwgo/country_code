@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Код страны</string>
+    <string name="app_name">Страна</string>
     <string name="app_author">JChipGame</string>
 
     <string name="grid_search">Поиск</string>
