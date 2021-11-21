@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Country Code</string>
+    <string name="app_name">Country</string>
     <string name="app_author">JChip Game</string>
 
     <string name="grid_search">Search</string>

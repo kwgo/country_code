@@ -180,7 +180,7 @@
             android:adjustViewBounds="true"
             android:background="@drawable/round_game"
             android:scaleType="fitXY"
-            android:src="@drawable/grid_game" />
+            android:src="@drawable/grid_about_image" />
 
         <TextView
             android:layout_width="wrap_content"
