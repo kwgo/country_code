@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -84,7 +85,11 @@ public class FallActivity extends AppCompatActivity {
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 int position = parent.getChildAdapterPosition(view);
                 if (position >= 0) {
-                    outRect.left = dp2px(FallHelper.getItemOffset(isPortrait(), position));
+                    if (isDirectionRTL()) {
+                        outRect.right = dp2px(FallHelper.getItemOffset(isPortrait(), position));
+                    } else {
+                        outRect.left = dp2px(FallHelper.getItemOffset(isPortrait(), position));
+                    }
                 }
             }
         });
@@ -184,10 +189,11 @@ public class FallActivity extends AppCompatActivity {
             //addTextView(detailView, index, 0, header[detailIndexes[index]], leftParams);
             addTextView(detailView, index, 0, header, leftParams);
             String detailText = info[detailIndexes[index]].trim();
-            if (detailIndexes[index] == FallHelper.COUNTRY || detailIndexes[index] == FallHelper.OFFICIAL || detailIndexes[index] == FallHelper.CAPITAL) {
-                String key = (detailIndexes[index] == FallHelper.CAPITAL ? "capital_" : (detailIndexes[index] == FallHelper.OFFICIAL ? "official_" : "short_")) + item.toLowerCase();
+            if (detailIndexes[index] == FallHelper.COUNTRY || detailIndexes[index] == FallHelper.CAPITAL) {
+                String key = (detailIndexes[index] == FallHelper.CAPITAL ? "capital_" : "short_") + item.toLowerCase();
                 int sourceId = getResources().getIdentifier(key, "string", getPackageName());
                 detailText = getResources().getString(sourceId);
+            } else if (detailIndexes[index] == FallHelper.OFFICIAL) {
             } else if (detailIndexes[index] == FallHelper.SOVEREIGNTY) {
                 String key = "sovereignty_" + detailText.toLowerCase().replace(" ", "_");
                 int sourceId = getResources().getIdentifier(key, "string", getPackageName());
@@ -261,6 +267,8 @@ public class FallActivity extends AppCompatActivity {
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setPadding(0, 2, 0, 2);
         textView.setSingleLine(true);
+        textView.setEllipsize(this.isDirectionRTL() ? TextUtils.TruncateAt.START : TextUtils.TruncateAt.END);
+        textView.setContentDescription("@null");
         GridLayout.LayoutParams params = new GridLayout.LayoutParams(layoutParams);
         params.rowSpec = GridLayout.spec(row);
         view.addView(textView, params);
@@ -277,7 +285,7 @@ public class FallActivity extends AppCompatActivity {
     }
 
     private boolean isDirectionRTL() {
-        Configuration configuration = getResources().getConfiguration();
+        Configuration configuration = this.getResources().getConfiguration();
         return configuration.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 

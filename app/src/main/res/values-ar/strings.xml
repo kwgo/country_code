@@ -10,7 +10,7 @@
     <string name="head_alpha2_code">كود ألفا 2</string>
     <string name="head_alpha3_code">كود ألفا 3</string>
     <string name="head_numeric_code">رمز رقمي</string>
-    <string name="head_internet_cctld">الإنترنت ccTLD</string>
+    <string name="head_internet_cctld">الإنترنت</string>
     <string name="head_capital">عاصمة</string>
     <string name="head_timezone">وحدة زمنية</string>
     <string name="head_call_code">كود الاتصال</string>

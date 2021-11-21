@@ -13,21 +13,33 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 public abstract class MainUtility {
-
     public static PopupWindow popupWindow(View parent, View popupView) {
-        final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-        popupView.setOnTouchListener((v, e) -> {
-                    popupWindow.dismiss();
-                    return true;
-                }
-        );
-        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-        return popupWindow;
+        try {
+            PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            popupView.setOnTouchListener((v, e) -> {
+                        try {
+                            if (popupWindow != null) {
+                                popupWindow.dismiss();
+                            }
+                        } catch (Exception ex) {
+                        }
+                        return true;
+                    }
+            );
+            if (parent != null) {
+                popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+            }
+        } catch (Exception ex) {
+        }
+        return null;
     }
 
     public static void closeWindow(PopupWindow popupWindow) {
-        if (popupWindow != null) {
-            popupWindow.dismiss();
+        try {
+            if (popupWindow != null) {
+                popupWindow.dismiss();
+            }
+        } catch (Exception ex) {
         }
     }
 
