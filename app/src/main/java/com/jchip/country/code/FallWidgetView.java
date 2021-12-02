@@ -35,20 +35,15 @@ public class FallWidgetView {
 
     public void updateView(int widgetId) {
         Map<String, String[]> info = MainHelper.getISOInfo();
-        int itemIndex = this.random.nextInt(info.size());
-        String item = String.valueOf(info.keySet().toArray()[itemIndex]);
+        int index = this.random.nextInt(info.size());
+        String item = String.valueOf(info.keySet().toArray()[index]);
         String[] iso = info.get(item);
-
         this.setImageView(R.id.widget_image, this.getSourceId(item, "drawable", "flag"));
         this.setTextView(R.id.widget_title, this.getSourceText(item, "string", "short"));
         this.setTextView(R.id.widget_marker, iso[FallHelper.OFFICIAL]);
-
-        StringBuilder detail = new StringBuilder();
-        detail.append(item).append(" ");
-        detail.append(iso[FallHelper.CURRENCY]).append(" ");
-        detail.append(iso[FallHelper.POPULATION]).append(" ");
-        detail.append(this.getSourceText(item, "string", "capital"));
-        this.setTextView(R.id.widget_detail, detail.toString());
+        this.setTextView(R.id.widget_symbol, item + " " + iso[FallHelper.CURRENCY]);
+        this.setTextView(R.id.widget_detail, this.getSourceText(item, "string", "capital"));
+        this.setTextView(R.id.widget_patch, ("(") + iso[FallHelper.POPULATION] + ")");
 
         this.setViewAction(widgetId, R.id.widget_view, ACTION_NEXT);
     }
