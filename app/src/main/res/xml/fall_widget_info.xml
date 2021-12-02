@@ -2,8 +2,9 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/fall_widget"
     android:initialLayout="@layout/fall_widget"
-    android:minWidth="110dp"
+    android:minWidth="40dp"
     android:minHeight="40dp"
+    android:icon="@drawable/widget_icon"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen" />

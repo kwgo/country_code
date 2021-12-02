@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/widget_background"
-    android:focusable="true"
-    android:paddingStart="4dp"
-    android:paddingTop="4dp"
-    android:paddingEnd="4dp"
-    android:paddingBottom="4dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/widget_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|center_vertical"
-        android:gravity="start|center_vertical"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/widget_background"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="4dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +23,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/widget_image"
+                android:id="@+id/widget_image_portrait"
                 android:layout_width="72dp"
                 android:layout_height="54dp"
                 android:layout_gravity="center"
@@ -35,7 +34,23 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="0dp"
                 android:paddingBottom="2dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/widget_image_landscape"
+                android:layout_width="96dp"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@null"
+                android:paddingStart="0dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="2dp"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="0dp"

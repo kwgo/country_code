@@ -3,6 +3,7 @@ package com.jchip.country.code;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -16,6 +17,7 @@ public class FallWidgetView {
     private Context context;
     private Intent intent;
     private RemoteViews views;
+    private int appWidgetId;
 
     private static Random random;
 
@@ -23,29 +25,38 @@ public class FallWidgetView {
         random = random != null ? random : new Random();
     }
 
-    public FallWidgetView(Context context, Intent intent) {
-        this(context, intent, null);
-    }
-
-    public FallWidgetView(Context context, Intent intent, RemoteViews views) {
+    public FallWidgetView(Context context, Intent intent, RemoteViews views, int appWidgetId) {
         this.context = context;
         this.intent = intent;
         this.views = views;
+        this.appWidgetId = appWidgetId;
     }
 
-    public void updateView(int widgetId) {
+    public void updateView() {
         Map<String, String[]> info = MainHelper.getISOInfo();
         int index = this.random.nextInt(info.size());
         String item = String.valueOf(info.keySet().toArray()[index]);
         String[] iso = info.get(item);
-        this.setImageView(R.id.widget_image, this.getSourceId(item, "drawable", "flag"));
         this.setTextView(R.id.widget_title, this.getSourceText(item, "string", "short"));
         this.setTextView(R.id.widget_marker, iso[FallHelper.OFFICIAL]);
-        this.setTextView(R.id.widget_symbol, item + " " + iso[FallHelper.CURRENCY]);
+        this.setTextView(R.id.widget_symbol, iso[FallHelper.ALPHA_2] + " " + iso[FallHelper.CURRENCY]);
         this.setTextView(R.id.widget_detail, this.getSourceText(item, "string", "capital"));
         this.setTextView(R.id.widget_patch, ("(") + iso[FallHelper.POPULATION] + ")");
 
-        this.setViewAction(widgetId, R.id.widget_view, ACTION_NEXT);
+        int orientation = context.getResources().getConfiguration().orientation;
+        boolean isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
+        this.setImageView(isLandscape ? R.id.widget_image_landscape : R.id.widget_image_portrait, this.getSourceId(item, "drawable", "flag"));
+        this.setVisibility(isLandscape ? R.id.widget_image_landscape : R.id.widget_image_portrait, true);
+        this.setVisibility(isLandscape ? R.id.widget_image_portrait : R.id.widget_image_landscape, false);
+
+        this.setViewAction(R.id.widget_view, ACTION_NEXT);
+    }
+
+    public void setupView() {
+//        this.setVisibility(R.id.widget_marker, false);
+        //       this.setVisibility(R.id.widget_patch, false);
+
+
     }
 
     public int getSourceId(String item, String type, String prefix) {
@@ -58,9 +69,9 @@ public class FallWidgetView {
         return context.getResources().getString(sourceId);
     }
 
-    public void setViewAction(int widgetId, int viewId, String action) {
+    public void setViewAction(int viewId, String action) {
         intent.setAction(action);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, widgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(viewId, pendingIntent);
     }
 
@@ -78,4 +89,5 @@ public class FallWidgetView {
     public void setVisibility(int viewId, boolean isOn) {
         this.views.setViewVisibility(viewId, isOn ? View.VISIBLE : View.GONE);
     }
+
 }
