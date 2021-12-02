@@ -5,4 +5,6 @@
     <color name="windowBackground">@android:color/black</color>
     <color name="colorIcon">@android:color/white</color>
     <color name="colorTitle">@android:color/white</color>
+    <color name="colorMarker">#e8e8e8e8</color>
+    <color name="colorDetail">@android:color/white</color>
 </resources>

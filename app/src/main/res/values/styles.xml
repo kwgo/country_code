@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="word_widget_style">
+        <item name="android:focusable">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">@dimen/widget_padding_start</item>
+        <item name="android:paddingEnd">@dimen/widget_padding_end</item>
+        <item name="android:paddingTop">@dimen/widget_padding_top</item>
+        <item name="android:paddingBottom">@dimen/widget_padding_bottom</item>
+        <item name="android:background">@drawable/widget_background</item>
+    </style>
+
+    <style name="widget_title_style">
+        <item name="android:textSize">@dimen/widget_title_font_size</item>
+        <item name="android:textColor">@color/colorTitle</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="widget_marker_style">
+        <item name="android:textSize">@dimen/widget_marker_font_size</item>
+        <item name="android:textColor">@color/colorMarker</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="widget_detail_style">
+        <item name="android:textSize">@dimen/widget_detail_font_size</item>
+        <item name="android:textColor">@color/colorDetail</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+</resources>
