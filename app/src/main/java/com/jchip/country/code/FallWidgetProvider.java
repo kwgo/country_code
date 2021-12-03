@@ -6,14 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SizeF;
 import android.widget.RemoteViews;
-
-import androidx.collection.ArrayMap;
-
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Map;
 
 public class FallWidgetProvider extends AppWidgetProvider {
     @Override
@@ -22,6 +15,8 @@ public class FallWidgetProvider extends AppWidgetProvider {
             if (FallWidgetView.ACTION_NEXT.equals(intent.getAction())) {
                 int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
                 this.onUpdate(context, AppWidgetManager.getInstance(context), new int[]{appWidgetId});
+            } else if (FallWidgetView.ACTION_APP.equals(intent.getAction())) {
+                this.activeApp(context, intent);
             } else {
                 super.onReceive(context, intent);
             }
@@ -29,37 +24,17 @@ public class FallWidgetProvider extends AppWidgetProvider {
             Log.e("widget", "widget action " + intent.getAction() + " error:", ex);
         }
     }
+
     @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,  int appWidgetId, Bundle newOptions) {
-        super.onAppWidgetOptionsChanged( context,  appWidgetManager,   appWidgetId,  newOptions);
-
-        for(String key : newOptions.keySet()) {
-            Log.d("", "key:"+key + "  value:"+ newOptions.get(key));
-        }
-
-        RemoteViews remoteViews=
-                new RemoteViews(context.getPackageName(), R.layout.fall_widget);
-        String msg=
-                String.format(Locale.getDefault(),
-                        "[%d-%d] x [%d-%d]",
-                        newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),
-                        newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
-                        newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT),
-                        newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT));
-
-        remoteViews.setTextViewText(R.id.widget_title, "text");
-
-        Intent intent = new Intent(context, FallWidgetProvider.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        new FallWidgetView(context, intent, remoteViews, appWidgetId).setupView();
-        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
-        }
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d("", "AppWidgetManager:"+appWidgetIds + "  AppWidgetManager:"+ appWidgetIds);
+        //Log.d("", "AppWidgetManager:" + appWidgetIds + "  AppWidgetManager:" + appWidgetIds);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.fall_widget);
-          //ComponentName componentName = new ComponentName(context, MainWidget.class);
+        //ComponentName componentName = new ComponentName(context, MainWidget.class);
         //int[] widgetIds = appWidgetManager.getAppWidgetIds(componentName);
         for (int appWidgetId : appWidgetIds) {
             Intent intent = new Intent(context, FallWidgetProvider.class);
@@ -70,4 +45,15 @@ public class FallWidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }
+
+    private void activeApp(Context context, Intent intent) {
+        Intent activityIntent = new Intent(context, FallActivity.class);
+        activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activityIntent.putExtra(FallWidgetView.ACTION_APP, true);
+        activityIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0));
+        activityIntent.putExtra(FallWidgetView.WIDGET_ITEM, intent.getStringExtra(FallWidgetView.WIDGET_ITEM));
+        activityIntent.putExtra(FallWidgetView.WIDGET_TEXT, intent.getStringExtra(FallWidgetView.WIDGET_TEXT));
+        context.startActivity(activityIntent);
+    }
+
 }

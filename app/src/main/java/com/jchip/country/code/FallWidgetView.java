@@ -12,7 +12,11 @@ import java.util.Random;
 
 public class FallWidgetView {
 
+    public static final String ACTION_APP = "actionApp";
     public static final String ACTION_NEXT = "actionNext";
+
+    public static final String WIDGET_ITEM = "widgetItem";
+    public static final String WIDGET_TEXT = "widgetText";
 
     private Context context;
     private Intent intent;
@@ -49,14 +53,11 @@ public class FallWidgetView {
         this.setVisibility(isLandscape ? R.id.widget_image_landscape : R.id.widget_image_portrait, true);
         this.setVisibility(isLandscape ? R.id.widget_image_portrait : R.id.widget_image_landscape, false);
 
+        intent.putExtra(WIDGET_ITEM, item);
+        intent.putExtra(WIDGET_TEXT, iso[FallHelper.ALPHA_2]);
+
         this.setViewAction(R.id.widget_view, ACTION_NEXT);
-    }
-
-    public void setupView() {
-//        this.setVisibility(R.id.widget_marker, false);
-        //       this.setVisibility(R.id.widget_patch, false);
-
-
+        this.setViewAction(isLandscape ? R.id.widget_image_landscape : R.id.widget_image_portrait, ACTION_APP);
     }
 
     public int getSourceId(String item, String type, String prefix) {
