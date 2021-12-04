@@ -57,7 +57,7 @@ public class FallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fall_active);
+        setContentView(R.layout.fall_activity);
         //FallUtility.setApplicationLanguage(this, "ar");
 
         this.gridView = findViewById(R.id.grid_view);
