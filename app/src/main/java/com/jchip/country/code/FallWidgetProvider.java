@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 public class FallWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(final Context context, Intent intent) {
         try {
-            if (FallWidgetView.ACTION_NEXT.equals(intent.getAction())) {
+            if (intent.getAction().equals(FallWidgetView.ACTION_TOAST)) {
+                final String item = intent.getStringExtra(FallWidgetView.WIDGET_ITEM);
+                Toast.makeText(context, "Widget toast:" + item, Toast.LENGTH_SHORT).show();
+            } else if (FallWidgetView.ACTION_NEXT.equals(intent.getAction())) {
                 int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
                 this.onUpdate(context, AppWidgetManager.getInstance(context), new int[]{appWidgetId});
             } else if (FallWidgetView.ACTION_APP.equals(intent.getAction())) {

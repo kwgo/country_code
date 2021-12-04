@@ -14,6 +14,7 @@ public class FallWidgetView {
 
     public static final String ACTION_APP = "actionApp";
     public static final String ACTION_NEXT = "actionNext";
+    public static final String ACTION_TOAST = "actionToast";
 
     public static final String WIDGET_ITEM = "widgetItem";
     public static final String WIDGET_TEXT = "widgetText";
