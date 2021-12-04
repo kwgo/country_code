@@ -1,6 +1,6 @@
 package com.jchip.country.code;
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +15,15 @@ import java.util.Map;
 
 public class FallViewAdapter extends RecyclerView.Adapter<FallViewAdapter.ViewHolder> {
 
-    protected Activity activity;
+    protected Context context;
     private Map<String, String[]> info;
     private List<String> gridInfo = new ArrayList<>();
 
     private boolean isPortrait;
     private int spanCount;
 
-    public FallViewAdapter(Activity activity, Map<String, String[]> info, List<String> gridInfo, boolean isPortrait) {
-        this.activity = activity;
+    public FallViewAdapter(Context context, Map<String, String[]> info, List<String> gridInfo, boolean isPortrait) {
+        this.context = context;
         this.info = info;
         this.gridInfo = gridInfo;
         this.isPortrait = isPortrait;
@@ -63,8 +63,9 @@ public class FallViewAdapter extends RecyclerView.Adapter<FallViewAdapter.ViewHo
             boolean isTop = col < FallHelper.getBottomLineIndex(isPortrait);
             boolean isImage = itemIndex == FallHelper.IMAGE;
             if (isImage) {
-                String imageName = "flag_" + this.item.toLowerCase();
-                int sourceId = activity.getResources().getIdentifier(imageName, "drawable", activity.getPackageName());
+//                String imageName = "flag_" + this.item.toLowerCase();
+//                int sourceId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                int sourceId = FallUtility.getSourceId(context, this.item, "drawable", "flag");
                 if (isTop) {
                     topImage.setImageResource(sourceId);
                 } else {
@@ -73,9 +74,11 @@ public class FallViewAdapter extends RecyclerView.Adapter<FallViewAdapter.ViewHo
             } else {
                 String text = iso[itemIndex].trim();
                 if (itemIndex == FallHelper.COUNTRY || itemIndex == FallHelper.OFFICIAL || itemIndex == FallHelper.CAPITAL) {
-                    String key = (itemIndex == FallHelper.CAPITAL ? "capital_" : (itemIndex == FallHelper.OFFICIAL ? "official_" : "short_")) + this.item.toLowerCase();
-                    int sourceId = activity.getResources().getIdentifier(key, "string", activity.getPackageName());
-                    text = activity.getResources().getString(sourceId);
+//                    String key = (itemIndex == FallHelper.CAPITAL ? "capital_" : (itemIndex == FallHelper.OFFICIAL ? "official_" : "short_")) + this.item.toLowerCase();
+//                    int sourceId = context.getResources().getIdentifier(key, "string", context.getPackageName());
+//                    text = context.getResources().getString(sourceId);
+                    String prefix = itemIndex == FallHelper.CAPITAL ? "capital" : itemIndex == FallHelper.OFFICIAL ? "official" : "short";
+                    text = FallUtility.getSourceText(context, this.item, "string", prefix);
                 }
                 if (!isPortrait && itemIndex == FallHelper.CALL_CODE) {
                     text = "+" + text;
@@ -107,10 +110,10 @@ public class FallViewAdapter extends RecyclerView.Adapter<FallViewAdapter.ViewHo
             this.bottomImage = itemView.findViewById(R.id.bottom_image);
             this.topText = itemView.findViewById(R.id.top_text);
             this.bottomText = itemView.findViewById(R.id.bottom_text);
-            this.topImage.setOnClickListener((v) -> ((FallActivity) activity).onDetail(item));
-            this.bottomImage.setOnClickListener((v) -> ((FallActivity) activity).onDetail(item));
-            this.topText.setOnClickListener((v) -> ((FallActivity) activity).onDetail(item));
-            this.bottomText.setOnClickListener((v) -> ((FallActivity) activity).onDetail(item));
+            this.topImage.setOnClickListener((v) -> ((FallActivity) context).onDetail(item));
+            this.bottomImage.setOnClickListener((v) -> ((FallActivity) context).onDetail(item));
+            this.topText.setOnClickListener((v) -> ((FallActivity) context).onDetail(item));
+            this.bottomText.setOnClickListener((v) -> ((FallActivity) context).onDetail(item));
         }
     }
 }

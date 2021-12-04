@@ -41,33 +41,23 @@ public class FallWidgetView {
         int index = this.random.nextInt(info.size());
         String item = String.valueOf(info.keySet().toArray()[index]);
         String[] iso = info.get(item);
-        this.setTextView(R.id.widget_title, this.getSourceText(item, "string", "short"));
+        this.setTextView(R.id.widget_title, FallUtility.getSourceText(this.context, item, "string", "short"));
         this.setTextView(R.id.widget_marker, iso[FallHelper.OFFICIAL]);
         this.setTextView(R.id.widget_symbol, iso[FallHelper.ALPHA_2] + " " + iso[FallHelper.CURRENCY]);
-        this.setTextView(R.id.widget_detail, this.getSourceText(item, "string", "capital"));
+        this.setTextView(R.id.widget_detail, FallUtility.getSourceText(this.context, item, "string", "capital"));
         this.setTextView(R.id.widget_patch, ("(") + iso[FallHelper.POPULATION] + ")");
 
         int orientation = context.getResources().getConfiguration().orientation;
         boolean isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
-        this.setImageView(isLandscape ? R.id.widget_image_landscape : R.id.widget_image_portrait, this.getSourceId(item, "drawable", "flag"));
+        this.setImageView(isLandscape ? R.id.widget_image_landscape : R.id.widget_image_portrait, FallUtility.getSourceId(this.context, item, "drawable", "flag"));
         this.setVisibility(isLandscape ? R.id.widget_image_landscape : R.id.widget_image_portrait, true);
         this.setVisibility(isLandscape ? R.id.widget_image_portrait : R.id.widget_image_landscape, false);
 
         intent.putExtra(WIDGET_ITEM, item);
-        intent.putExtra(WIDGET_TEXT, this.getSourceText(item, "string", "short"));
+        intent.putExtra(WIDGET_TEXT, FallUtility.getSourceText(this.context, item, "string", "short"));
 
         this.setViewAction(R.id.widget_view, ACTION_NEXT);
         this.setViewAction(isLandscape ? R.id.widget_image_landscape : R.id.widget_image_portrait, ACTION_APP);
-    }
-
-    public int getSourceId(String item, String type, String prefix) {
-        String name = prefix + "_" + item.toLowerCase();
-        return context.getResources().getIdentifier(name, type, context.getPackageName());
-    }
-
-    public String getSourceText(String item, String type, String prefix) {
-        int sourceId = this.getSourceId(item, type, prefix);
-        return context.getResources().getString(sourceId);
     }
 
     public void setViewAction(int viewId, String action) {

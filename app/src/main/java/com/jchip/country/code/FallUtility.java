@@ -1,5 +1,6 @@
 package com.jchip.country.code;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -25,8 +26,8 @@ public abstract class FallUtility extends MainUtility {
     }
 
     @SuppressWarnings("deprecation")
-    public static void setApplicationLanguage(FallActivity activity, String languageCode) {
-        Resources resources = activity.getResources();
+    public static void setApplicationLanguage(Context context, String languageCode) {
+        Resources resources = context.getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         Configuration configuration = resources.getConfiguration();
         configuration.setLocale(new Locale(languageCode.toLowerCase()));
@@ -34,12 +35,22 @@ public abstract class FallUtility extends MainUtility {
     }
 
 
-    public static String getImageRatio(FallActivity activity, int sourceId) {
-        Bitmap image = BitmapFactory.decodeResource(activity.getResources(), sourceId);
+    public static String getImageRatio(Context context, int sourceId) {
+        Bitmap image = BitmapFactory.decodeResource(context.getResources(), sourceId);
         int width = image.getWidth();
         int height = image.getHeight();
         int gcd = getGCD(width, height);
         return "" + width / gcd + " : " + height / gcd;
+    }
+
+    public static int getSourceId(Context context, String item, String type, String prefix) {
+        String name = prefix + "_" + item.toLowerCase();
+        return context.getResources().getIdentifier(name, type, context.getPackageName());
+    }
+
+    public static String getSourceText(Context context, String item, String type, String prefix) {
+        int sourceId = getSourceId(context, item, type, prefix);
+        return context.getResources().getString(sourceId);
     }
 
     private static int getGCD(int number1, int number2) {

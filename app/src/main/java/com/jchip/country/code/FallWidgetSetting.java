@@ -1,6 +1,5 @@
 package com.jchip.country.code;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,12 +13,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class FallWidgetSetting extends AppCompatActivity {
-    ListView listView;
-    TextView textView;
-    String[] listItem;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,26 +28,13 @@ public class FallWidgetSetting extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         );
 
-        ListView simpleList;
+        ListView settingView;
         String countryList[] = {"India", "China", "australia", "Portugle", "America", "NewZealand"};
         int flags[] = {R.drawable.flag_in, R.drawable.flag_ch, R.drawable.flag_au, R.drawable.flag_bz, R.drawable.flag_us, R.drawable.flag_nz};
 
-        simpleList = (ListView) findViewById(R.id.widget_setting_view);
-        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), countryList, flags);
-        simpleList.setAdapter(customAdapter);
-
-//        listItem = getResources().getStringArray(R.array.grid_sort_items);
-//        listView = (ListView) findViewById(R.id.widget_setting_view);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.fall_widget_setting_item, R.id.widget_setting_item, listItem);
-//        listView.setAdapter(arrayAdapter);
-
-
-//        listView=(ListView)findViewById(R.id.widget_setting_view);
-//        textView=(TextView)findViewById(R.id.widget_setting_item);
-//        listItem = getResources().getStringArray(R.array.grid_sort_items);
-//        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1, R.id.widget_setting_item, listItem);
-//        listView.setAdapter(adapter);
+        settingView = (ListView) findViewById(R.id.widget_setting_view);
+        ListViewAdapter listViewAdapter = new ListViewAdapter(getApplicationContext(), countryList, flags);
+        settingView.setAdapter(listViewAdapter);
 
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -62,41 +47,48 @@ public class FallWidgetSetting extends AppCompatActivity {
 //        });
     }
 
-    public class CustomAdapter extends BaseAdapter {
-        Context context;
-        String countryList[];
-        int flags[];
-        LayoutInflater inflter;
+    public class ListViewAdapter extends BaseAdapter {
+        private Context context;
+        private LayoutInflater inflater;
 
-        public CustomAdapter(Context applicationContext, String[] countryList, int[] flags) {
+        private Map<String, String[]> info;
+        private List<String> sortedInfo;
+
+        public ListViewAdapter(Context context, String[] countryList, int[] flags) {
             this.context = context;
-            this.countryList = countryList;
-            this.flags = flags;
-            inflter = (LayoutInflater.from(applicationContext));
+            this.inflater = (LayoutInflater.from(context));
+
+            this.info = MainHelper.getISOInfo();
+
+            this.sortedInfo = new ArrayList(this.info.keySet());
+
+            FallHelper.sortCountryInfo(this.context, this.info, this.sortedInfo, FallHelper.COUNTRY);
         }
 
         @Override
         public int getCount() {
-            return countryList.length;
+            return this.info.size();
         }
 
         @Override
-        public Object getItem(int i) {
+        public Object getItem(int position) {
             return null;
         }
 
         @Override
-        public long getItemId(int i) {
+        public long getItemId(int position) {
             return 0;
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            view = inflter.inflate(R.layout.fall_widget_setting_item, null);
-            TextView country = view.findViewById(R.id.widget_setting_text);
-            ImageView icon = view.findViewById(R.id.widget_setting_image);
-            country.setText(countryList[i]);
-            icon.setImageResource(flags[i]);
+        public View getView(int position, View view, ViewGroup viewGroup) {
+            view = inflater.inflate(R.layout.fall_widget_setting_item, null);
+            TextView textView = view.findViewById(R.id.widget_setting_text);
+            ImageView imageView = view.findViewById(R.id.widget_setting_image);
+
+            String item = this.sortedInfo.get(position);
+            textView.setText(FallUtility.getSourceText(context, item, "string", "short"));
+            imageView.setImageResource(FallUtility.getSourceId(context, item, "drawable", "flag"));
             return view;
         }
     }

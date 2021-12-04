@@ -190,14 +190,16 @@ public class FallActivity extends AppCompatActivity {
             addTextView(detailView, index, 0, header, leftParams);
             String detailText = info[detailIndexes[index]].trim();
             if (detailIndexes[index] == FallHelper.COUNTRY || detailIndexes[index] == FallHelper.CAPITAL) {
-                String key = (detailIndexes[index] == FallHelper.CAPITAL ? "capital_" : "short_") + item.toLowerCase();
-                int sourceId = getResources().getIdentifier(key, "string", getPackageName());
-                detailText = getResources().getString(sourceId);
+//                String key = (detailIndexes[index] == FallHelper.CAPITAL ? "capital_" : "short_") + item.toLowerCase();
+//                int sourceId = getResources().getIdentifier(key, "string", getPackageName());
+//                detailText = getResources().getString(sourceId);
+                detailText = FallUtility.getSourceText(this, item, "string", detailIndexes[index] == FallHelper.CAPITAL ? "capital" : "short");
             } else if (detailIndexes[index] == FallHelper.OFFICIAL) {
             } else if (detailIndexes[index] == FallHelper.SOVEREIGNTY) {
-                String key = "sovereignty_" + detailText.toLowerCase().replace(" ", "_");
-                int sourceId = getResources().getIdentifier(key, "string", getPackageName());
-                detailText = getResources().getString(sourceId);
+//                String key = "sovereignty_" + detailText.toLowerCase().replace(" ", "_");
+//                int sourceId = getResources().getIdentifier(key, "string", getPackageName());
+//                detailText = getResources().getString(sourceId);
+                detailText = FallUtility.getSourceText(this, detailText.toLowerCase().replace(" ", "_"), "string", "sovereignty");
             } else if (detailIndexes[index] == FallHelper.CURRENCY) {
                 detailText += " (" + info[FallHelper.SYMBOL].trim() + ")";
             } else if (detailIndexes[index] == FallHelper.CALL_CODE) {
