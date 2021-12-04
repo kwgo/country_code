@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,15 +38,14 @@ public class FallWidgetSetting extends AppCompatActivity {
         ListViewAdapter listViewAdapter = new ListViewAdapter(getApplicationContext(), countryList, flags);
         settingView.setAdapter(listViewAdapter);
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                // TODO Auto-generated method stub
-//                String value = arrayAdapter.getItem(position);
-//                Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+        settingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String item = (String) listViewAdapter.getItem(position);
+                Toast.makeText(getApplicationContext(), item, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 
     public class ListViewAdapter extends BaseAdapter {
@@ -72,12 +73,12 @@ public class FallWidgetSetting extends AppCompatActivity {
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return this.sortedInfo.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
