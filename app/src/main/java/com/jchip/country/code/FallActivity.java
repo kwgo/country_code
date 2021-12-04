@@ -220,7 +220,7 @@ public class FallActivity extends AppCompatActivity {
         textView.setText(info[FallHelper.FLAG_RATIO]);
 
         FallUtility.closeWindow(this.detailWindow);
-        this.detailWindow = FallUtility.popupWindow(this.gridView, popupView);
+        this.detailWindow = FallUtility.popupWindow(popupView);
     }
 
     private void onSort() {
@@ -249,16 +249,29 @@ public class FallActivity extends AppCompatActivity {
         TextView textView = (TextView) popupView.findViewById(R.id.version_code);
         textView.setText(BuildConfig.VERSION_NAME);
         FallUtility.closeWindow(this.aboutWindow);
-        this.aboutWindow = FallUtility.popupWindow(this.gridView, popupView);
+        this.aboutWindow = FallUtility.popupWindow(popupView);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (inactiveCounter % 3 == 0) {
-            this.onAbout();
+        String text = this.getIntent().getStringExtra(FallWidgetView.WIDGET_TEXT);
+        if (text != null && !text.trim().isEmpty()) {
+            this.getIntent().replaceExtras((Bundle) null);
+            this.searchText.setText(text);
+        } else {
+            if (inactiveCounter % 3 == 0) {
+                this.onAbout();
+            }
+            inactiveCounter++;
         }
-        inactiveCounter++;
+    }
+
+    @Override
+    protected void onStop() {
+        FallUtility.closeWindow(this.aboutWindow);
+        FallUtility.closeWindow(this.detailWindow);
+        super.onStop();
     }
 
     private void addTextView(GridLayout view, int row, int col, String text, GridLayout.LayoutParams layoutParams) {

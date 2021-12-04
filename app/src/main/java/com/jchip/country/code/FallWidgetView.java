@@ -54,7 +54,7 @@ public class FallWidgetView {
         this.setVisibility(isLandscape ? R.id.widget_image_portrait : R.id.widget_image_landscape, false);
 
         intent.putExtra(WIDGET_ITEM, item);
-        intent.putExtra(WIDGET_TEXT, iso[FallHelper.ALPHA_2]);
+        intent.putExtra(WIDGET_TEXT, this.getSourceText(item, "string", "short"));
 
         this.setViewAction(R.id.widget_view, ACTION_NEXT);
         this.setViewAction(isLandscape ? R.id.widget_image_landscape : R.id.widget_image_portrait, ACTION_APP);

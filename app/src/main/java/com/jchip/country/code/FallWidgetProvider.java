@@ -32,7 +32,6 @@ public class FallWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        //Log.d("", "AppWidgetManager:" + appWidgetIds + "  AppWidgetManager:" + appWidgetIds);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.fall_widget);
         //ComponentName componentName = new ComponentName(context, MainWidget.class);
         //int[] widgetIds = appWidgetManager.getAppWidgetIds(componentName);
@@ -48,9 +47,8 @@ public class FallWidgetProvider extends AppWidgetProvider {
 
     private void activeApp(Context context, Intent intent) {
         Intent activityIntent = new Intent(context, FallActivity.class);
-        activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activityIntent.putExtra(FallWidgetView.ACTION_APP, true);
-        activityIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0));
+        activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        //activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         activityIntent.putExtra(FallWidgetView.WIDGET_ITEM, intent.getStringExtra(FallWidgetView.WIDGET_ITEM));
         activityIntent.putExtra(FallWidgetView.WIDGET_TEXT, intent.getStringExtra(FallWidgetView.WIDGET_TEXT));
         context.startActivity(activityIntent);

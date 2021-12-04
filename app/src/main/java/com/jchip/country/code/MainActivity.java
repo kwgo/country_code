@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.setClipToOutline(true);
 
         MainUtility.closeWindow(this.detailWindow);
-        this.detailWindow = MainUtility.popupWindow(this.gridView, popupView);
+        this.detailWindow = MainUtility.popupWindow(popupView);
 
         this.isStopShowing.set(false);
     }
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = (TextView) popupView.findViewById(R.id.version_code);
         textView.setText(BuildConfig.VERSION_NAME);
         MainUtility.closeWindow(this.aboutWindow);
-        this.aboutWindow = MainUtility.popupWindow(this.gridView, popupView);
+        this.aboutWindow = MainUtility.popupWindow(popupView);
     }
 
     private Void showGrid() {

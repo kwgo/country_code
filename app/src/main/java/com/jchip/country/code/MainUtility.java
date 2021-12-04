@@ -13,9 +13,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 public abstract class MainUtility {
-    public static PopupWindow popupWindow(View parent, View popupView) {
+    public static PopupWindow popupWindow(View popupView) {
+        PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         try {
-            PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popupView.setOnTouchListener((v, e) -> {
                         try {
                             if (popupWindow != null) {
@@ -26,18 +26,17 @@ public abstract class MainUtility {
                         return true;
                     }
             );
-            if (parent != null) {
-                popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-            }
+            popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
         } catch (Exception ex) {
         }
-        return null;
+        return popupWindow;
     }
 
     public static void closeWindow(PopupWindow popupWindow) {
         try {
             if (popupWindow != null) {
                 popupWindow.dismiss();
+                popupWindow = null;
             }
         } catch (Exception ex) {
         }
