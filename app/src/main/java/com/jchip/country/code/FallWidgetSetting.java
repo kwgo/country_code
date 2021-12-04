@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,27 +31,6 @@ public class FallWidgetSetting extends AppCompatActivity {
 
     private int resultValue = RESULT_CANCELED;
 
-    @Override
-    protected void onDestroy() {
-        if (resultValue == RESULT_CANCELED) {
-            final Intent resultIntent = new Intent();
-            resultIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            setResult(RESULT_CANCELED, resultIntent);
-        }
-        Log.d("", "onDestroy =====================================");
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("", "onStop =====================================");
-        if (resultValue == RESULT_CANCELED) {
-            final Intent resultIntent = new Intent();
-            resultIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            setResult(RESULT_CANCELED, resultIntent);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,56 +60,30 @@ public class FallWidgetSetting extends AppCompatActivity {
         settingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                setResult(resultValue = RESULT_OK);
+
                 String item = (String) listViewAdapter.getItem(position);
-                Toast.makeText(getApplicationContext(), item, Toast.LENGTH_SHORT).show();
 
-                final Intent resultIntent = new Intent();
-                resultIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-                resultIntent.putExtra(FallWidgetView.WIDGET_ITEM, item);
-                setResult(resultValue = RESULT_OK, resultIntent);
-
-                // Request widget update
-                //  final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(FallWidgetSetting.this);
-                //   FallWidgetFlagProvider.updateAppWidget(this, appWidgetManager, appWidgetId, mRowIDs);
-
-// This is equivalent to your ChecksWidgetProvider.updateAppWidget()
-//                appWidgetManager.updateAppWidget(appWidgetId,
-//                        ChecksWidgetProvider.buildRemoteViews(getApplicationContext(),
-//                                appWidgetId));
-
-
-//                // Since min and max is usually the same, just take min
-//                mWidgetLandWidth = providerInfo.minWidth;
-//                mWidgetPortHeight = providerInfo.minHeight;
-//                mWidgetPortWidth = providerInfo.minWidth;
-//                mWidgetLandHeight = providerInfo.minHeight;
-
-
-//                String[] iso = MainHelper.getISOInfo().get(item);
-
-
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
+                Context context = getApplicationContext();
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                 AppWidgetProviderInfo providerInfo = appWidgetManager.getAppWidgetInfo(appWidgetId);
                 int layoutId = providerInfo.initialLayout;
-                Log.d("", "activity layoutId====================" + layoutId);
-
+                boolean flag = layoutId != R.layout.fall_widget_ratio;
 
                 RemoteViews remoteViews = new RemoteViews(getPackageName(), layoutId);
-                int sourceId = FallUtility.getSourceId(getApplicationContext(), item, "drawable", "good");
+                int sourceId = FallUtility.getSourceId(context, item, "drawable", "good");
                 remoteViews.setImageViewResource(R.id.widget_flag_image, sourceId);
                 remoteViews.setImageViewResource(R.id.widget_rotate_image, sourceId);
 
-//                Intent intent = new Intent(getApplicationContext(), FallWidgetFlagProvider.class);
-////            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-//                Intent intent = new Intent(context, FallWidgetProvider.class);
-//                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-//                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-//
-//
-//                intent.setAction(action);
-//                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//                views.setOnClickPendingIntent(viewId, pendingIntent);
+                Intent intent = new Intent(context, flag ? FallWidgetFlagProvider.class : FallWidgetRatioProvider.class);
+                intent.setAction(FallWidgetView.ACTION_APP);
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+                intent.putExtra(FallWidgetView.WIDGET_ITEM, item);
+                intent.putExtra(FallWidgetView.WIDGET_TEXT, FallUtility.getSourceText(context, item, "string", "short"));
 
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                remoteViews.setOnClickPendingIntent(R.id.widget_flag_image, pendingIntent);
+                remoteViews.setOnClickPendingIntent(R.id.widget_rotate_image, pendingIntent);
 
                 appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 
@@ -139,6 +91,34 @@ public class FallWidgetSetting extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("", "onPause =====================================");
+        if (resultValue == RESULT_CANCELED) {
+            setResult(RESULT_CANCELED);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("", "onStop =====================================");
+        if (resultValue == RESULT_CANCELED) {
+            setResult(RESULT_CANCELED);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("", "onDestroy =====================================");
+        if (resultValue == RESULT_CANCELED) {
+            setResult(RESULT_CANCELED);
+        }
+        super.onDestroy();
+    }
+
 
     public class ListViewAdapter extends BaseAdapter {
         private Context context;
@@ -185,4 +165,6 @@ public class FallWidgetSetting extends AppCompatActivity {
             return view;
         }
     }
+
+
 }
