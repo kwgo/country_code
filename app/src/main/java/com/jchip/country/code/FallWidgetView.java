@@ -67,10 +67,7 @@ public class FallWidgetView {
     }
 
     public final void setTextView(int textViewId, String text) {
-        if (text != null) {
-            this.views.setTextViewText(textViewId, text);
-        }
-        this.setVisibility(textViewId, text != null);
+        this.views.setTextViewText(textViewId, text);
     }
 
     public final void setImageView(int imageViewId, int imageSourceId) {

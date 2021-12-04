@@ -15,10 +15,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".FallWidgetSetting"
+            android:icon="@drawable/widget_icon"
+            android:roundIcon="@drawable/widget_icon"
+            android:theme="@style/widget_setting">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <receiver
             android:name=".FallWidgetProvider"
-            android:icon="@drawable/widget_icon"
-            android:roundIcon="@drawable/widget_icon">
+            android:icon="@drawable/widget_icon">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -26,6 +35,24 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/fall_widget_info" />
         </receiver>
-    </application>
 
+        <receiver android:name=".FallWidgetFlagProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/fall_widget_flag" />
+        </receiver>
+        <!--
+        <receiver android:name=".FallWidgetRatioProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/fall_widget_ratio" />
+        </receiver>
+-->
+    </application>
 </manifest>
