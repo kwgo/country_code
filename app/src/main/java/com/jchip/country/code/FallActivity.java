@@ -234,11 +234,11 @@ public class FallActivity extends AppCompatActivity {
     private void onAbout() {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.activity_about, null);
+        View linkView = popupView.findViewById(R.id.grid_link);
+        linkView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:JChip+Games"))));
         ImageView imageView = (ImageView) popupView.findViewById(R.id.grid_game);
         imageView.setClipToOutline(true);
-        imageView.setOnClickListener((e) -> {
-            this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.boxman")));
-        });
+        imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.boxman"))));
         TextView textView = (TextView) popupView.findViewById(R.id.version_code);
         textView.setText(BuildConfig.VERSION_NAME);
         FallUtility.closeWindow(this.aboutWindow);

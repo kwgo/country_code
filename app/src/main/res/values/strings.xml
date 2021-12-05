@@ -43,8 +43,8 @@
     <string name="about_author">Author</string>
     <string name="about_contact">Contact</string>
     <string name="about_email">jchipgame@gmail.com</string>
-    <string name="about_git_site">github.com/jchipgame/country</string>
-    <string name="about_source">Git source</string>
+    <string name="about_git_site">play.google.com/store/search?q=jchip</string>
+    <string name="about_source">Other apps</string>
     <string name="about_owned">Owned Sokoban (Boxman) Classic</string>
     <string name="about_play">click image to play</string>
 

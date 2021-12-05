@@ -43,8 +43,8 @@
     <string name="about_author">作者</string>
     <string name="about_contact">邮箱</string>
     <string name="about_email">jchipgame@gmail.com</string>
-    <string name="about_git_site">github.com/jchipgame/country</string>
-    <string name="about_source">Git 源</string>
+    <string name="about_git_site">play.google.com/store/search?q=jchip</string>
+    <string name="about_source">其他应用</string>
     <string name="about_owned">所拥有的仓库世家游戏</string>
     <string name="about_play">(点击图片进入)</string>
 

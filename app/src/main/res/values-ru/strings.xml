@@ -43,8 +43,8 @@
     <string name="about_author">Автор</string>
     <string name="about_contact">Почта</string>
     <string name="about_email">jchipgame@gmail.com</string>
-    <string name="about_git_site">github.com/jchipgame/country</string>
-    <string name="about_source">Источник Git</string>
+    <string name="about_git_site">play.google.com/store/search?q=jchip</string>
+    <string name="about_source">Другие</string>
     <string name="about_owned">Собственный Сокобан (Боксман) Классик</string>
     <string name="about_play">(Нажмите на изображение, чтобы войти)</string>
 

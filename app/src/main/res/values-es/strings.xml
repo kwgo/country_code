@@ -44,8 +44,8 @@
     <string name="about_author">Autor</string>
     <string name="about_contact">Correo</string>
     <string name="about_email">jchipgame@gmail.com</string>
-    <string name="about_git_site">github.com/jchipgame/country</string>
-    <string name="about_source">Fuente de Git</string>
+    <string name="about_git_site">play.google.com/store/search?q=jchip</string>
+    <string name="about_source">Otros</string>
     <string name="about_owned">Propiedad Sokoban (Boxman) Classic</string>
     <string name="about_play">(click en la imagen para entrar)</string>
 
