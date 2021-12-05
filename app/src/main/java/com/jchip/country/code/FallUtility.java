@@ -74,6 +74,8 @@ public abstract class FallUtility extends MainUtility {
     public static Bitmap rotateBitmap(Bitmap bitmap, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
+        Log.d("","bitmap.getWidth()===" + bitmap.getWidth());
+        Log.d("","bitmap.getHeight()===" + bitmap.getHeight());
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 

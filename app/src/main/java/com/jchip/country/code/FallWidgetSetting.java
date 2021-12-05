@@ -3,9 +3,11 @@ package com.jchip.country.code;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,15 +64,18 @@ public class FallWidgetSetting extends AppCompatActivity {
     private void updateAppWidget(Context context, String item) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         AppWidgetProviderInfo providerInfo = appWidgetManager.getAppWidgetInfo(appWidgetId);
-        int layoutId = providerInfo.initialLayout;
-        boolean flag = layoutId != R.layout.fall_widget_ratio;
+        int initialLayoutId = providerInfo.initialLayout;
+        //boolean flag = initialLayoutId == R.layout.fall_widget_flag;
+        ComponentName provider = providerInfo.provider;
+        Log.d("", "provider===" + providerInfo.provider);
 
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), layoutId);
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), initialLayoutId);
         int sourceId = FallUtility.getSourceId(context, item, "drawable", "good");
         remoteViews.setImageViewResource(R.id.widget_image_landscape, sourceId);
         remoteViews.setImageViewBitmap(R.id.widget_image_portrait, FallUtility.rotateBitmap(context, sourceId, 90));
 
-        Intent intent = new Intent(context, flag ? FallWidgetFlagProvider.class : FallWidgetRatioProvider.class);
+        //   Intent intent = new Intent(context, flag ? FallWidgetFlagProvider.class : FallWidgetRatioProvider.class);
+        Intent intent = new Intent(context, provider.getClass());
         intent.setAction(FallWidgetView.ACTION_APP);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.putExtra(FallWidgetView.WIDGET_ITEM, item);

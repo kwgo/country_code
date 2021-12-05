@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="com.jchip.country.code.FallWidgetSetting"
+    android:description="@string/app_name"
     android:initialKeyguardLayout="@layout/fall_widget_ratio"
     android:initialLayout="@layout/fall_widget_ratio"
     android:minWidth="40dp"
     android:minHeight="40dp"
-    android:previewImage="@drawable/flag_ch"
+    android:minResizeWidth="10dp"
+    android:minResizeHeight="10dp"
+    android:previewImage="@drawable/widget_icon_ratio"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen" />
+    android:widgetCategory="home_screen"
+    android:widgetFeatures="reconfigurable" />

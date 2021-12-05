@@ -7,26 +7,25 @@
         android:id="@+id/widget_ratio_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
         android:focusable="true"
-        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/widget_ratio_image"
+            android:id="@+id/widget_image_landscape"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
             android:contentDescription="@null"
-            android:paddingStart="0dp"
-            android:paddingTop="0dp"
-            android:paddingEnd="0dp"
-            android:paddingBottom="0dp"
             android:scaleType="fitCenter"
+            android:src="@drawable/widget_icon_ratio"
             android:visibility="visible" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/widget_image_portrait"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
 
+    </LinearLayout>
 </LinearLayout>
