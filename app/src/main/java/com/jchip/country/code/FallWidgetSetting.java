@@ -3,11 +3,9 @@ package com.jchip.country.code;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,26 +62,31 @@ public class FallWidgetSetting extends AppCompatActivity {
     private void updateAppWidget(Context context, String item) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         AppWidgetProviderInfo providerInfo = appWidgetManager.getAppWidgetInfo(appWidgetId);
-        int initialLayoutId = providerInfo.initialLayout;
-        //boolean flag = initialLayoutId == R.layout.fall_widget_flag;
-        ComponentName provider = providerInfo.provider;
-        Log.d("", "provider===" + providerInfo.provider);
 
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), initialLayoutId);
-        int sourceId = FallUtility.getSourceId(context, item, "drawable", "good");
-        remoteViews.setImageViewResource(R.id.widget_image_landscape, sourceId);
-        remoteViews.setImageViewBitmap(R.id.widget_image_portrait, FallUtility.rotateBitmap(context, sourceId, 90));
-
-        //   Intent intent = new Intent(context, flag ? FallWidgetFlagProvider.class : FallWidgetRatioProvider.class);
-        Intent intent = new Intent(context, provider.getClass());
+        boolean flag = providerInfo.initialLayout == R.layout.fall_widget_flag;
+        Intent intent = new Intent(context, flag ? FallWidgetFlagProvider.class : FallWidgetRatioProvider.class);
         intent.setAction(FallWidgetView.ACTION_APP);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.putExtra(FallWidgetView.WIDGET_ITEM, item);
         intent.putExtra(FallWidgetView.WIDGET_TEXT, FallUtility.getSourceText(context, item, "string", "short"));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.widget_image_landscape, pendingIntent);
-        remoteViews.setOnClickPendingIntent(R.id.widget_image_portrait, pendingIntent);
 
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), providerInfo.initialLayout);
+        int sourceId = FallUtility.getSourceId(context, item, "drawable", "good");
+        if (flag) {
+            if ("NP".equalsIgnoreCase(item)) {
+                remoteViews.setImageViewBitmap(R.id.widget_image_landscape, FallUtility.rotateBitmap(context, sourceId, 90));
+                remoteViews.setImageViewResource(R.id.widget_image_portrait, sourceId);
+            } else {
+                remoteViews.setImageViewResource(R.id.widget_image_landscape, sourceId);
+                remoteViews.setImageViewBitmap(R.id.widget_image_portrait, FallUtility.rotateBitmap(context, sourceId, 90));
+            }
+            remoteViews.setOnClickPendingIntent(R.id.widget_image_landscape, pendingIntent);
+            remoteViews.setOnClickPendingIntent(R.id.widget_image_portrait, pendingIntent);
+        } else {
+            remoteViews.setImageViewResource(R.id.widget_image_landscape, sourceId);
+            remoteViews.setOnClickPendingIntent(R.id.widget_image_landscape, pendingIntent);
+        }
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
 
