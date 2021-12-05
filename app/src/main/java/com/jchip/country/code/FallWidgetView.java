@@ -13,6 +13,7 @@ import java.util.Random;
 public class FallWidgetView {
 
     public static final String ACTION_APP = "actionApp";
+    public static final String ACTION_SETTING = "actionSetting";
     public static final String ACTION_NEXT = "actionNext";
     public static final String ACTION_TOAST = "actionToast";
 

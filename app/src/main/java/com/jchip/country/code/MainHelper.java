@@ -103,9 +103,6 @@ public abstract class MainHelper {
                         String[] phases = info.get(item);
                         String phaseText = phases[searchIndex];
                         if (searchIndex == COUNTRY || searchIndex == OFFICIAL || searchIndex == CAPITAL) {
-//                            String key = (searchIndex == FallHelper.CAPITAL ? "capital_" : (searchIndex == FallHelper.OFFICIAL ? "official_" : "short_")) + item.toLowerCase();
-//                            int sourceId = activity.getResources().getIdentifier(key, "string", activity.getPackageName());
-//                            phaseText = activity.getResources().getString(sourceId);
                             String prefix = (searchIndex == FallHelper.CAPITAL ? "capital" : (searchIndex == FallHelper.OFFICIAL ? "official" : "short"));
                             phaseText = FallUtility.getSourceText(context, item, "string", prefix);
                         }
@@ -150,13 +147,6 @@ public abstract class MainHelper {
                 int value1 = MainUtility.parseInteger(info.get(key1)[index], 0);
                 int value2 = MainUtility.parseInteger(info.get(key2)[index], 0);
                 return value2 - value1;
-//            } else if (index == TIMEZONE) {
-//                if (info.get(key1)[index].charAt(0) != info.get(key2)[index].charAt(0)) {
-//                    return info.get(key1)[index].compareTo(info.get(key2)[index]);
-//                } else if (info.get(key1)[index].charAt(0) == '-') {
-//                    return info.get(key2)[index].compareTo(info.get(key1)[index]);
-//                }
-//                return info.get(key1)[index].compareTo(info.get(key2)[index]);
             }
             return info.get(key1)[index].compareToIgnoreCase(info.get(key2)[index]);
         }

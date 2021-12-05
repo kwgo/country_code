@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ public class FallWidgetSetting extends AppCompatActivity {
 
     private int resultValue = RESULT_CANCELED;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +40,7 @@ public class FallWidgetSetting extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         );
 
-        final Intent intent = getIntent();
-        final Bundle extras = intent.getExtras();
-        if (extras != null) {
-            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-        }
-
-        Log.d("", "activity appWidgetId====================" + appWidgetId);
+        appWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
@@ -61,41 +53,38 @@ public class FallWidgetSetting extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 setResult(resultValue = RESULT_OK);
-
-                String item = (String) listViewAdapter.getItem(position);
-
-                Context context = getApplicationContext();
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                AppWidgetProviderInfo providerInfo = appWidgetManager.getAppWidgetInfo(appWidgetId);
-                int layoutId = providerInfo.initialLayout;
-                boolean flag = layoutId != R.layout.fall_widget_ratio;
-
-                RemoteViews remoteViews = new RemoteViews(getPackageName(), layoutId);
-                int sourceId = FallUtility.getSourceId(context, item, "drawable", "good");
-                remoteViews.setImageViewResource(R.id.widget_flag_image, sourceId);
-                remoteViews.setImageViewResource(R.id.widget_rotate_image, sourceId);
-
-                Intent intent = new Intent(context, flag ? FallWidgetFlagProvider.class : FallWidgetRatioProvider.class);
-                intent.setAction(FallWidgetView.ACTION_APP);
-                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-                intent.putExtra(FallWidgetView.WIDGET_ITEM, item);
-                intent.putExtra(FallWidgetView.WIDGET_TEXT, FallUtility.getSourceText(context, item, "string", "short"));
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                remoteViews.setOnClickPendingIntent(R.id.widget_flag_image, pendingIntent);
-                remoteViews.setOnClickPendingIntent(R.id.widget_rotate_image, pendingIntent);
-
-                appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
-
+                updateAppWidget(getApplicationContext(), (String) listViewAdapter.getItem(position));
                 finish();
             }
         });
     }
 
+    private void updateAppWidget(Context context, String item) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        AppWidgetProviderInfo providerInfo = appWidgetManager.getAppWidgetInfo(appWidgetId);
+        int layoutId = providerInfo.initialLayout;
+        boolean flag = layoutId != R.layout.fall_widget_ratio;
+
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), layoutId);
+        int sourceId = FallUtility.getSourceId(context, item, "drawable", "good");
+        remoteViews.setImageViewResource(R.id.widget_image_landscape, sourceId);
+        remoteViews.setImageViewBitmap(R.id.widget_image_portrait, FallUtility.rotateBitmap(context, sourceId, 90));
+
+        Intent intent = new Intent(context, flag ? FallWidgetFlagProvider.class : FallWidgetRatioProvider.class);
+        intent.setAction(FallWidgetView.ACTION_APP);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        intent.putExtra(FallWidgetView.WIDGET_ITEM, item);
+        intent.putExtra(FallWidgetView.WIDGET_TEXT, FallUtility.getSourceText(context, item, "string", "short"));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.widget_image_landscape, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.widget_image_portrait, pendingIntent);
+
+        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("", "onPause =====================================");
         if (resultValue == RESULT_CANCELED) {
             setResult(RESULT_CANCELED);
         }
@@ -104,7 +93,6 @@ public class FallWidgetSetting extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("", "onStop =====================================");
         if (resultValue == RESULT_CANCELED) {
             setResult(RESULT_CANCELED);
         }
@@ -112,7 +100,6 @@ public class FallWidgetSetting extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.d("", "onDestroy =====================================");
         if (resultValue == RESULT_CANCELED) {
             setResult(RESULT_CANCELED);
         }

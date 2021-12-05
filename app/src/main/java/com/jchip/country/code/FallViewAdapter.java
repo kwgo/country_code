@@ -63,8 +63,6 @@ public class FallViewAdapter extends RecyclerView.Adapter<FallViewAdapter.ViewHo
             boolean isTop = col < FallHelper.getBottomLineIndex(isPortrait);
             boolean isImage = itemIndex == FallHelper.IMAGE;
             if (isImage) {
-//                String imageName = "flag_" + this.item.toLowerCase();
-//                int sourceId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
                 int sourceId = FallUtility.getSourceId(context, this.item, "drawable", "flag");
                 if (isTop) {
                     topImage.setImageResource(sourceId);
@@ -74,9 +72,6 @@ public class FallViewAdapter extends RecyclerView.Adapter<FallViewAdapter.ViewHo
             } else {
                 String text = iso[itemIndex].trim();
                 if (itemIndex == FallHelper.COUNTRY || itemIndex == FallHelper.OFFICIAL || itemIndex == FallHelper.CAPITAL) {
-//                    String key = (itemIndex == FallHelper.CAPITAL ? "capital_" : (itemIndex == FallHelper.OFFICIAL ? "official_" : "short_")) + this.item.toLowerCase();
-//                    int sourceId = context.getResources().getIdentifier(key, "string", context.getPackageName());
-//                    text = context.getResources().getString(sourceId);
                     String prefix = itemIndex == FallHelper.CAPITAL ? "capital" : itemIndex == FallHelper.OFFICIAL ? "official" : "short";
                     text = FallUtility.getSourceText(context, this.item, "string", prefix);
                 }
