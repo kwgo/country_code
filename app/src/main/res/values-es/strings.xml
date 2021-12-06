@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">País</string>
-    <string name="app_author">Juego de JChip</string>
+    <string name="app_author">JChip Game</string>
     <string name="widget_flag">Bandera</string>
     <string name="widget_ratio">Proporción Bandera</string>
 
