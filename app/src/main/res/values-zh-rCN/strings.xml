@@ -2,7 +2,7 @@
     <string name="app_name">国家代码</string>
     <string name="app_author">JChip Game</string>
     <string name="widget_flag">国旗</string>
-    <string name="widget_ratio">国旗(原始比例)</string>
+    <string name="widget_ratio">国旗(原比例)</string>
 
     <string name="grid_search">搜索</string>
 
