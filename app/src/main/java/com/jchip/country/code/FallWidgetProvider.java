@@ -13,9 +13,6 @@ public class FallWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(final Context context, Intent intent) {
         try {
-            Log.d("", "parent widget is onReceive............ class=" + this.getClass().getName());
-            Log.d("", "parent widget is onReceive............ action=" + intent.getAction());
-
             if (intent.getAction().equals(FallWidgetView.ACTION_TOAST)) {
                 final String item = intent.getStringExtra(FallWidgetView.WIDGET_ITEM);
                 Toast.makeText(context, "Widget toast:" + item, Toast.LENGTH_SHORT).show();
@@ -41,7 +38,6 @@ public class FallWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d("", "parent widget is onUpdate............ class=" + this.getClass().getName());
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.fall_widget);
         //ComponentName componentName = new ComponentName(context, MainWidget.class);
         //int[] widgetIds = appWidgetManager.getAppWidgetIds(componentName);

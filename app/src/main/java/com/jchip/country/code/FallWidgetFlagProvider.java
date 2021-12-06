@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -15,14 +14,10 @@ public class FallWidgetFlagProvider extends FallWidgetProvider {
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        Log.d("", "flag widget is onAppWidgetOptionsChanged........onAppWidgetOptionsChanged.....");
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), this.getWidgetLayoutId());
         float width = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
         float height = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
         boolean landscape = width / height >= 0.85f;
-
-        Log.d("", "widget is onAppWidgetOptionsChanged..... landscape==" + landscape);
-
         remoteViews.setViewVisibility(R.id.widget_image_landscape, landscape ? View.VISIBLE : View.GONE);
         remoteViews.setViewVisibility(R.id.widget_image_portrait, landscape ? View.GONE : View.VISIBLE);
         appWidgetManager.partiallyUpdateAppWidget(appWidgetId, remoteViews);
@@ -30,33 +25,16 @@ public class FallWidgetFlagProvider extends FallWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d("", "flag widget is onUpdate............. class=" + this.getClass().getName());
-        //RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.fall_widget);
         for (int appWidgetId : appWidgetIds) {
             SharedPreferences pres = PreferenceManager.getDefaultSharedPreferences(context);
             String item = pres.getString(String.valueOf(appWidgetId), (String) null);
-            Log.d("", "flag widget id:" + appWidgetId + "  item:" + item);
             if (item != null && !item.isEmpty()) {
-                Log.d("", "flag gonna update widget id:" + appWidgetId + "  item:" + item);
                 updateAppWidget(context, appWidgetId, item);
-                Log.d("", "flag end update widget id:" + appWidgetId + "  item:" + item);
             }
         }
     }
 
-    @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
-        Log.d("", "ok widget is removed.............");
-        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        //prefs.clear();
-        for (int appWidgetId : appWidgetIds) {
-            prefs.remove(String.valueOf(appWidgetId));
-        }
-        prefs.commit();
-    }
-
     protected void updateAppWidget(Context context, int appWidgetId, String item) {
-        Log.d("", "flag widget is updateAppWidget............. class=" + this.getClass().getName());
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), this.getWidgetLayoutId());
         int sourceId = FallUtility.getSourceId(context, item, "drawable", "good");
         if (this.isRotatedImage(item)) {
@@ -64,8 +42,6 @@ public class FallWidgetFlagProvider extends FallWidgetProvider {
             remoteViews.setImageViewResource(R.id.widget_image_portrait, sourceId);
         } else {
             remoteViews.setImageViewResource(R.id.widget_image_landscape, sourceId);
-
-            Log.d("", "set portrait image=" + FallUtility.rotateBitmap(context, sourceId, 90));
             remoteViews.setImageViewBitmap(R.id.widget_image_portrait, FallUtility.rotateBitmap(context, sourceId, 90));
         }
         Intent intent = new Intent(context, FallWidgetFlagProvider.class);
@@ -91,5 +67,14 @@ public class FallWidgetFlagProvider extends FallWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.widget_image_landscape, pendingIntent);
         remoteViews.setOnClickPendingIntent(R.id.widget_image_portrait, pendingIntent);
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        for (int appWidgetId : appWidgetIds) {
+            prefs.remove(String.valueOf(appWidgetId));
+        }
+        prefs.commit();
     }
 }

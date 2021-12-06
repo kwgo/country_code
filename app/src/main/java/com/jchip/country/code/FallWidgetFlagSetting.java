@@ -6,12 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 
 public class FallWidgetFlagSetting extends AppCompatActivity {
 
@@ -35,8 +32,6 @@ public class FallWidgetFlagSetting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fall_widget_setting);
 
-        Log.d("", "setting oncreate====" + this.getLocalClassName());
-
         this.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -46,30 +41,15 @@ public class FallWidgetFlagSetting extends AppCompatActivity {
         if (this.appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
-        Bundle bundle = getIntent().getExtras();
-        Log.d("", "bundle-==================" + bundle);
-        if (bundle != null) {
-            for (String key : bundle.keySet()) {
-                Log.d("", "bundle-=value pair===" + key + " === " + bundle.get(key));
-
-            }
-        }
 
         ListView settingView = (ListView) findViewById(R.id.widget_setting_view);
         ListViewAdapter listViewAdapter = new ListViewAdapter(getApplicationContext());
         settingView.setAdapter(listViewAdapter);
 
-        settingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                saveSharedPreferences(getApplicationContext(), appWidgetId, (String) listViewAdapter.getItem(position));
-
-                updateWidget(getApplicationContext());
-
-                //setResult(resultValue = RgetApplicationContext()ESULT_OK);
-                //updateAppWidget(getApplicationContext(), (String) listViewAdapter.getItem(position));
-                finish();
-            }
+        settingView.setOnItemClickListener((adapterView, view, position, id) -> {
+            saveSharedPreferences(getApplicationContext(), appWidgetId, (String) listViewAdapter.getItem(position));
+            updateWidget(getApplicationContext());
+            finish();
         });
     }
 
@@ -82,7 +62,6 @@ public class FallWidgetFlagSetting extends AppCompatActivity {
     private void updateWidget(Context context) {
         notifyWidget(resultValue = RESULT_OK);
 
-        Log.d("", "send broadcast ---------------------" + this.getClass().getName());
         Intent updateIntent = new Intent(context, this.gerProviderClass());
         updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, this.appWidgetId);
@@ -168,7 +147,6 @@ public class FallWidgetFlagSetting extends AppCompatActivity {
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
         //prefs.clear();
         prefs.putString(String.valueOf(appWidgetId), item);
-        Log.d("", "save shared refs=" + appWidgetId + " == " + item);
         prefs.commit();
     }
 }
