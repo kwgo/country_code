@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Pays</string>
     <string name="app_author">Jeu JChip</string>
+    <string name="widget_flag">Drapeau</string>
+    <string name="widget_ratio">Ratio Drapeau</string>
 
     <string name="grid_search">Chercher</string>
 

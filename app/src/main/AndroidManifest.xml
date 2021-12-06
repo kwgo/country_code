@@ -45,7 +45,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/fall_widget_info" />
         </receiver>
-        <receiver android:name=".FallWidgetFlagProvider">
+        <receiver
+            android:name=".FallWidgetFlagProvider"
+            android:label="@string/widget_flag">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -53,7 +55,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/fall_widget_flag" />
         </receiver>
-        <receiver android:name=".FallWidgetRatioProvider">
+        <receiver
+            android:name=".FallWidgetRatioProvider"
+            android:label="@string/widget_ratio">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Country</string>
     <string name="app_author">JChip Game</string>
+    <string name="widget_flag">Flag</string>
+    <string name="widget_ratio">Ratio Flag</string>
 
     <string name="grid_search">Search</string>
 

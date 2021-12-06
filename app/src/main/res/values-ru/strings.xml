@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Страна</string>
     <string name="app_author">JChipGame</string>
+    <string name="widget_flag">Флаг</string>
+    <string name="widget_ratio">Соотношение Флаг</string>
 
     <string name="grid_search">Поиск</string>
 
