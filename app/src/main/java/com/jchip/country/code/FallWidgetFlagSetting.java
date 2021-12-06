@@ -1,11 +1,12 @@
 package com.jchip.country.code;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class FallWidgetSetting extends AppCompatActivity {
+public class FallWidgetFlagSetting extends AppCompatActivity {
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
@@ -35,14 +35,24 @@ public class FallWidgetSetting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fall_widget_setting);
 
+        Log.d("", "setting oncreate====" + this.getLocalClassName());
+
         this.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         );
 
-        appWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        this.appWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        if (this.appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
+        }
+        Bundle bundle = getIntent().getExtras();
+        Log.d("", "bundle-==================" + bundle);
+        if (bundle != null) {
+            for (String key : bundle.keySet()) {
+                Log.d("", "bundle-=value pair===" + key + " === " + bundle.get(key));
+
+            }
         }
 
         ListView settingView = (ListView) findViewById(R.id.widget_setting_view);
@@ -52,49 +62,43 @@ public class FallWidgetSetting extends AppCompatActivity {
         settingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                setResult(resultValue = RESULT_OK);
-                updateAppWidget(getApplicationContext(), (String) listViewAdapter.getItem(position));
+                saveSharedPreferences(getApplicationContext(), appWidgetId, (String) listViewAdapter.getItem(position));
+
+                updateWidget(getApplicationContext());
+
+                //setResult(resultValue = RgetApplicationContext()ESULT_OK);
+                //updateAppWidget(getApplicationContext(), (String) listViewAdapter.getItem(position));
                 finish();
             }
         });
     }
 
-    private void updateAppWidget(Context context, String item) {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        AppWidgetProviderInfo providerInfo = appWidgetManager.getAppWidgetInfo(appWidgetId);
+    private void notifyWidget(int value) {
+        Intent intent = new Intent();
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, this.appWidgetId);
+        setResult(value, intent);
+    }
 
-        boolean flag = providerInfo.initialLayout == R.layout.fall_widget_flag;
-        Intent intent = new Intent(context, flag ? FallWidgetFlagProvider.class : FallWidgetRatioProvider.class);
-        intent.setAction(FallWidgetView.ACTION_APP);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        intent.putExtra(FallWidgetView.WIDGET_ITEM, item);
-        intent.putExtra(FallWidgetView.WIDGET_TEXT, FallUtility.getSourceText(context, item, "string", "short"));
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    private void updateWidget(Context context) {
+        notifyWidget(resultValue = RESULT_OK);
 
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), providerInfo.initialLayout);
-        int sourceId = FallUtility.getSourceId(context, item, "drawable", "good");
-        if (flag) {
-            if ("NP".equalsIgnoreCase(item)) {
-                remoteViews.setImageViewBitmap(R.id.widget_image_landscape, FallUtility.rotateBitmap(context, sourceId, 90));
-                remoteViews.setImageViewResource(R.id.widget_image_portrait, sourceId);
-            } else {
-                remoteViews.setImageViewResource(R.id.widget_image_landscape, sourceId);
-                remoteViews.setImageViewBitmap(R.id.widget_image_portrait, FallUtility.rotateBitmap(context, sourceId, 90));
-            }
-            remoteViews.setOnClickPendingIntent(R.id.widget_image_landscape, pendingIntent);
-            remoteViews.setOnClickPendingIntent(R.id.widget_image_portrait, pendingIntent);
-        } else {
-            remoteViews.setImageViewResource(R.id.widget_image_landscape, sourceId);
-            remoteViews.setOnClickPendingIntent(R.id.widget_image_landscape, pendingIntent);
-        }
-        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+        Log.d("", "send broadcast ---------------------" + this.getClass().getName());
+        Intent updateIntent = new Intent(context, this.gerProviderClass());
+        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, this.appWidgetId);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{this.appWidgetId});
+        context.sendBroadcast(updateIntent);
+    }
+
+    protected Class gerProviderClass() {
+        return FallWidgetFlagProvider.class;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if (resultValue == RESULT_CANCELED) {
-            setResult(RESULT_CANCELED);
+            notifyWidget(RESULT_CANCELED);
         }
     }
 
@@ -102,7 +106,7 @@ public class FallWidgetSetting extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if (resultValue == RESULT_CANCELED) {
-            setResult(RESULT_CANCELED);
+            notifyWidget(RESULT_CANCELED);
         }
     }
 
@@ -113,7 +117,6 @@ public class FallWidgetSetting extends AppCompatActivity {
         }
         super.onDestroy();
     }
-
 
     public class ListViewAdapter extends BaseAdapter {
         private Context context;
@@ -161,5 +164,11 @@ public class FallWidgetSetting extends AppCompatActivity {
         }
     }
 
-
+    protected void saveSharedPreferences(Context context, int appWidgetId, String item) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        //prefs.clear();
+        prefs.putString(String.valueOf(appWidgetId), item);
+        Log.d("", "save shared refs=" + appWidgetId + " == " + item);
+        prefs.commit();
+    }
 }
