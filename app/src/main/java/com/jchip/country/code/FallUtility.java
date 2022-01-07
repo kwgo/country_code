@@ -1,5 +1,6 @@
 package com.jchip.country.code;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -85,5 +86,13 @@ public abstract class FallUtility extends MainUtility {
             }
         }
         return gcd;
+    }
+
+    public static void exitApp(Activity activity) {
+        try {
+            //activity.moveTaskToBack(true);
+            activity.finishAndRemoveTask();
+        } catch (Exception ignore) {
+        }
     }
 }

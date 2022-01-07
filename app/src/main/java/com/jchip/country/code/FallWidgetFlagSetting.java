@@ -57,6 +57,8 @@ public class FallWidgetFlagSetting extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, this.appWidgetId);
         setResult(value, intent);
+
+        FallUtility.exitApp(this);
     }
 
     private void updateWidget(Context context) {
