@@ -49,7 +49,9 @@
     <string name="about_git_site">play.google.com/store/search?q=jchip</string>
     <string name="about_source">Otros</string>
     <string name="about_owned">Propiedad Sokoban (Boxman) Classic</string>
-    <string name="about_play">(click en la imagen para entrar)</string>
+    <string name="about_play">click en la imagen para entrar</string>
+    <string name="about_owned_other">Álbum de fotos propio</string>
+    <string name="about_install_other">haga clic en la imagen para instalar</string>
 
 
     <string name="short_language">24</string>

@@ -48,7 +48,9 @@
     <string name="about_git_site">play.google.com/store/search?q=jchip</string>
     <string name="about_source">Другие</string>
     <string name="about_owned">Собственный Сокобан (Боксман) Классик</string>
-    <string name="about_play">(Нажмите на изображение, чтобы войти)</string>
+    <string name="about_play">Нажмите на изображение, чтобы войти</string>
+    <string name="about_owned_other">Собственный фотоальбом</string>
+    <string name="about_install_other">щелкните изображение, чтобы установить</string>
 
 
     <string name="short_language">28</string>

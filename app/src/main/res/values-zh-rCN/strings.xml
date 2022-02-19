@@ -48,7 +48,9 @@
     <string name="about_git_site">play.google.com/store/search?q=jchip</string>
     <string name="about_source">其他应用</string>
     <string name="about_owned">所拥有的仓库世家游戏</string>
-    <string name="about_play">(点击图片进入)</string>
+    <string name="about_play">点击图片进入</string>
+    <string name="about_owned_other">所拥有的相册应用</string>
+    <string name="about_install_other">点击图片安装</string>
 
 
     <string name="short_language">35</string>

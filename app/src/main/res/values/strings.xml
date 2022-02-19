@@ -49,6 +49,8 @@
     <string name="about_source">Other apps</string>
     <string name="about_owned">Owned Sokoban (Boxman) Classic</string>
     <string name="about_play">click image to play</string>
+    <string name="about_owned_other">Owned Photo Album App</string>
+    <string name="about_install_other">click image to install</string>
 
 
     <string name="short_language">21</string>

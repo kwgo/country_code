@@ -52,6 +52,7 @@ public class FallActivity extends AppCompatActivity {
     private PopupWindow aboutWindow;
     private PopupWindow detailWindow;
 
+    private int activeCounter = 0;
     private int inactiveCounter = -1;
 
     @Override
@@ -238,9 +239,19 @@ public class FallActivity extends AppCompatActivity {
         linkView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:JChip+Games"))));
         ImageView imageView = (ImageView) popupView.findViewById(R.id.grid_game);
         imageView.setClipToOutline(true);
-        imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.boxman"))));
+        imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.album"))));
         TextView textView = (TextView) popupView.findViewById(R.id.version_code);
         textView.setText(BuildConfig.VERSION_NAME);
+
+        if (++activeCounter % 2 == 0) {
+            TextView ownedView = popupView.findViewById(R.id.grid_owned);
+            ownedView.setText(R.string.about_owned);
+            imageView.setImageResource(R.drawable.grid_about);
+            imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.boxman"))));
+            TextView clickView = popupView.findViewById(R.id.grid_click);
+            clickView.setText(R.string.about_play);
+        }
+
         FallUtility.closeWindow(this.aboutWindow);
         this.aboutWindow = FallUtility.popupWindow(popupView);
     }
@@ -253,7 +264,7 @@ public class FallActivity extends AppCompatActivity {
             this.getIntent().replaceExtras((Bundle) null);
             this.searchText.setText(text);
         } else {
-            if (inactiveCounter % 3 == 0) {
+            if (inactiveCounter >= 0) {
                 this.onAbout();
             }
             inactiveCounter++;

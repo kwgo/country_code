@@ -150,6 +150,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/grid_owned"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="5"
@@ -161,7 +162,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="0dp"
             android:singleLine="true"
-            android:text="@string/about_owned"
+            android:text="@string/about_owned_other"
             android:textAlignment="center"
             android:textStyle="bold" />
 
@@ -181,9 +182,10 @@
             android:adjustViewBounds="true"
             android:background="@drawable/round_game"
             android:scaleType="fitXY"
-            android:src="@drawable/grid_about_image" />
+            android:src="@drawable/grid_about_other" />
 
         <TextView
+            android:id="@+id/grid_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="7"
@@ -198,7 +200,7 @@
             android:layout_marginBottom="2dp"
             android:hint="click to play"
             android:singleLine="true"
-            android:text="@string/about_play"
+            android:text="@string/about_install_other"
             android:textAlignment="center"
             android:textSize="12dp" />
     </GridLayout>

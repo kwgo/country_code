@@ -48,7 +48,10 @@
     <string name="about_git_site">play.google.com/store/search?q=jchip</string>
     <string name="about_source">تطبيقات</string>
     <string name="about_owned">يملك Sokoban (بوكسمان) كلاسيك</string>
-    <string name="about_play">(اضغط على الصورة للدخول)</string>
+    <string name="about_play">اضغط على الصورة للدخول</string>
+    <string name="about_owned_other">ألبوم الصور المملوك</string>
+    <string name="about_install_other">انقر على الصورة للتثبيت</string>
+
 
     <string name="official_language">32</string>
     <string name="official_alpha_2">official_name_ar</string>
