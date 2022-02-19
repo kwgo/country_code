@@ -37,6 +37,7 @@
                 android:id="@+id/grid_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="20dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true" />
 
@@ -52,15 +53,16 @@
 
             <ImageView
                 android:id="@+id/grid_dots"
-                android:layout_width="36dp"
+                android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_alignStart="@id/grid_sort"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
                 android:layout_marginStart="0dp"
-                android:layout_toStartOf="@id/grid_sort"
                 android:autoMirrored="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitXY"
-                android:src="@drawable/grid_about_button" />
+                android:src="@drawable/grid_dots" />
 
         </RelativeLayout>
     </LinearLayout>
