@@ -7,7 +7,18 @@
     android:orientation="vertical"
     android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
+    <ImageView
+        android:id="@+id/grid_full_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:padding="16dp"
+        android:visibility="gone" />
+
     <ScrollView
+        android:id="@+id/grid_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

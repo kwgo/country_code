@@ -207,9 +207,23 @@ public class FallActivity extends AppCompatActivity {
             addTextView(detailView, index, 1, detailText, rightParams);
         }
 
+        ImageView fullImageView = (ImageView) popupView.findViewById(R.id.grid_full_image);
+        fullImageView.getLayoutParams().width = findViewById(R.id.context_view).getWidth();
+        fullImageView.getLayoutParams().height = findViewById(R.id.context_view).getHeight();
+        fullImageView.setImageResource(FallUtility.getSourceId(this, item, "drawable", "good"));
+        fullImageView.setOnClickListener((v) -> {
+            popupView.findViewById(R.id.grid_scroll_view).setVisibility(View.VISIBLE);
+            fullImageView.setVisibility(View.GONE);
+        });
+
         ImageView imageView = (ImageView) popupView.findViewById(R.id.grid_image);
         imageView.setImageResource(FallUtility.getSourceId(this, item, "drawable", "good"));
         imageView.setClipToOutline(true);
+        imageView.setOnClickListener((v) -> {
+            popupView.findViewById(R.id.grid_scroll_view).setVisibility(View.GONE);
+            fullImageView.setVisibility(View.VISIBLE);
+        });
+
         TextView textView = (TextView) popupView.findViewById(R.id.grid_text);
         textView.setText(info[FallHelper.FLAG_RATIO]);
 
