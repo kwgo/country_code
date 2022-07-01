@@ -261,7 +261,7 @@ public class FallActivity extends AppCompatActivity {
             TextView ownedView = popupView.findViewById(R.id.grid_owned);
             ownedView.setText(R.string.about_owned);
             imageView.setImageResource(R.drawable.grid_about);
-            imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.boxman"))));
+            imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.sokomon"))));
             TextView clickView = popupView.findViewById(R.id.grid_click);
             clickView.setText(R.string.about_play);
         }

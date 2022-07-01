@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView imageView = (ImageView) popupView.findViewById(R.id.grid_game);
         imageView.setClipToOutline(true);
         imageView.setOnClickListener((e) -> {
-            this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.boxman")));
+            this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.sokomon")));
         });
         TextView textView = (TextView) popupView.findViewById(R.id.version_code);
         textView.setText(BuildConfig.VERSION_NAME);
