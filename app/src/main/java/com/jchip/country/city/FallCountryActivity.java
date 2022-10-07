@@ -2,17 +2,16 @@ package com.jchip.country.city;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,9 +50,7 @@ public class FallCountryActivity extends AppCompatActivity {
 
     private PopupWindow aboutWindow;
     private PopupWindow detailWindow;
-
-    private int activeCounter = 0;
-    private int inactiveCounter = -1;
+    private PopupWindow selectWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +68,12 @@ public class FallCountryActivity extends AppCompatActivity {
     }
 
     private void refreshGridView() {
-        int spanCount = FallCountryViewHelper.getSpanCount(isPortrait());
+        int spanCount = FallCountryViewHelper.getSpanCount(FallUtility.isPortrait(FallCountryActivity.this));
         GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return FallCountryViewHelper.getSpanSize(isPortrait(), position);
+                return FallCountryViewHelper.getSpanSize(FallUtility.isPortrait(FallCountryActivity.this), position);
             }
         });
         this.gridView.setLayoutManager(layoutManager);
@@ -86,24 +83,24 @@ public class FallCountryActivity extends AppCompatActivity {
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 int position = parent.getChildAdapterPosition(view);
                 if (position >= 0) {
-                    if (isDirectionRTL()) {
-                        outRect.right = dp2px(FallCountryViewHelper.getItemOffset(isPortrait(), position));
+                    if (FallUtility.isDirectionRTL(FallCountryActivity.this)) {
+                        outRect.right = FallUtility.dp2px(FallCountryActivity.this, FallCountryViewHelper.getItemOffset(FallUtility.isPortrait(FallCountryActivity.this), position));
                     } else {
-                        outRect.left = dp2px(FallCountryViewHelper.getItemOffset(isPortrait(), position));
+                        outRect.left = FallUtility.dp2px(FallCountryActivity.this, FallCountryViewHelper.getItemOffset(FallUtility.isPortrait(FallCountryActivity.this), position));
                     }
                 }
             }
         });
-        gridView.setAdapter(new FallCountryAdapter(this, this.info, this.gridInfo, isPortrait()));
+        gridView.setAdapter(new FallCountryAdapter(this, this.info, this.gridInfo, FallUtility.isPortrait(FallCountryActivity.this)));
     }
 
     private void initSortSpinner() {
-        final CharSequence[] sortItems = this.getResources().getTextArray(R.array.grid_sort_items);
+        final CharSequence[] sortItems = this.getResources().getTextArray(R.array.grid_country_sort_items);
         sortSpinner = (Spinner) findViewById(R.id.grid_sort);
         sortSpinner.setAdapter(new ArrayAdapter<CharSequence>(this, R.layout.grid_spinner_item, Arrays.asList(sortItems)) {
             @Override
             public boolean isEnabled(int position) {
-                return FallCountryViewHelper.isSortable(position - 1, isPortrait());
+                return FallCountryViewHelper.isSortable(position - 1, FallUtility.isPortrait(FallCountryActivity.this));
             }
 
             @Override
@@ -111,7 +108,9 @@ public class FallCountryActivity extends AppCompatActivity {
                 TextView view = (TextView) super.getDropDownView(position, convertView, parent);
                 view.setTextColor(position == 0 ? Color.LTGRAY : (isEnabled(position) ? Color.BLACK : Color.LTGRAY));
                 view.setText(position > 0 ? view.getText() : "");
-                view.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    view.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                }
                 view.setPadding(30, 0, 30, position == 0 ? -8 : 8);
                 return view;
             }
@@ -153,7 +152,7 @@ public class FallCountryActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int maxLength = FallCountryViewHelper.getInputCount(isPortrait());
+                int maxLength = FallCountryViewHelper.getInputCount(FallUtility.isPortrait(FallCountryActivity.this));
                 searchText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
                 FallUtility.runOnUiWorker(FallCountryActivity.this, () -> {
                     onSearch();
@@ -186,7 +185,7 @@ public class FallCountryActivity extends AppCompatActivity {
         int[] detailIndexes = FallCountryViewHelper.detailIndexes;
         for (int index = 0; index < detailIndexes.length; index++) {
             String header = getResources().getString(FallCountryViewHelper.getHeaderIndex(detailIndexes[index]));
-            addTextView(detailView, index, 0, header, leftParams);
+            addTextView(this, detailView, index, 0, header, leftParams);
             String detailText = info[detailIndexes[index]].trim();
             if (detailIndexes[index] == FallCountryViewHelper.COUNTRY || detailIndexes[index] == FallCountryViewHelper.CAPITAL) {
                 detailText = FallUtility.getSourceText(this, item, "string", detailIndexes[index] == FallCountryViewHelper.CAPITAL ? "capital" : "short");
@@ -204,7 +203,7 @@ public class FallCountryActivity extends AppCompatActivity {
                     detailText += " (" + info[FallCountryViewHelper.BASIC_NUMBER].trim() + ")";
                 }
             }
-            addTextView(detailView, index, 1, detailText, rightParams);
+            addTextView(this, detailView, index, 1, detailText, rightParams);
         }
 
         ImageView fullImageView = (ImageView) popupView.findViewById(R.id.grid_full_image);
@@ -218,7 +217,9 @@ public class FallCountryActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) popupView.findViewById(R.id.grid_image);
         imageView.setImageResource(FallUtility.getSourceId(this, item, "drawable", "good"));
-        imageView.setClipToOutline(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageView.setClipToOutline(true);
+        }
         imageView.setOnClickListener((v) -> {
             popupView.findViewById(R.id.grid_scroll_view).setVisibility(View.GONE);
             fullImageView.setVisibility(View.VISIBLE);
@@ -241,9 +242,22 @@ public class FallCountryActivity extends AppCompatActivity {
         if (searchText.isEmpty()) {
             this.gridInfo = FallCountryViewHelper.sortCountryInfo(info, new ArrayList(info.keySet()), FallCountryViewHelper.SORT_COUNTRY);
         } else {
-            this.gridInfo = FallCountryViewHelper.searchCountryInfo(this, this.info, searchText, isPortrait());
+            this.gridInfo = FallCountryViewHelper.searchCountryInfo(this, this.info, searchText, FallUtility.isPortrait(this));
         }
         this.onSort();
+    }
+
+    private void onSelect(String item) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.fall_select_view, null);
+        ImageView countryImageView = (ImageView) popupView.findViewById(R.id.grid_country);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            countryImageView.setClipToOutline(true);
+        }
+        countryImageView.setOnClickListener((e) -> this.onDetail(item));
+
+        FallUtility.closeWindow(this.selectWindow);
+        this.selectWindow = FallUtility.popupWindow(popupView);
     }
 
     private void onAbout() {
@@ -252,19 +266,19 @@ public class FallCountryActivity extends AppCompatActivity {
         View linkView = popupView.findViewById(R.id.grid_link);
         linkView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:JChip+Games"))));
         ImageView imageView = (ImageView) popupView.findViewById(R.id.grid_game);
-        imageView.setClipToOutline(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageView.setClipToOutline(true);
+        }
         imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.album"))));
         TextView textView = (TextView) popupView.findViewById(R.id.version_code);
         textView.setText(BuildConfig.VERSION_NAME);
 
-        if (++activeCounter % 2 == 0) {
-            TextView ownedView = popupView.findViewById(R.id.grid_owned);
-            ownedView.setText(R.string.about_owned);
-            imageView.setImageResource(R.drawable.grid_about);
-            imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.sokomon"))));
-            TextView clickView = popupView.findViewById(R.id.grid_click);
-            clickView.setText(R.string.about_play);
-        }
+        TextView ownedView = popupView.findViewById(R.id.grid_owned);
+        ownedView.setText(R.string.about_owned);
+        imageView.setImageResource(R.drawable.grid_about);
+        imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.sokomon"))));
+        TextView clickView = popupView.findViewById(R.id.grid_click);
+        clickView.setText(R.string.about_play);
 
         FallUtility.closeWindow(this.aboutWindow);
         this.aboutWindow = FallUtility.popupWindow(popupView);
@@ -277,28 +291,24 @@ public class FallCountryActivity extends AppCompatActivity {
         if (text != null && !text.trim().isEmpty()) {
             this.getIntent().replaceExtras((Bundle) null);
             this.searchText.setText(text);
-        } else {
-            if (inactiveCounter >= 0) {
-                this.onAbout();
-            }
-            inactiveCounter++;
         }
     }
 
     @Override
     protected void onStop() {
+        super.onStop();
         FallUtility.closeWindow(this.aboutWindow);
         FallUtility.closeWindow(this.detailWindow);
-        super.onStop();
+        FallUtility.closeWindow(this.selectWindow);
     }
 
-    private void addTextView(GridLayout view, int row, int col, String text, GridLayout.LayoutParams layoutParams) {
+    private void addTextView(Context context, GridLayout view, int row, int col, String text, GridLayout.LayoutParams layoutParams) {
         TextView textView = new TextView(this);
         textView.setText(text);
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setPadding(0, 2, 0, 2);
         textView.setSingleLine(true);
-        textView.setEllipsize(this.isDirectionRTL() ? TextUtils.TruncateAt.START : TextUtils.TruncateAt.END);
+        textView.setEllipsize(FallUtility.isDirectionRTL(context) ? TextUtils.TruncateAt.START : TextUtils.TruncateAt.END);
         textView.setContentDescription("@null");
         GridLayout.LayoutParams params = new GridLayout.LayoutParams(layoutParams);
         params.rowSpec = GridLayout.spec(row);
@@ -308,19 +318,5 @@ public class FallCountryActivity extends AppCompatActivity {
     public void showProcessing(boolean isShow) {
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.grid_processing);
         progressBar.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    private boolean isPortrait() {
-        int orientation = this.getResources().getConfiguration().orientation;
-        return orientation == Configuration.ORIENTATION_PORTRAIT;
-    }
-
-    private boolean isDirectionRTL() {
-        Configuration configuration = this.getResources().getConfiguration();
-        return configuration.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
-    }
-
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 }

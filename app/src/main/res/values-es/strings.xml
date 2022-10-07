@@ -26,7 +26,21 @@
     <string name="head_flag_ratio">Proporción de bandera</string>
     <string name="head_population">Población</string>
 
-    <string-array name="grid_sort_items">
+    <string name="head_city_name">Nombre</string>
+    <string name="head_city_ascii">Nombre ASCII</string>
+    <string name="head_city_capital">Tipo</string>
+    <string name="head_city_admin">Administrador</string>
+    <string name="head_city_lat">Latitud</string>
+    <string name="head_city_lng">Longitud</string>
+    <string name="head_city_population">Población</string>
+
+    <string-array name="grid_city_sort_items">
+        <item>Todas las ciudades</item>
+        <item>Administrar ciudades</item>
+        <item>Ciudades más grandes</item>
+    </string-array>
+
+    <string-array name="grid_country_sort_items">
         <item>Clasificar</item>
         <item>País</item>
         <item>Oficial</item>

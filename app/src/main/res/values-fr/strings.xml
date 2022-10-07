@@ -25,7 +25,21 @@
     <string name="head_flag_ratio">Rapport de drapeau</string>
     <string name="head_population">Population</string>
 
-    <string-array name="grid_sort_items">
+    <string name="head_city_name">Nom</string>
+    <string name="head_city_ascii">Nom ASCII</string>
+    <string name="head_city_capital">Type</string>
+    <string name="head_city_admin">Administrateur</string>
+    <string name="head_city_lat">Latitude</string>
+    <string name="head_city_lng">Longitude</string>
+    <string name="head_city_population">Population</string>
+
+    <string-array name="grid_city_sort_items">
+        <item>Toutes les villes</item>
+        <item>Villes admin</item>
+        <item>Grandes villes</item>
+    </string-array>
+
+    <string-array name="grid_country_sort_items">
         <item>Sorte</item>
         <item>Pays</item>
         <item>Officiel</item>

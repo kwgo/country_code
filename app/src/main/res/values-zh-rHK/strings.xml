@@ -25,7 +25,21 @@
     <string name="head_flag_ratio">國旗比例</string>
     <string name="head_population">人口</string>
 
-    <string-array name="grid_sort_items">
+    <string name="head_city_name">名稱</string>
+    <string name="head_city_ascii">標準名稱</string>
+    <string name="head_city_capital">類型</string>
+    <string name="head_city_admin">行政</string>
+    <string name="head_city_lat">緯度</string>
+    <string name="head_city_lng">經度</string>
+    <string name="head_city_population">人口</string>
+
+    <string-array name="grid_city_sort_items">
+        <item>所有城市</item>
+        <item>行政城市</item>
+        <item>大中城市</item>
+    </string-array>
+
+    <string-array name="grid_country_sort_items">
         <item>排序</item>
         <item>國家名稱</item>
         <item>官方名稱</item>

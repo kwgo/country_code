@@ -35,15 +35,30 @@
                 android:textAlignment="viewStart"
                 android:textSize="20dp" />
 
+            <ImageView
+                android:id="@+id/grid_dots"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignStart="@id/grid_search"
+                android:layout_alignLeft="@id/grid_search"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:autoMirrored="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitXY"
+                android:src="@drawable/grid_dots" />
+
             <Spinner
                 android:id="@+id/grid_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="20dp"
                 android:layout_alignParentEnd="true"
-                android:paddingLeft="20dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp" />
 
             <ProgressBar
                 android:id="@+id/grid_processing"
@@ -56,18 +71,6 @@
                 android:layout_gravity="end"
                 android:visibility="invisible" />
 
-            <ImageView
-                android:id="@+id/grid_dots"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignStart="@id/grid_sort"
-                android:layout_centerVertical="true"
-                android:layout_gravity="end"
-                android:layout_marginStart="0dp"
-                android:autoMirrored="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:scaleType="fitXY"
-                android:src="@drawable/grid_dots" />
 
         </RelativeLayout>
     </LinearLayout>

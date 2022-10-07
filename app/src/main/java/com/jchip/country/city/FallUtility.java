@@ -7,9 +7,11 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.Build;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -55,7 +57,9 @@ public abstract class FallUtility {
         Resources resources = context.getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         Configuration configuration = resources.getConfiguration();
-        configuration.setLocale(new Locale(languageCode.toLowerCase()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.setLocale(new Locale(languageCode.toLowerCase()));
+        }
         resources.updateConfiguration(configuration, displayMetrics);
     }
 
@@ -100,7 +104,9 @@ public abstract class FallUtility {
     public static void exitApp(Activity activity) {
         try {
             //activity.moveTaskToBack(true);
-            activity.finishAndRemoveTask();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                activity.finishAndRemoveTask();
+            }
         } catch (Exception ignore) {
         }
     }
@@ -177,5 +183,22 @@ public abstract class FallUtility {
         } catch (Exception ex) {
             return defaultValue;
         }
+    }
+
+    public static boolean isPortrait(Context context) {
+        int orientation = context.getResources().getConfiguration().orientation;
+        return orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+    public static boolean isDirectionRTL(Context context) {
+        Configuration configuration = context.getResources().getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return configuration.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+        }
+        return false;
+    }
+
+    public static int dp2px(Context context, int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
 }

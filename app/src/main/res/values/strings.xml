@@ -25,7 +25,21 @@
     <string name="head_flag_ratio">Flag ratio</string>
     <string name="head_population">Population</string>
 
-    <string-array name="grid_sort_items">
+    <string name="head_city_name">Name</string>
+    <string name="head_city_ascii">ASCII name</string>
+    <string name="head_city_capital">Type</string>
+    <string name="head_city_admin">Admin</string>
+    <string name="head_city_lat">Latitude</string>
+    <string name="head_city_lng">Longitude</string>
+    <string name="head_city_population">Population</string>
+
+    <string-array name="grid_city_sort_items">
+        <item>All cities</item>
+        <item>Admin cities</item>
+        <item>Larger cities</item>
+    </string-array>
+
+    <string-array name="grid_country_sort_items">
         <item>Sort</item>
         <item>Country</item>
         <item>Official</item>

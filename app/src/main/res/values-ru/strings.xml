@@ -25,7 +25,21 @@
     <string name="head_flag_ratio">Соотношение флагов</string>
     <string name="head_population">населения</string>
 
-    <string-array name="grid_sort_items">
+    <string name="head_city_name">Имя</string>
+    <string name="head_city_ascii">имя ASCII</string>
+    <string name="head_city_capital">Тип</string>
+    <string name="head_city_admin">Административный</string>
+    <string name="head_city_lat">Широта</string>
+    <string name="head_city_lng">Долгота</string>
+    <string name="head_city_population">Население</string>
+
+    <string-array name="grid_city_sort_items">
+        <item>Все города</item>
+        <item>Администрирование городов</item>
+        <item>Большие города</item>
+    </string-array>
+
+    <string-array name="grid_country_sort_items">
         <item>Сортировать</item>
         <item>Страна</item>
         <item>Официальный</item>

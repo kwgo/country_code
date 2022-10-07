@@ -25,7 +25,21 @@
     <string name="head_flag_ratio">نسبة العلم</string>
     <string name="head_population">تعداد السكان</string>
 
-    <string-array name="grid_sort_items">
+    <string name="head_city_name">الاسم</string>
+    <string name="head_city_ascii">الاسم القياسي</string>
+    <string name="head_city_capital">النوع</string>
+    <string name="head_city_admin">دينة</string>
+    <string name="head_city_lat">خط العرض</string>
+    <string name="head_city_lng">خط الطول</string>
+    <string name="head_city_population">السكان</string>
+
+    <string-array name="grid_city_sort_items">
+        <item>كل المدن</item>
+        <item>المدن الإدارية</item>
+        <item>مدن أكبر</item>
+    </string-array>
+
+    <string-array name="grid_country_sort_items">
         <item>نوع</item>
         <item>دولة</item>
         <item>الرسمية</item>
