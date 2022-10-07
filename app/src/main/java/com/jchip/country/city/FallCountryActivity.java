@@ -184,21 +184,21 @@ public class FallCountryActivity extends AppCompatActivity {
         for (int index = 0; index < detailIndexes.length; index++) {
             String header = getResources().getString(FallCountryViewHelper.getHeaderIndex(detailIndexes[index]));
             addTextView(this, detailView, index, 0, header, leftParams);
-            String detailText = info[detailIndexes[index]].trim();
+            String detailText = info != null ? info[detailIndexes[index]].trim() : "";
             if (detailIndexes[index] == FallCountryViewHelper.COUNTRY || detailIndexes[index] == FallCountryViewHelper.CAPITAL) {
                 detailText = FallUtility.getSourceText(this, item, "string", detailIndexes[index] == FallCountryViewHelper.CAPITAL ? "capital" : "short");
-            } else if (detailIndexes[index] == FallCountryViewHelper.OFFICIAL) {
+                // } else if (detailIndexes[index] == FallCountryViewHelper.OFFICIAL) {
             } else if (detailIndexes[index] == FallCountryViewHelper.SOVEREIGNTY) {
                 detailText = FallUtility.getSourceText(this, detailText.toLowerCase().replace(" ", "_"), "string", "sovereignty");
             } else if (detailIndexes[index] == FallCountryViewHelper.CURRENCY) {
-                detailText += " (" + info[FallCountryViewHelper.SYMBOL].trim() + ")";
+                detailText += " (" + (info != null ? info[FallCountryViewHelper.SYMBOL].trim() : "") + ")";
             } else if (detailIndexes[index] == FallCountryViewHelper.CALL_CODE) {
                 detailText = "+" + detailText.replace("-", " ");
             } else if (detailIndexes[index] == FallCountryViewHelper.TIMEZONE) {
                 detailText = "UTC" + detailText;
             } else if (detailIndexes[index] == FallCountryViewHelper.FRACTION) {
                 if (!"(none)".equals(detailText)) {
-                    detailText += " (" + info[FallCountryViewHelper.BASIC_NUMBER].trim() + ")";
+                    detailText += " (" + (info != null ? info[FallCountryViewHelper.BASIC_NUMBER].trim() : "") + ")";
                 }
             }
             addTextView(this, detailView, index, 1, detailText, rightParams);
@@ -225,7 +225,7 @@ public class FallCountryActivity extends AppCompatActivity {
         });
 
         TextView textView = popupView.findViewById(R.id.grid_text);
-        textView.setText(info[FallCountryViewHelper.FLAG_RATIO]);
+        textView.setText(info != null ? info[FallCountryViewHelper.FLAG_RATIO] : "");
 
         FallUtility.closeWindow(this.detailWindow);
         this.detailWindow = FallUtility.popupWindow(popupView);
@@ -233,7 +233,8 @@ public class FallCountryActivity extends AppCompatActivity {
 
     private void onSort() {
         int sortIndex = this.sortSpinner.getSelectedItemPosition() - 1;
-        this.gridInfo = FallCountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, sortIndex);
+        // this.gridInfo = FallCountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, sortIndex);
+        FallCountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, sortIndex);
     }
 
     private void onSearch() {
@@ -273,7 +274,9 @@ public class FallCountryActivity extends AppCompatActivity {
         }
         cityImageView.setOnClickListener((e) -> {
             FallUtility.closeWindow(this.selectWindow);
-            startActivity(new Intent(this, FallCityActivity.class));
+            Intent intent = new Intent(this, FallCityActivity.class);
+            intent.putExtra("countryCode", item);
+            startActivity(intent);
         });
 
         FallUtility.closeWindow(this.selectWindow);
