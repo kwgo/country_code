@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,7 +81,7 @@ public class FallCountryActivity extends AppCompatActivity {
         this.gridView.removeItemDecoration(this.itemDecoration);
         this.gridView.addItemDecoration(this.itemDecoration = new RecyclerView.ItemDecoration() {
             @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state) {
                 int position = parent.getChildAdapterPosition(view);
                 if (position >= 0) {
                     if (FallUtility.isDirectionRTL(FallCountryActivity.this)) {
@@ -96,7 +97,7 @@ public class FallCountryActivity extends AppCompatActivity {
 
     private void initSortSpinner() {
         final CharSequence[] sortItems = this.getResources().getTextArray(R.array.grid_country_sort_items);
-        sortSpinner = (Spinner) findViewById(R.id.grid_sort);
+        sortSpinner = findViewById(R.id.grid_sort);
         sortSpinner.setAdapter(new ArrayAdapter<CharSequence>(this, R.layout.grid_spinner_item, Arrays.asList(sortItems)) {
             @Override
             public boolean isEnabled(int position) {
@@ -104,7 +105,7 @@ public class FallCountryActivity extends AppCompatActivity {
             }
 
             @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                 TextView view = (TextView) super.getDropDownView(position, convertView, parent);
                 view.setTextColor(position == 0 ? Color.LTGRAY : (isEnabled(position) ? Color.BLACK : Color.LTGRAY));
                 view.setText(position > 0 ? view.getText() : "");
@@ -134,7 +135,6 @@ public class FallCountryActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
             }
         });
     }
@@ -160,17 +160,14 @@ public class FallCountryActivity extends AppCompatActivity {
                 });
             }
         });
-        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
-                    textView.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
-                    return true;
-                }
-                return false;
+        searchText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
+                textView.clearFocus();
+                InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+                return true;
             }
+            return false;
         });
         findViewById(R.id.grid_dots).setOnClickListener((v) -> onAbout());
     }
@@ -206,7 +203,7 @@ public class FallCountryActivity extends AppCompatActivity {
             addTextView(this, detailView, index, 1, detailText, rightParams);
         }
 
-        ImageView fullImageView = (ImageView) popupView.findViewById(R.id.grid_full_image);
+        ImageView fullImageView = popupView.findViewById(R.id.grid_full_image);
         fullImageView.getLayoutParams().width = findViewById(R.id.context_view).getWidth();
         fullImageView.getLayoutParams().height = findViewById(R.id.context_view).getHeight();
         fullImageView.setImageResource(FallUtility.getSourceId(this, item, "drawable", "good"));
@@ -215,7 +212,7 @@ public class FallCountryActivity extends AppCompatActivity {
             fullImageView.setVisibility(View.GONE);
         });
 
-        ImageView imageView = (ImageView) popupView.findViewById(R.id.grid_image);
+        ImageView imageView = popupView.findViewById(R.id.grid_image);
         imageView.setImageResource(FallUtility.getSourceId(this, item, "drawable", "good"));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             imageView.setClipToOutline(true);
@@ -225,7 +222,7 @@ public class FallCountryActivity extends AppCompatActivity {
             fullImageView.setVisibility(View.VISIBLE);
         });
 
-        TextView textView = (TextView) popupView.findViewById(R.id.grid_text);
+        TextView textView = popupView.findViewById(R.id.grid_text);
         textView.setText(info[FallCountryViewHelper.FLAG_RATIO]);
 
         FallUtility.closeWindow(this.detailWindow);
@@ -240,7 +237,7 @@ public class FallCountryActivity extends AppCompatActivity {
     private void onSearch() {
         String searchText = this.searchText.getText().toString().trim().toUpperCase();
         if (searchText.isEmpty()) {
-            this.gridInfo = FallCountryViewHelper.sortCountryInfo(info, new ArrayList(info.keySet()), FallCountryViewHelper.SORT_COUNTRY);
+            this.gridInfo = FallCountryViewHelper.sortCountryInfo(info, new ArrayList<String>(info.keySet()), FallCountryViewHelper.SORT_COUNTRY);
         } else {
             this.gridInfo = FallCountryViewHelper.searchCountryInfo(this, this.info, searchText, FallUtility.isPortrait(this));
         }
@@ -262,13 +259,19 @@ public class FallCountryActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             countryImageView.setClipToOutline(true);
         }
-        countryImageView.setOnClickListener((e) -> this.onDetail(item));
+        countryImageView.setOnClickListener((e) -> {
+            FallUtility.closeWindow(this.selectWindow);
+            this.onDetail(item);
+        });
 
         ImageView cityImageView = (ImageView) popupView.findViewById(R.id.grid_city);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cityImageView.setClipToOutline(true);
         }
-        cityImageView.setOnClickListener((e) -> startActivity(new Intent(this, FallCityActivity.class)));
+        cityImageView.setOnClickListener((e) -> {
+            FallUtility.closeWindow(this.selectWindow);
+            startActivity(new Intent(this, FallCityActivity.class));
+        });
 
         FallUtility.closeWindow(this.selectWindow);
         this.selectWindow = FallUtility.popupWindow(popupView);
