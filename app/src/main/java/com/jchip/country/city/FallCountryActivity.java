@@ -248,6 +248,7 @@ public class FallCountryActivity extends AppCompatActivity {
 
     public void onSelect(String item) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        @SuppressLint("InflateParams")
         View popupView = inflater.inflate(R.layout.fall_select_view, null);
 
         int imageId = FallUtility.getSourceId(this, item, "drawable", "flag");
@@ -281,6 +282,7 @@ public class FallCountryActivity extends AppCompatActivity {
 
     private void onAbout() {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        @SuppressLint("InflateParams")
         View popupView = inflater.inflate(R.layout.fall_about_view, null);
         View linkView = popupView.findViewById(R.id.grid_link);
         linkView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:JChip+Games"))));
