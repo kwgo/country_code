@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <com.jchip.country.code.FallImageView
+    <com.jchip.country.city.FallImageView
         android:id="@+id/top_image"
         android:layout_width="match_parent"
         android:layout_height="22dp"
@@ -24,7 +24,7 @@
         app:top_right="false"
         app:type="round" />
 
-    <com.jchip.country.code.FallImageView
+    <com.jchip.country.city.FallImageView
         android:id="@+id/bottom_image"
         android:layout_width="match_parent"
         android:layout_height="22dp"
