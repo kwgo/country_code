@@ -247,7 +247,7 @@ public class FallCountryActivity extends AppCompatActivity {
         this.onSort();
     }
 
-    private void onSelect(String item) {
+    public void onSelect(String item) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.fall_select_view, null);
         ImageView countryImageView = (ImageView) popupView.findViewById(R.id.grid_country);
