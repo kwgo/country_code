@@ -22,11 +22,11 @@ public abstract class FallCityHelper {
     public static final int ID = 10;
 
     public static List<String[]> getCities(Context context, String countryCode) {
-        int rawId = context.getResources().getIdentifier("city_" + countryCode, "raw", context.getPackageName());
+        int rawId = context.getResources().getIdentifier("city_" + countryCode.toLowerCase(), "raw", context.getPackageName());
         InputStream file = context.getResources().openRawResource(rawId);
         BufferedReader reader = new BufferedReader(new InputStreamReader(file));
         List<String[]> cities = new ArrayList<>();
-        String line = null;
+        String line;
         try {
             while ((line = reader.readLine()) != null) {
                 String[] cityInfo = line.split("\",\"");

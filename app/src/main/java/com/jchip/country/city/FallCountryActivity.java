@@ -1,5 +1,6 @@
 package com.jchip.country.city;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,7 +13,6 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +62,7 @@ public class FallCountryActivity extends AppCompatActivity {
         this.gridView = findViewById(R.id.grid_view);
 
         this.info = FallCountryViewHelper.getISOInfo();
-        this.gridInfo = new ArrayList<String>(this.info.keySet());
+        this.gridInfo = new ArrayList<>(this.info.keySet());
 
         this.initSearchText();
         this.initSortSpinner();
@@ -81,7 +81,7 @@ public class FallCountryActivity extends AppCompatActivity {
         this.gridView.removeItemDecoration(this.itemDecoration);
         this.gridView.addItemDecoration(this.itemDecoration = new RecyclerView.ItemDecoration() {
             @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state) {
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 int position = parent.getChildAdapterPosition(view);
                 if (position >= 0) {
                     if (FallUtility.isDirectionRTL(FallCountryActivity.this)) {
@@ -172,10 +172,11 @@ public class FallCountryActivity extends AppCompatActivity {
         findViewById(R.id.grid_dots).setOnClickListener((v) -> onAbout());
     }
 
+    @SuppressLint("InflateParams")
     public void onDetail(String item) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.fall_country_view, null);
-        GridLayout detailView = (GridLayout) popupView.findViewById(R.id.grid_view);
+        GridLayout detailView = popupView.findViewById(R.id.grid_view);
         GridLayout.LayoutParams leftParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_left).getLayoutParams();
         GridLayout.LayoutParams rightParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_right).getLayoutParams();
         String[] info = this.info.get(item);
@@ -203,9 +204,10 @@ public class FallCountryActivity extends AppCompatActivity {
             addTextView(this, detailView, index, 1, detailText, rightParams);
         }
 
+        View contextView = findViewById(R.id.context_view);
         ImageView fullImageView = popupView.findViewById(R.id.grid_full_image);
-        fullImageView.getLayoutParams().width = findViewById(R.id.context_view).getWidth();
-        fullImageView.getLayoutParams().height = findViewById(R.id.context_view).getHeight();
+        fullImageView.getLayoutParams().width = contextView.getWidth();
+        fullImageView.getLayoutParams().height = contextView.getHeight();
         fullImageView.setImageResource(FallUtility.getSourceId(this, item, "drawable", "good"));
         fullImageView.setOnClickListener((v) -> {
             popupView.findViewById(R.id.grid_scroll_view).setVisibility(View.VISIBLE);
@@ -237,7 +239,7 @@ public class FallCountryActivity extends AppCompatActivity {
     private void onSearch() {
         String searchText = this.searchText.getText().toString().trim().toUpperCase();
         if (searchText.isEmpty()) {
-            this.gridInfo = FallCountryViewHelper.sortCountryInfo(info, new ArrayList<String>(info.keySet()), FallCountryViewHelper.SORT_COUNTRY);
+            this.gridInfo = FallCountryViewHelper.sortCountryInfo(info, new ArrayList<>(info.keySet()), FallCountryViewHelper.SORT_COUNTRY);
         } else {
             this.gridInfo = FallCountryViewHelper.searchCountryInfo(this, this.info, searchText, FallUtility.isPortrait(this));
         }
@@ -255,7 +257,7 @@ public class FallCountryActivity extends AppCompatActivity {
         TextView textView = popupView.findViewById(R.id.grid_text);
         textView.setText(text);
 
-        ImageView countryImageView = (ImageView) popupView.findViewById(R.id.grid_country);
+        ImageView countryImageView = popupView.findViewById(R.id.grid_country);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             countryImageView.setClipToOutline(true);
         }
@@ -264,7 +266,7 @@ public class FallCountryActivity extends AppCompatActivity {
             this.onDetail(item);
         });
 
-        ImageView cityImageView = (ImageView) popupView.findViewById(R.id.grid_city);
+        ImageView cityImageView = popupView.findViewById(R.id.grid_city);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cityImageView.setClipToOutline(true);
         }
@@ -282,12 +284,12 @@ public class FallCountryActivity extends AppCompatActivity {
         View popupView = inflater.inflate(R.layout.fall_about_view, null);
         View linkView = popupView.findViewById(R.id.grid_link);
         linkView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:JChip+Games"))));
-        ImageView imageView = (ImageView) popupView.findViewById(R.id.grid_game);
+        ImageView imageView = popupView.findViewById(R.id.grid_game);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             imageView.setClipToOutline(true);
         }
         imageView.setOnClickListener((e) -> this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.jchip.album"))));
-        TextView textView = (TextView) popupView.findViewById(R.id.version_code);
+        TextView textView = popupView.findViewById(R.id.version_code);
         textView.setText(BuildConfig.VERSION_NAME);
 
         TextView ownedView = popupView.findViewById(R.id.grid_owned);
@@ -333,7 +335,7 @@ public class FallCountryActivity extends AppCompatActivity {
     }
 
     public void showProcessing(boolean isShow) {
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.grid_processing);
+        final ProgressBar progressBar = findViewById(R.id.grid_processing);
         progressBar.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
     }
 }
