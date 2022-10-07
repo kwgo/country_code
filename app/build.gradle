@@ -7,11 +7,11 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.jchip.country.code"
-        minSdkVersion 22
+        applicationId "com.jchip.country.city"
+        minSdkVersion 14
         targetSdkVersion 30
-        versionCode 19
-        versionName "1.1.9"
+        versionCode 1
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
