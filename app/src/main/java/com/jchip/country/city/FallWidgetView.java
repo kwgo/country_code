@@ -39,15 +39,15 @@ public class FallWidgetView {
     }
 
     public void updateView() {
-        Map<String, String[]> info = MainHelper.getISOInfo();
+        Map<String, String[]> info = FallCountryHelper.getISOInfo();
         int index = this.random.nextInt(info.size());
         String item = String.valueOf(info.keySet().toArray()[index]);
         String[] iso = info.get(item);
         this.setTextView(R.id.widget_title, FallUtility.getSourceText(this.context, item, "string", "short"));
-        this.setTextView(R.id.widget_marker, iso[FallHelper.OFFICIAL]);
-        this.setTextView(R.id.widget_symbol, iso[FallHelper.ALPHA_2] + " " + iso[FallHelper.CURRENCY]);
+        this.setTextView(R.id.widget_marker, iso[FallCountryViewHelper.OFFICIAL]);
+        this.setTextView(R.id.widget_symbol, iso[FallCountryViewHelper.ALPHA_2] + " " + iso[FallCountryViewHelper.CURRENCY]);
         this.setTextView(R.id.widget_detail, FallUtility.getSourceText(this.context, item, "string", "capital"));
-        this.setTextView(R.id.widget_patch, ("(") + iso[FallHelper.POPULATION] + ")");
+        this.setTextView(R.id.widget_patch, ("(") + iso[FallCountryViewHelper.POPULATION] + ")");
 
         int orientation = context.getResources().getConfiguration().orientation;
         boolean isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE;

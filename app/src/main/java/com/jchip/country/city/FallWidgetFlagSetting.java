@@ -110,11 +110,11 @@ public class FallWidgetFlagSetting extends AppCompatActivity {
             this.context = context;
             this.inflater = (LayoutInflater.from(context));
 
-            this.info = MainHelper.getISOInfo();
+            this.info = FallCountryHelper.getISOInfo();
 
             this.sortedInfo = new ArrayList(this.info.keySet());
 
-            FallHelper.sortCountryInfo(this.context, this.info, this.sortedInfo, FallHelper.COUNTRY);
+            FallCountryViewHelper.sortCountryInfo(this.context, this.info, this.sortedInfo, FallCountryViewHelper.COUNTRY);
         }
 
         @Override

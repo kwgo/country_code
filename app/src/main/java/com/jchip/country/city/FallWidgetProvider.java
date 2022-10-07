@@ -20,7 +20,7 @@ public class FallWidgetProvider extends AppWidgetProvider {
                 int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
                 this.onUpdate(context, AppWidgetManager.getInstance(context), new int[]{appWidgetId});
             } else if (FallWidgetView.ACTION_APP.equals(intent.getAction())) {
-                this.activeApp(context, intent, FallActivity.class);
+                this.activeApp(context, intent, FallCountryActivity.class);
             } else if (FallWidgetView.ACTION_SETTING.equals(intent.getAction())) {
                 this.activeApp(context, intent, FallWidgetFlagSetting.class);
             } else {
