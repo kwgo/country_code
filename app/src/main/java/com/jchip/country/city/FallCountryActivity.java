@@ -61,7 +61,7 @@ public class FallCountryActivity extends AppCompatActivity {
         this.gridView = findViewById(R.id.grid_view);
 
         this.info = FallCountryViewHelper.getISOInfo();
-        this.gridInfo = new ArrayList(this.info.keySet());
+        this.gridInfo = new ArrayList<String>(this.info.keySet());
 
         this.initSearchText();
         this.initSortSpinner();
@@ -140,7 +140,7 @@ public class FallCountryActivity extends AppCompatActivity {
     }
 
     private void initSearchText() {
-        searchText = (EditText) findViewById(R.id.grid_search);
+        searchText = findViewById(R.id.grid_search);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -250,11 +250,25 @@ public class FallCountryActivity extends AppCompatActivity {
     public void onSelect(String item) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.fall_select_view, null);
+
+        int imageId = FallUtility.getSourceId(this, item, "drawable", "flag");
+        ImageView imageView = popupView.findViewById(R.id.grid_image);
+        imageView.setImageResource(imageId);
+        String text = FallUtility.getSourceText(this, item, "string", "official");
+        TextView textView = popupView.findViewById(R.id.grid_text);
+        textView.setText(text);
+
         ImageView countryImageView = (ImageView) popupView.findViewById(R.id.grid_country);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             countryImageView.setClipToOutline(true);
         }
         countryImageView.setOnClickListener((e) -> this.onDetail(item));
+
+        ImageView cityImageView = (ImageView) popupView.findViewById(R.id.grid_city);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cityImageView.setClipToOutline(true);
+        }
+        cityImageView.setOnClickListener((e) -> startActivity(new Intent(this, FallCityActivity.class)));
 
         FallUtility.closeWindow(this.selectWindow);
         this.selectWindow = FallUtility.popupWindow(popupView);

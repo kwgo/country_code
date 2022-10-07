@@ -12,9 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:contentDescription="@null"
         android:gravity="center"
-        android:scaleType="fitCenter"
         android:padding="16dp"
+        android:scaleType="fitCenter"
         android:visibility="gone" />
 
     <ScrollView
@@ -42,10 +43,12 @@
                 android:layout_column="0"
                 android:layout_columnSpan="1"
                 android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:singleLine="true"
                 android:textIsSelectable="true"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:visibility="gone" />
 
             <TextView
@@ -59,7 +62,7 @@
                 android:layout_marginEnd="0dp"
                 android:singleLine="true"
                 android:textIsSelectable="true"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -71,6 +74,7 @@
                 android:layout_columnSpan="1"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="52dp"
+                android:layout_marginLeft="52dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -84,6 +88,7 @@
                     android:layout_marginEnd="0dp"
                     android:layout_marginBottom="0dp"
                     android:adjustViewBounds="true"
+                    android:contentDescription="@null"
                     android:gravity="center"
                     android:scaleType="fitCenter" />
 
@@ -98,7 +103,7 @@
                     android:layout_marginBottom="0dp"
                     android:singleLine="true"
                     android:textIsSelectable="true"
-                    android:textSize="10dp" />
+                    android:textSize="10sp" />
 
             </LinearLayout>
         </GridLayout>
