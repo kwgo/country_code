@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ public class FallCountryAdapter extends RecyclerView.Adapter<FallCountryAdapter.
 
     protected Context context;
     private Map<String, String[]> info;
-    private List<String> gridInfo = new ArrayList<>();
+    private List<String> gridInfo;
 
     private boolean isPortrait;
     private int spanCount;

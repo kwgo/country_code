@@ -1,6 +1,7 @@
 package com.jchip.country.city;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -22,13 +23,17 @@ public abstract class FallCityHelper {
     public static final int ID = 10;
 
     public static List<String[]> getCities(Context context, String countryCode) {
+        Log.d("O", "city_" + countryCode.toLowerCase());
         int rawId = context.getResources().getIdentifier("city_" + countryCode.toLowerCase(), "raw", context.getPackageName());
+        Log.d("O", "rawId:" + rawId);
         InputStream file = context.getResources().openRawResource(rawId);
+        Log.d("O", "file:" + file);
         BufferedReader reader = new BufferedReader(new InputStreamReader(file));
         List<String[]> cities = new ArrayList<>();
         String line;
         try {
             while ((line = reader.readLine()) != null) {
+                Log.d("O", line);
                 String[] cityInfo = line.split("\",\"");
                 for (int index = 0; index < cityInfo.length; index++) {
                     cityInfo[index] = cityInfo[index].replace("\"", "");

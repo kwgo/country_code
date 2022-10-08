@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -25,8 +26,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 public abstract class FallUtility {
-    public static void runOnUiWorker(FallCountryActivity activity, Runnable worker) {
-        activity.runOnUiThread(() -> activity.showProcessing(true));
+    public static void runOnUiWorker(Activity activity, int processingId, Runnable worker) {
+        activity.runOnUiThread(() -> showProcessing(activity, processingId, true));
         new Thread(() -> {
             activity.runOnUiThread(() -> {
                 try {
@@ -34,9 +35,14 @@ public abstract class FallUtility {
                 } catch (Exception ex) {
                     Log.d("", ex.toString());
                 }
-                activity.showProcessing(false);
+                showProcessing(activity, processingId, false);
             });
         }).start();
+    }
+
+    public static void showProcessing(Activity activity, int processingId, boolean isShow) {
+        final ProgressBar progressBar = activity.findViewById(processingId);
+        progressBar.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
     }
 
     @SuppressWarnings("deprecation")

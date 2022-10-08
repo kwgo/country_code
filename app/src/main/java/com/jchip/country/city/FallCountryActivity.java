@@ -24,7 +24,6 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -123,7 +122,7 @@ public class FallCountryActivity extends AppCompatActivity {
                 if (textView != null) {
                     textView.setTextColor(i == 0 ? searchText.getCurrentHintTextColor() : searchText.getCurrentTextColor());
                 }
-                FallUtility.runOnUiWorker(FallCountryActivity.this, () -> {
+                FallUtility.runOnUiWorker(FallCountryActivity.this, R.id.grid_processing, () -> {
                     if (i == 0) {
                         onSearch();
                     } else {
@@ -154,7 +153,7 @@ public class FallCountryActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int maxLength = FallCountryViewHelper.getInputCount(FallUtility.isPortrait(FallCountryActivity.this));
                 searchText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
-                FallUtility.runOnUiWorker(FallCountryActivity.this, () -> {
+                FallUtility.runOnUiWorker(FallCountryActivity.this, R.id.grid_processing, () -> {
                     onSearch();
                     refreshGridView();
                 });
@@ -337,10 +336,5 @@ public class FallCountryActivity extends AppCompatActivity {
         GridLayout.LayoutParams params = new GridLayout.LayoutParams(layoutParams);
         params.rowSpec = GridLayout.spec(row);
         view.addView(textView, params);
-    }
-
-    public void showProcessing(boolean isShow) {
-        final ProgressBar progressBar = findViewById(R.id.grid_processing);
-        progressBar.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
     }
 }

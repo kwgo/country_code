@@ -1,23 +1,25 @@
 package com.jchip.country.city;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHolder> {
+    public static final String CITY_PRIMARY_TAG = "☆";
+    public static final String CITY_ADMIN = "✧";
+    public static final String CITY_NORMAL_TAG = "⭑";
+    public static final String CITY_MINOR_TAG = "⋆";
 
     protected Context context;
     private List<String[]> cities;
-    private List<Integer> gridInfo = new ArrayList<>();
+    private List<Integer> gridInfo;
 
     private boolean isPortrait;
     private int spanCount;
@@ -37,7 +39,7 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        return R.layout.fall_country_grid;
+        return R.layout.fall_city_grid;
     }
 
     @Override
@@ -47,68 +49,65 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return this.cities.size() * this.spanCount;
+        return this.gridInfo.size() * this.spanCount;
     }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
-    
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public void bind(int row, int col) {
             this.item = gridInfo.get(row);
-            String[] iso = cities.get(this.item);
+            String[] city = cities.get(this.item);
             int itemIndex = FallCityViewHelper.getItemIndex(isPortrait, col);
             boolean isTop = col < FallCityViewHelper.getBottomLineIndex(isPortrait);
             boolean isTag = itemIndex == FallCityViewHelper.TAG;
-            if (isTag) {
-                int sourceId = this.item;
-                if (isTop) {
-                    topImage.setImageResource(sourceId);
-                } else {
-                    bottomImage.setImageResource(sourceId);
+            boolean isBold = itemIndex == FallCityViewHelper.CITY;
+
+            String text = "";
+            if (itemIndex == FallCityViewHelper.EMPTY) {
+            } else if (itemIndex == FallCityViewHelper.TAG) {
+                text = FallCityViewHelper.isPrimary(city) ? CITY_PRIMARY_TAG :
+                        FallCityViewHelper.isAdmin(city) ? CITY_ADMIN :
+                                FallCityViewHelper.isMinor(city) ? CITY_MINOR_TAG : CITY_NORMAL_TAG;
+            } else if (itemIndex == FallCityViewHelper.LAT) {
+                if (!FallCityViewHelper.isEmpty(city, FallCityViewHelper.LAT) && !FallCityViewHelper.isEmpty(city, FallCityViewHelper.LNG)) {
+                    text = city[FallCityViewHelper.LAT] + ", " + city[FallCityViewHelper.LNG];
                 }
-            } else {
-                String text = iso[itemIndex].trim();
-//                if (itemIndex == FallCityViewHelper.COUNTRY || itemIndex == FallCityViewHelper.OFFICIAL || itemIndex == FallCityViewHelper.CAPITAL) {
-//                    String prefix = itemIndex == FallCityViewHelper.CAPITAL ? "capital" : itemIndex == FallCityViewHelper.OFFICIAL ? "official" : "short";
-//                    text = FallUtility.getSourceText(context, this.item, "string", prefix);
-//                }
-//                if (!isPortrait && itemIndex == FallCityViewHelper.CALL_CODE) {
-//                    text = "+" + text;
-//                }
-//                if (!isPortrait && itemIndex == FallCityViewHelper.TIMEZONE) {
-//                    text = "UTC" + text;
-//                }
-                if (isTop) {
-                    topText.setText(text);
+            } else if (itemIndex == FallCityViewHelper.CITY) {
+                if (!city[FallCityViewHelper.CITY].equals(city[FallCityViewHelper.CITY_ASCII]) && !FallCityViewHelper.isEmpty(city, FallCityViewHelper.CITY)) {
+                    text = city[FallCityViewHelper.CITY_ASCII] + "(" + city[FallCityViewHelper.CITY] + ")";
                 } else {
-                    bottomText.setText(text);
+                    text = city[FallCityViewHelper.CITY_ASCII];
                 }
+            } else if (itemIndex == FallCityViewHelper.POPULATION) {
+                text = FallCityViewHelper.getNumberItem(city, FallCityViewHelper.POPULATION);
+            } else if (itemIndex == FallCityViewHelper.ADMIN_NAME) {
+                text = city[itemIndex].trim();
             }
-            topImage.setVisibility(isTag && isTop ? View.VISIBLE : View.GONE);
-            bottomImage.setVisibility(isTag && !isTop ? View.VISIBLE : View.GONE);
+
+            tagText.setText(isTag ? text : "");
+            topText.setText(isTop ? text : "");
+            bottomText.setText(!isTop ? text : "");
+
+            topText.setTypeface(null, isBold ? Typeface.BOLD : Typeface.NORMAL);
+            //tagText.setVisibility(View.VISIBLE);
             topText.setVisibility(!isTag && isTop ? View.VISIBLE : View.GONE);
             bottomText.setVisibility(!isTag && !isTop ? View.VISIBLE : View.GONE);
         }
 
         private int item;
-        private ImageView topImage;
+        private TextView tagText;
         private TextView topText;
-        private ImageView bottomImage;
         private TextView bottomText;
 
         ViewHolder(View itemView) {
             super(itemView);
-            this.topImage = itemView.findViewById(R.id.top_image);
-            this.bottomImage = itemView.findViewById(R.id.bottom_image);
+            this.tagText = itemView.findViewById(R.id.tag_text);
             this.topText = itemView.findViewById(R.id.top_text);
             this.bottomText = itemView.findViewById(R.id.bottom_text);
-//            this.topImage.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(item));
-//            this.bottomImage.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(item));
-//            this.topText.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(item));
-//            this.bottomText.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(item));
         }
     }
 }
