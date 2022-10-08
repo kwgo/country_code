@@ -2,6 +2,7 @@ package com.jchip.country.city;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,10 +63,6 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
             this.item = gridInfo.get(row);
             String[] city = cities.get(this.item);
             int itemIndex = FallCityViewHelper.getItemIndex(isPortrait, col);
-            boolean isTop = col < FallCityViewHelper.getBottomLineIndex(isPortrait);
-            boolean isTag = itemIndex == FallCityViewHelper.TAG;
-            boolean isBold = itemIndex == FallCityViewHelper.CITY;
-
             String text = "";
             if (itemIndex == FallCityViewHelper.EMPTY) {
             } else if (itemIndex == FallCityViewHelper.TAG) {
@@ -88,7 +85,13 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
                 text = city[itemIndex].trim();
             }
 
+            boolean isTop = col < FallCityViewHelper.getBottomLineIndex(isPortrait);
+            boolean isTag = itemIndex == FallCityViewHelper.TAG;
+            boolean isBold = itemIndex == FallCityViewHelper.CITY;
+            boolean isEnd = itemIndex == FallCityViewHelper.LAT || itemIndex == FallCityViewHelper.POPULATION;
+
             itemText.setText(text);
+            itemText.setGravity(isTag ? Gravity.CENTER : (isEnd ? Gravity.END : Gravity.START));
             itemText.setTypeface(null, isBold ? Typeface.BOLD : Typeface.NORMAL);
         }
 

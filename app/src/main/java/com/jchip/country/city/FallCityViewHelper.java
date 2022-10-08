@@ -15,18 +15,14 @@ public abstract class FallCityViewHelper extends FallCityHelper {
     public static final int PORTRAIT_SPAN_COUNT = 3;
     public static final int LANDSCAPE_SPAN_COUNT = 5;
 
-//    public static final int PORTRAIT_FULL_SPAN_INDEX = 1;
-//    public static final int LANDSCAPE_FULL_SPAN_INDEX = 1;
-
     public static final int PORTRAIT_BOTTOM_LINE_INDEX = 3;
     public static final int LANDSCAPE_BOTTOM_LINE_INDEX = 5;
 
     public static final int[] portraitIndexes = new int[]{TAG, CITY, POPULATION, EMPTY, ADMIN_NAME, LAT};
     public static final int[] landscapeIndexes = new int[]{TAG, CITY, LAT, ADMIN_NAME, POPULATION};
 
-    public static final int[] portraitOffsets = new int[]{0, 0, -38, 0, 0, -38};
-    public static final int[] landscapeOffsets = new int[]{0, 5, -45, -85, -110};
-
+    public static final int[] portraitOffsets = new int[]{0, -80, -50, 0, -80, -50};
+    public static final int[] landscapeOffsets = new int[]{0, -80, -50, -80, -120};
 
     public static final int[] headerIndexes = new int[]{
             R.string.head_city_ascii,
@@ -45,10 +41,6 @@ public abstract class FallCityViewHelper extends FallCityHelper {
     public static int getInputCount(boolean isPortrait) {
         return isPortrait ? PORTRAIT_INPUT_COUNT : LANDSCAPE_INPUT_COUNT;
     }
-
-//    public static int getFullSpanIndex(boolean isPortrait) {
-//        return isPortrait ? PORTRAIT_FULL_SPAN_INDEX : LANDSCAPE_FULL_SPAN_INDEX;
-//    }
 
     public static int getBottomLineIndex(boolean isPortrait) {
         return isPortrait ? PORTRAIT_BOTTOM_LINE_INDEX : LANDSCAPE_BOTTOM_LINE_INDEX;

@@ -145,7 +145,7 @@ public class FallCityActivity extends AppCompatActivity {
     }
 
     private void initSearchText() {
-        searchText = (EditText) findViewById(R.id.grid_search);
+        searchText = findViewById(R.id.grid_search);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
