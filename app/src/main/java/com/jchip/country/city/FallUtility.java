@@ -45,7 +45,6 @@ public abstract class FallUtility {
         progressBar.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
     }
 
-    @SuppressWarnings("deprecation")
     public static void runOnUiLater(Runnable worker) {
         Handler handler = new Handler();
         handler.post(() -> {
@@ -58,7 +57,6 @@ public abstract class FallUtility {
         });
     }
 
-    @SuppressWarnings("deprecation")
     public static void setApplicationLanguage(Context context, String languageCode) {
         Resources resources = context.getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();

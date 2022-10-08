@@ -18,11 +18,11 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
     public static final String CITY_MINOR_TAG = "⋆";
 
     protected Context context;
-    private List<String[]> cities;
-    private List<Integer> gridInfo;
+    private final List<String[]> cities;
+    private final List<Integer> gridInfo;
 
-    private boolean isPortrait;
-    private int spanCount;
+    private final boolean isPortrait;
+    private final int spanCount;
 
     public FallCityAdapter(Context context, List<String[]> cities, List<Integer> gridInfo, boolean isPortrait) {
         this.context = context;
@@ -88,26 +88,16 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
                 text = city[itemIndex].trim();
             }
 
-            tagText.setText(isTag ? text : "");
-            topText.setText(isTop ? text : "");
-            bottomText.setText(!isTop ? text : "");
-
-            topText.setTypeface(null, isBold ? Typeface.BOLD : Typeface.NORMAL);
-            //tagText.setVisibility(View.VISIBLE);
-            topText.setVisibility(!isTag && isTop ? View.VISIBLE : View.GONE);
-            bottomText.setVisibility(!isTag && !isTop ? View.VISIBLE : View.GONE);
+            itemText.setText(text);
+            itemText.setTypeface(null, isBold ? Typeface.BOLD : Typeface.NORMAL);
         }
 
         private int item;
-        private TextView tagText;
-        private TextView topText;
-        private TextView bottomText;
+        private final TextView itemText;
 
         ViewHolder(View itemView) {
             super(itemView);
-            this.tagText = itemView.findViewById(R.id.tag_text);
-            this.topText = itemView.findViewById(R.id.top_text);
-            this.bottomText = itemView.findViewById(R.id.bottom_text);
+            this.itemText = itemView.findViewById(R.id.item_text);
         }
     }
 }
