@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="0dp"
@@ -30,9 +31,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.60"
@@ -40,25 +42,23 @@
 
             <TextView
                 android:id="@+id/item_city"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:gravity="start"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0dp"
                 android:padding="0dp"
                 android:singleLine="true"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="NestedWeights" />
 
             <TextView
                 android:id="@+id/item_population"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_gravity="end"
                 android:gravity="end"
                 android:includeFontPadding="false"
@@ -67,9 +67,9 @@
                 android:singleLine="true"
                 android:textSize="14sp" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -79,24 +79,22 @@
 
             <TextView
                 android:id="@+id/item_admin"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:gravity="start"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0dp"
                 android:padding="0dp"
                 android:singleLine="true"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="NestedWeights" />
 
             <TextView
                 android:id="@+id/item_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_gravity="end"
                 android:gravity="end"
                 android:includeFontPadding="false"
@@ -105,7 +103,7 @@
                 android:singleLine="true"
                 android:textSize="14sp" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
