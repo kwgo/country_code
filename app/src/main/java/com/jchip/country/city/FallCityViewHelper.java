@@ -21,8 +21,12 @@ public abstract class FallCityViewHelper extends FallCityHelper {
     public static final int[] portraitIndexes = new int[]{TAG, CITY, POPULATION, EMPTY, ADMIN_NAME, LAT};
     public static final int[] landscapeIndexes = new int[]{TAG, CITY, LAT, ADMIN_NAME, POPULATION};
 
-    public static final int[] portraitOffsets = new int[]{0, -80, -50, 0, -80, -50};
-    public static final int[] landscapeOffsets = new int[]{0, -80, -50, -80, -120};
+    public static final int[] portraitOffsets = new int[]{10, -80, -50, 0, -80, -50};
+    public static final int[] landscapeOffsets = new int[]{20, -80, -50, -80, -120};
+
+    public static final int[] detailIndexes = new int[]{
+            CITY_ASCII, CITY, CAPITAL, ADMIN_NAME, LAT, LNG, POPULATION
+    };
 
     public static final int[] headerIndexes = new int[]{
             R.string.head_city_ascii,

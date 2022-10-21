@@ -22,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -204,28 +203,22 @@ public class FallCityActivity extends AppCompatActivity {
         GridLayout.LayoutParams leftParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_left).getLayoutParams();
         GridLayout.LayoutParams rightParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_right).getLayoutParams();
         String[] city = this.cities.get(item);
-        int[] detailIndexes = FallCountryViewHelper.detailIndexes;
+        int[] detailIndexes = FallCityViewHelper.detailIndexes;
         for (int index = 0; index < detailIndexes.length; index++) {
-            String header = getResources().getString(FallCountryViewHelper.getHeaderIndex(detailIndexes[index]));
+            String header = getResources().getString(FallCityViewHelper.getHeaderIndex(detailIndexes[index]));
             addTextView(this, detailView, index, 0, header, leftParams);
-            String detailText = city != null ? city[detailIndexes[index]].trim() : "";
-//            if (detailIndexes[index] == FallCountryViewHelper.COUNTRY || detailIndexes[index] == FallCountryViewHelper.CAPITAL) {
-//                detailText = FallUtility.getSourceText(this, item, "string", detailIndexes[index] == FallCountryViewHelper.CAPITAL ? "capital" : "short");
-//                // } else if (detailIndexes[index] == FallCountryViewHelper.OFFICIAL) {
-//            } else if (detailIndexes[index] == FallCountryViewHelper.SOVEREIGNTY) {
-//                detailText = FallUtility.getSourceText(this, detailText.toLowerCase().replace(" ", "_"), "string", "sovereignty");
-//            } else if (detailIndexes[index] == FallCountryViewHelper.CURRENCY) {
-//                detailText += " (" + (city != null ? city[FallCountryViewHelper.SYMBOL].trim() : "") + ")";
-//            } else if (detailIndexes[index] == FallCountryViewHelper.CALL_CODE) {
-//                detailText = "+" + detailText.replace("-", " ");
-//            } else if (detailIndexes[index] == FallCountryViewHelper.TIMEZONE) {
-//                detailText = "UTC" + detailText;
-//            } else if (detailIndexes[index] == FallCountryViewHelper.FRACTION) {
-//                if (!"(none)".equals(detailText)) {
-//                    detailText += " (" + (city != null ? city[FallCountryViewHelper.BASIC_NUMBER].trim() : "") + ")";
-//                }
-//            }
-            addTextView(this, detailView, index, 1, detailText, rightParams);
+
+            int itemIndex = detailIndexes[index];
+            String itemText = "";
+            if (itemIndex == FallCityViewHelper.POPULATION) {
+                itemText = FallCityViewHelper.getNumberItem(city, FallCityViewHelper.POPULATION);
+            } else if (itemIndex == FallCityViewHelper.CAPITAL) {
+                //firstUppercased
+                itemText = city[itemIndex];
+            } else {
+                itemText = city[itemIndex];
+            }
+            addTextView(this, detailView, index, 1, itemText, rightParams);
         }
 
 //        View contextView = findViewById(R.id.context_view);

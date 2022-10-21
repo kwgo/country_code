@@ -85,13 +85,13 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
                 text = city[itemIndex].trim();
             }
 
-            boolean isTop = col < FallCityViewHelper.getBottomLineIndex(isPortrait);
+            // boolean isTop = col < FallCityViewHelper.getBottomLineIndex(isPortrait);
             boolean isTag = itemIndex == FallCityViewHelper.TAG;
             boolean isBold = itemIndex == FallCityViewHelper.CITY;
             boolean isEnd = itemIndex == FallCityViewHelper.LAT || itemIndex == FallCityViewHelper.POPULATION;
 
             itemText.setText(text);
-            itemText.setGravity(isTag ? Gravity.CENTER : (isEnd ? Gravity.END : Gravity.START));
+            itemText.setGravity(isTag ? Gravity.START : (isEnd ? Gravity.END : Gravity.START));
             itemText.setTypeface(null, isBold ? Typeface.BOLD : Typeface.NORMAL);
         }
 
@@ -101,6 +101,7 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
         ViewHolder(View itemView) {
             super(itemView);
             this.itemText = itemView.findViewById(R.id.item_text);
+            this.itemText.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(item));
         }
     }
 }
