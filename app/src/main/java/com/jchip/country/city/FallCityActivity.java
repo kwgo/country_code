@@ -47,7 +47,7 @@ public class FallCityActivity extends AppCompatActivity {
     private Spinner sortSpinner;
     private EditText searchText;
 
-    private RecyclerView.ItemDecoration itemDecoration;
+    //private RecyclerView.ItemDecoration itemDecoration;
 
     private PopupWindow detailWindow;
 
@@ -72,29 +72,28 @@ public class FallCityActivity extends AppCompatActivity {
     }
 
     private void refreshGridView() {
-        int spanCount = FallCityViewHelper.getSpanCount(FallUtility.isPortrait(this));
-        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return FallCityViewHelper.getSpanSize(FallUtility.isPortrait(FallCityActivity.this), position);
-            }
-        });
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
+//        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(int position) {
+//                return FallCityViewHelper.getSpanSize(FallUtility.isPortrait(FallCityActivity.this), position);
+//            }
+//        });
         this.gridView.setLayoutManager(layoutManager);
-        this.gridView.removeItemDecoration(this.itemDecoration);
-        this.gridView.addItemDecoration(this.itemDecoration = new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                int position = parent.getChildAdapterPosition(view);
-                if (position >= 0) {
-                    if (FallUtility.isDirectionRTL(FallCityActivity.this)) {
-                        outRect.right = FallUtility.dp2px(FallCityActivity.this, FallCityViewHelper.getItemOffset(FallUtility.isPortrait(FallCityActivity.this), position));
-                    } else {
-                        outRect.left = FallUtility.dp2px(FallCityActivity.this, FallCityViewHelper.getItemOffset(FallUtility.isPortrait(FallCityActivity.this), position));
-                    }
-                }
-            }
-        });
+       // this.gridView.removeItemDecoration(this.itemDecoration);
+//        this.gridView.addItemDecoration(this.itemDecoration = new RecyclerView.ItemDecoration() {
+//            @Override
+//            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+////                int position = parent.getChildAdapterPosition(view);
+////                if (position >= 0) {
+////                    if (FallUtility.isDirectionRTL(FallCityActivity.this)) {
+////                        outRect.right = FallUtility.dp2px(FallCityActivity.this, FallCityViewHelper.getItemOffset(FallUtility.isPortrait(FallCityActivity.this), position));
+////                    } else {
+////                        outRect.left = FallUtility.dp2px(FallCityActivity.this, FallCityViewHelper.getItemOffset(FallUtility.isPortrait(FallCityActivity.this), position));
+////                    }
+////                }
+//            }
+//        });
         gridView.setAdapter(new FallCityAdapter(this, this.cities, this.gridInfo, FallUtility.isPortrait(this)));
     }
 

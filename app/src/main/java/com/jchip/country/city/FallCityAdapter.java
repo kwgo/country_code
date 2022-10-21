@@ -1,8 +1,7 @@
 package com.jchip.country.city;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import android.view.Gravity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +21,14 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
     private final List<String[]> cities;
     private final List<Integer> gridInfo;
 
-    private final boolean isPortrait;
-    private final int spanCount;
+    // private final boolean isPortrait;
 
     public FallCityAdapter(Context context, List<String[]> cities, List<Integer> gridInfo, boolean isPortrait) {
         this.context = context;
         this.cities = cities;
         this.gridInfo = gridInfo;
-        this.isPortrait = isPortrait;
-        this.spanCount = FallCityViewHelper.getItemCount(this.isPortrait);
+        // this.isPortrait = isPortrait;
+        // this.spanCount = FallCityViewHelper.getItemCount(this.isPortrait);
     }
 
     @Override
@@ -45,12 +43,12 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(position / this.spanCount, position % this.spanCount);
+        holder.bind(position, 0);
     }
 
     @Override
     public int getItemCount() {
-        return this.gridInfo.size() * this.spanCount;
+        return this.gridInfo.size(); // * this.spanCount;
     }
 
     @Override
@@ -58,50 +56,62 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
         return position;
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public void bind(int row, int col) {
-            this.item = gridInfo.get(row);
-            String[] city = cities.get(this.item);
-            int itemIndex = FallCityViewHelper.getItemIndex(isPortrait, col);
-            String text = "";
-            if (itemIndex == FallCityViewHelper.EMPTY) {
-            } else if (itemIndex == FallCityViewHelper.TAG) {
-                text = FallCityViewHelper.isPrimary(city) ? CITY_PRIMARY_TAG :
-                        FallCityViewHelper.isAdmin(city) ? CITY_ADMIN :
-                                FallCityViewHelper.isMinor(city) ? CITY_MINOR_TAG : CITY_NORMAL_TAG;
-            } else if (itemIndex == FallCityViewHelper.LAT) {
-                if (!FallCityViewHelper.isEmpty(city, FallCityViewHelper.LAT) && !FallCityViewHelper.isEmpty(city, FallCityViewHelper.LNG)) {
-                    text = city[FallCityViewHelper.LAT] + ", " + city[FallCityViewHelper.LNG];
-                }
-            } else if (itemIndex == FallCityViewHelper.CITY) {
-                if (!city[FallCityViewHelper.CITY].equals(city[FallCityViewHelper.CITY_ASCII]) && !FallCityViewHelper.isEmpty(city, FallCityViewHelper.CITY)) {
-                    text = city[FallCityViewHelper.CITY_ASCII] + "(" + city[FallCityViewHelper.CITY] + ")";
-                } else {
-                    text = city[FallCityViewHelper.CITY_ASCII];
-                }
-            } else if (itemIndex == FallCityViewHelper.POPULATION) {
-                text = FallCityViewHelper.getNumberItem(city, FallCityViewHelper.POPULATION);
-            } else if (itemIndex == FallCityViewHelper.ADMIN_NAME) {
-                text = city[itemIndex].trim();
+            // this.item = gridInfo.get(row);
+            String[] city = cities.get(row);
+
+            String tag = FallCityViewHelper.isPrimary(city) ? CITY_PRIMARY_TAG :
+                    FallCityViewHelper.isAdmin(city) ? CITY_ADMIN :
+                            FallCityViewHelper.isMinor(city) ? CITY_MINOR_TAG : CITY_NORMAL_TAG;
+            String location = "";
+            if (!FallCityViewHelper.isEmpty(city, FallCityViewHelper.LAT) && !FallCityViewHelper.isEmpty(city, FallCityViewHelper.LNG)) {
+                location = city[FallCityViewHelper.LAT] + ", " + city[FallCityViewHelper.LNG];
             }
 
-            // boolean isTop = col < FallCityViewHelper.getBottomLineIndex(isPortrait);
-            boolean isTag = itemIndex == FallCityViewHelper.TAG;
-            boolean isBold = itemIndex == FallCityViewHelper.CITY;
-            boolean isEnd = itemIndex == FallCityViewHelper.LAT || itemIndex == FallCityViewHelper.POPULATION;
+            String cityName = "";
+            if (!city[FallCityViewHelper.CITY].equals(city[FallCityViewHelper.CITY_ASCII]) && !FallCityViewHelper.isEmpty(city, FallCityViewHelper.CITY)) {
+                cityName = city[FallCityViewHelper.CITY_ASCII] + "(" + city[FallCityViewHelper.CITY] + ")";
+            } else {
+                cityName = city[FallCityViewHelper.CITY_ASCII];
+            }
 
-            itemText.setText(text);
-            itemText.setGravity(isTag ? Gravity.START : (isEnd ? Gravity.END : Gravity.START));
-            itemText.setTypeface(null, isBold ? Typeface.BOLD : Typeface.NORMAL);
+            String population = FallCityViewHelper.getNumberItem(city, FallCityViewHelper.POPULATION);
+
+            String adminName = city[FallCityViewHelper.ADMIN_NAME].trim();
+
+
+            textTag.setText(tag);
+            textCity.setText(cityName);
+            textPopulation.setText(population);
+            textAdmin.setText(adminName);
+            textLocation.setText(location);
+
+            if (FallCityViewHelper.isPrimary(city)) {
+                textTag.setTextColor(Color.rgb(102, 0, 153));
+            } else if (FallCityViewHelper.isAdmin(city)) {
+                textTag.setTextColor(Color.rgb(255, 69, 0));
+            } else {
+                textTag.setTextColor(Color.rgb(192, 192, 192));
+            }
         }
 
-        private int item;
-        private final TextView itemText;
+        // private int item;
+        private final TextView textTag;
+        private final TextView textCity;
+        private final TextView textPopulation;
+        private final TextView textAdmin;
+        private final TextView textLocation;
 
         ViewHolder(View itemView) {
             super(itemView);
-            this.itemText = itemView.findViewById(R.id.item_text);
-            this.itemText.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(item));
+            this.textTag = itemView.findViewById(R.id.item_tag);
+            this.textCity = itemView.findViewById(R.id.item_city);
+            this.textPopulation = itemView.findViewById(R.id.item_population);
+            this.textAdmin = itemView.findViewById(R.id.item_admin);
+            this.textLocation = itemView.findViewById(R.id.item_location);
+            //          this.itemText.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(item));
         }
     }
 }
