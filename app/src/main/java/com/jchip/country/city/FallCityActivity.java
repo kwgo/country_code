@@ -3,7 +3,6 @@ package com.jchip.country.city;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,8 +46,6 @@ public class FallCityActivity extends AppCompatActivity {
     private Spinner sortSpinner;
     private EditText searchText;
 
-    //private RecyclerView.ItemDecoration itemDecoration;
-
     private PopupWindow detailWindow;
 
     @Override
@@ -73,27 +70,7 @@ public class FallCityActivity extends AppCompatActivity {
 
     private void refreshGridView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
-//        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(int position) {
-//                return FallCityViewHelper.getSpanSize(FallUtility.isPortrait(FallCityActivity.this), position);
-//            }
-//        });
         this.gridView.setLayoutManager(layoutManager);
-       // this.gridView.removeItemDecoration(this.itemDecoration);
-//        this.gridView.addItemDecoration(this.itemDecoration = new RecyclerView.ItemDecoration() {
-//            @Override
-//            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-////                int position = parent.getChildAdapterPosition(view);
-////                if (position >= 0) {
-////                    if (FallUtility.isDirectionRTL(FallCityActivity.this)) {
-////                        outRect.right = FallUtility.dp2px(FallCityActivity.this, FallCityViewHelper.getItemOffset(FallUtility.isPortrait(FallCityActivity.this), position));
-////                    } else {
-////                        outRect.left = FallUtility.dp2px(FallCityActivity.this, FallCityViewHelper.getItemOffset(FallUtility.isPortrait(FallCityActivity.this), position));
-////                    }
-////                }
-//            }
-//        });
         gridView.setAdapter(new FallCityAdapter(this, this.cities, this.gridInfo, FallUtility.isPortrait(this)));
     }
 
@@ -109,12 +86,13 @@ public class FallCityActivity extends AppCompatActivity {
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 TextView view = (TextView) super.getDropDownView(position, convertView, parent);
-                view.setTextColor(Color.LTGRAY);
+                view.setTextColor(Color.DKGRAY);
                 //  view.setText(position > 0 ? view.getText() : "");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     view.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                 }
-                view.setPadding(30, 0, 30, position == 0 ? -8 : 8);
+                //view.setPadding(30, 0, 30, position == 0 ? -8 : 8);
+                view.setPadding(30, 0, 30, 10);
                 return view;
             }
         });
@@ -137,7 +115,6 @@ public class FallCityActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
             }
         });
     }
@@ -163,17 +140,14 @@ public class FallCityActivity extends AppCompatActivity {
                 });
             }
         });
-        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
-                    textView.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
-                    return true;
-                }
-                return false;
+        searchText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
+                textView.clearFocus();
+                InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+                return true;
             }
+            return false;
         });
         //findViewById(R.id.grid_dots).setOnClickListener((v) -> onAbout());
     }
@@ -195,20 +169,19 @@ public class FallCityActivity extends AppCompatActivity {
     }
 
     @SuppressLint("InflateParams")
-    public void onDetail(int item) {
+    public void onDetail(String[] city) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.fall_city_view, null);
         GridLayout detailView = popupView.findViewById(R.id.grid_view);
         GridLayout.LayoutParams leftParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_left).getLayoutParams();
         GridLayout.LayoutParams rightParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_right).getLayoutParams();
-        String[] city = this.cities.get(item);
         int[] detailIndexes = FallCityViewHelper.detailIndexes;
         for (int index = 0; index < detailIndexes.length; index++) {
             String header = getResources().getString(FallCityViewHelper.getHeaderIndex(detailIndexes[index]));
             addTextView(this, detailView, index, 0, header, leftParams);
 
             int itemIndex = detailIndexes[index];
-            String itemText = "";
+            String itemText;
             if (itemIndex == FallCityViewHelper.POPULATION) {
                 itemText = FallCityViewHelper.getNumberItem(city, FallCityViewHelper.POPULATION);
             } else if (itemIndex == FallCityViewHelper.CAPITAL) {
