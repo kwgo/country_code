@@ -34,9 +34,10 @@
     <string name="head_city_population">Population</string>
 
     <string-array name="grid_city_sort_items">
-        <item>Toutes les villes</item>
-        <item>Villes admin</item>
-        <item>Grandes villes</item>
+        <item>Tous</item>
+        <item>Trier</item>
+        <item>Administrateur</item>
+        <item>Plus grande</item>
     </string-array>
 
     <string-array name="grid_country_sort_items">

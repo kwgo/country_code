@@ -34,9 +34,10 @@
     <string name="head_city_population">Население</string>
 
     <string-array name="grid_city_sort_items">
-        <item>Все города</item>
-        <item>Администрирование городов</item>
-        <item>Большие города</item>
+        <item>Все</item>
+        <item>Сортировать</item>
+        <item>Администратор</item>
+        <item>Увеличить</item>
     </string-array>
 
     <string-array name="grid_country_sort_items">

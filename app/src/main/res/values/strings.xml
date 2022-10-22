@@ -35,6 +35,7 @@
 
     <string-array name="grid_city_sort_items">
         <item>All</item>
+        <item>Sort</item>
         <item>Admin</item>
         <item>Larger</item>
     </string-array>

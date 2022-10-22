@@ -34,9 +34,10 @@
     <string name="head_city_population">السكان</string>
 
     <string-array name="grid_city_sort_items">
-        <item>كل المدن</item>
-        <item>المدن الإدارية</item>
-        <item>مدن أكبر</item>
+        <item>الكل</item>
+        <item>فرز</item>
+        <item>مسؤل</item>
+        <item>أكبر</item>
     </string-array>
 
     <string-array name="grid_country_sort_items">

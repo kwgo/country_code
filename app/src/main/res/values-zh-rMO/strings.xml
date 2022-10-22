@@ -35,6 +35,7 @@
 
     <string-array name="grid_city_sort_items">
         <item>所有城市</item>
+        <item>排序城市</item>
         <item>行政城市</item>
         <item>大中城市</item>
     </string-array>
