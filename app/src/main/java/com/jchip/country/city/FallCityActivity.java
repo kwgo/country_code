@@ -2,16 +2,12 @@ package com.jchip.country.city;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +35,7 @@ public class FallCityActivity extends AppCompatActivity {
 
     private List<String[]> cities;
 
-
+    private List<Integer> indexInfo;
     private List<Integer> gridInfo;
 
     private RecyclerView gridView;
@@ -51,21 +47,22 @@ public class FallCityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fall_country_activity);
+        setContentView(R.layout.fall_city_activity);
 
-        this.gridView = findViewById(R.id.grid_view);
+        this.gridView = findViewById(R.id.grid_city_view);
 
         this.countryCode = this.getIntent().getStringExtra("countryCode");
         this.cities = FallCityHelper.getCities(this, countryCode);
-        this.gridInfo = new ArrayList<>();
+        this.indexInfo = new ArrayList<>();
         for (int index = 0; index < this.cities.size(); index++) {
-            this.gridInfo.add(index);
+            this.indexInfo.add(index);
         }
-        Log.d("O", "cities:" + cities.size());
-        Log.d("O", "gridInfo:" + gridInfo.size());
+        this.gridInfo = new ArrayList<>(this.indexInfo);
 
         this.initSearchText();
         this.initSortSpinner();
+
+        findViewById(R.id.grid_back).setOnClickListener((v) -> this.finish());
     }
 
     private void refreshGridView() {
@@ -78,37 +75,19 @@ public class FallCityActivity extends AppCompatActivity {
         final CharSequence[] sortItems = this.getResources().getTextArray(R.array.grid_city_sort_items);
         sortSpinner = (Spinner) findViewById(R.id.grid_sort);
         sortSpinner.setAdapter(new ArrayAdapter<CharSequence>(this, R.layout.grid_spinner_item, Arrays.asList(sortItems)) {
-//            @Override
-//            public boolean isEnabled(int position) {
-//                return FallCityViewHelper.isSortable(position - 1, isPortrait());
-//            }
-
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 TextView view = (TextView) super.getDropDownView(position, convertView, parent);
-                view.setTextColor(Color.DKGRAY);
-                //  view.setText(position > 0 ? view.getText() : "");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    view.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                }
-                //view.setPadding(30, 0, 30, position == 0 ? -8 : 8);
-                view.setPadding(30, 0, 30, 10);
+                view.setPadding(40, 0, 40, 6);
                 return view;
             }
         });
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView textView = (TextView) adapterView.getChildAt(0);
-                if (textView != null) {
-                    textView.setTextColor(i == 0 ? searchText.getCurrentHintTextColor() : searchText.getCurrentTextColor());
-                }
                 FallUtility.runOnUiWorker(FallCityActivity.this, R.id.grid_processing, () -> {
-                    if (i == 0) {
-                        onSearch();
-                    } else {
-                        onSort();
-                    }
+                    onSort();
+                    onSearch();
                     refreshGridView();
                 });
             }
@@ -149,23 +128,17 @@ public class FallCityActivity extends AppCompatActivity {
             }
             return false;
         });
-        //findViewById(R.id.grid_dots).setOnClickListener((v) -> onAbout());
     }
 
-
     private void onSort() {
-        int sortIndex = this.sortSpinner.getSelectedItemPosition() - 1;
-        //this.gridInfo = FallCityViewHelper.sortCountryInfo(this, this.info, this.gridInfo, sortIndex);
+        int sortIndex = this.sortSpinner.getSelectedItemPosition();
+        this.indexInfo = FallCityHelper.sortCities(this.cities, sortIndex);
+        this.gridInfo = new ArrayList<>(this.indexInfo);
     }
 
     private void onSearch() {
         String searchText = this.searchText.getText().toString().trim().toUpperCase();
-//        if (searchText.isEmpty()) {
-//            this.gridInfo = FallCityViewHelper.sortCountryInfo(info, new ArrayList(info.keySet()), FallCityViewHelper.SORT_COUNTRY);
-//        } else {
-//            this.gridInfo = FallCityViewHelper.searchCountryInfo(this, this.info, searchText, isPortrait());
-//        }
-        this.onSort();
+        this.gridInfo = FallCityViewHelper.searchCities(this.cities, this.indexInfo, searchText);
     }
 
     @SuppressLint("InflateParams")

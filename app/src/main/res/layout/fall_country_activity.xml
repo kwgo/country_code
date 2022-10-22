@@ -32,7 +32,8 @@
                 android:maxLength="12"
                 android:singleLine="true"
                 android:textAlignment="viewStart"
-                android:textSize="20dp" />
+                android:textSize="20sp"
+                android:layout_alignParentLeft="true" />
 
             <Spinner
                 android:id="@+id/grid_sort"
@@ -40,7 +41,9 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:paddingLeft="20dp"
+                android:layout_alignParentRight="true" />
 
             <ProgressBar
                 android:id="@+id/grid_processing"
@@ -50,7 +53,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:layout_alignParentRight="true" />
 
             <ImageView
                 android:id="@+id/grid_dots"
@@ -63,7 +67,9 @@
                 android:autoMirrored="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitXY"
-                android:src="@drawable/grid_dots" />
+                android:src="@drawable/grid_dots"
+                android:layout_alignLeft="@id/grid_sort"
+                android:layout_marginLeft="0dp" />
 
         </RelativeLayout>
     </LinearLayout>

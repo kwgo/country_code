@@ -15,8 +15,8 @@ import java.util.List;
 public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHolder> {
     public static final String CITY_PRIMARY_TAG = "☆";
     public static final String CITY_ADMIN = "✧";
-    public static final String CITY_NORMAL_TAG = "⭑";
-    public static final String CITY_MINOR_TAG = "⋆";
+    public static final String CITY_NORMAL_TAG = "";
+    public static final String CITY_MINOR_TAG = "⭑";
 
     protected Context context;
     private final List<String[]> cities;
@@ -46,7 +46,7 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return this.gridInfo.size(); // * this.spanCount;
+        return this.gridInfo.size();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
 
         }
 
-        private String [] city;
+        private String[] city;
         private final TextView textTag;
         private final TextView textCity;
         private final TextView textPopulation;
