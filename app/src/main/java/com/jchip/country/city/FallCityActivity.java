@@ -18,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -148,55 +150,39 @@ public class FallCityActivity extends AppCompatActivity {
     }
 
     @SuppressLint("InflateParams")
-    public void onDetail(String[] city) {
+    public void onDetail(View view, String[] city) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.fall_city_view, null);
+        int imageId = FallUtility.getSourceId(this, countryCode, "drawable", "flag");
+        ImageView imageView = popupView.findViewById(R.id.grid_image);
+        imageView.setImageResource(imageId);
+        // String text = FallUtility.getSourceText(this, countryCode, "string", "official");
+        String text = city[FallCityViewHelper.CITY_ASCII];
+        TextView textView = popupView.findViewById(R.id.grid_text);
+        textView.setText(text);
+
         GridLayout detailView = popupView.findViewById(R.id.grid_view);
         GridLayout.LayoutParams leftParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_left).getLayoutParams();
         GridLayout.LayoutParams rightParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_right).getLayoutParams();
         int[] detailIndexes = FallCityViewHelper.detailIndexes;
         for (int index = 0; index < detailIndexes.length; index++) {
-            String header = getResources().getString(FallCityViewHelper.getHeaderIndex(detailIndexes[index]));
+            String header = getResources().getString(FallCityViewHelper.getHeaderIndex(index));
             addTextView(this, detailView, index, 0, header, leftParams);
 
             int itemIndex = detailIndexes[index];
             String itemText;
             if (itemIndex == FallCityViewHelper.POPULATION) {
-                itemText = FallCityViewHelper.getNumberItem(city, FallCityViewHelper.POPULATION);
+                itemText = FallCityViewHelper.getNumberItem(city[FallCityViewHelper.POPULATION]);
             } else if (itemIndex == FallCityViewHelper.CAPITAL) {
-                //firstUppercased
-                itemText = city[itemIndex];
+                itemText = FallCityViewHelper.getCapitalizeItem(city[itemIndex]);
             } else {
                 itemText = city[itemIndex];
             }
             addTextView(this, detailView, index, 1, itemText, rightParams);
         }
 
-//        View contextView = findViewById(R.id.context_view);
-//        ImageView fullImageView = popupView.findViewById(R.id.grid_full_image);
-//        fullImageView.getLayoutParams().width = contextView.getWidth();
-//        fullImageView.getLayoutParams().height = contextView.getHeight();
-//        fullImageView.setImageResource(FallUtility.getSourceId(this, item, "drawable", "good"));
-//        fullImageView.setOnClickListener((v) -> {
-//            popupView.findViewById(R.id.grid_scroll_view).setVisibility(View.VISIBLE);
-//            fullImageView.setVisibility(View.GONE);
-//        });
-//
-//        ImageView imageView = popupView.findViewById(R.id.grid_image);
-//        imageView.setImageResource(FallUtility.getSourceId(this, item, "drawable", "good"));
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            imageView.setClipToOutline(true);
-//        }
-//        imageView.setOnClickListener((v) -> {
-//            popupView.findViewById(R.id.grid_scroll_view).setVisibility(View.GONE);
-//            fullImageView.setVisibility(View.VISIBLE);
-//        });
-//
-//        TextView textView = popupView.findViewById(R.id.grid_text);
-//        textView.setText(city != null ? city[FallCountryViewHelper.FLAG_RATIO] : "");
-
         FallUtility.closeWindow(this.detailWindow);
-        this.detailWindow = FallUtility.popupWindow(popupView);
+        this.detailWindow = FallUtility.popupWindow(view, popupView);
     }
 
     private void addTextView(Context context, GridLayout view, int row, int col, String text, GridLayout.LayoutParams layoutParams) {

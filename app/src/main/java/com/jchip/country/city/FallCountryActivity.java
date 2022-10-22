@@ -168,11 +168,11 @@ public class FallCountryActivity extends AppCompatActivity {
             }
             return false;
         });
-        findViewById(R.id.grid_dots).setOnClickListener((v) -> onAbout());
+        findViewById(R.id.grid_dots).setOnClickListener((view) -> onAbout(view));
     }
 
     @SuppressLint("InflateParams")
-    public void onDetail(String item) {
+    public void onDetail(View view, String item) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.fall_country_view, null);
         GridLayout detailView = popupView.findViewById(R.id.grid_view);
@@ -227,7 +227,7 @@ public class FallCountryActivity extends AppCompatActivity {
         textView.setText(info != null ? info[FallCountryViewHelper.FLAG_RATIO] : "");
 
         FallUtility.closeWindow(this.detailWindow);
-        this.detailWindow = FallUtility.popupWindow(popupView);
+        this.detailWindow = FallUtility.popupWindow(view, popupView);
     }
 
     private void onSort() {
@@ -246,7 +246,7 @@ public class FallCountryActivity extends AppCompatActivity {
         this.onSort();
     }
 
-    public void onSelect(String item) {
+    public void onSelect(View view, String item) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams")
         View popupView = inflater.inflate(R.layout.fall_select_view, null);
@@ -264,7 +264,7 @@ public class FallCountryActivity extends AppCompatActivity {
         }
         countryImageView.setOnClickListener((e) -> {
             FallUtility.closeWindow(this.selectWindow);
-            this.onDetail(item);
+            this.onDetail(view, item);
         });
 
         ImageView cityImageView = popupView.findViewById(R.id.grid_city);
@@ -279,10 +279,10 @@ public class FallCountryActivity extends AppCompatActivity {
         });
 
         FallUtility.closeWindow(this.selectWindow);
-        this.selectWindow = FallUtility.popupWindow(popupView);
+        this.selectWindow = FallUtility.popupWindow(view, popupView);
     }
 
-    private void onAbout() {
+    private void onAbout(View view) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams")
         View popupView = inflater.inflate(R.layout.fall_about_view, null);
@@ -304,7 +304,7 @@ public class FallCountryActivity extends AppCompatActivity {
         clickView.setText(R.string.about_play);
 
         FallUtility.closeWindow(this.aboutWindow);
-        this.aboutWindow = FallUtility.popupWindow(popupView);
+        this.aboutWindow = FallUtility.popupWindow(view, popupView);
     }
 
     @Override

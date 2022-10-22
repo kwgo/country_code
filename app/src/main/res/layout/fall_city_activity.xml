@@ -88,7 +88,6 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
                 android:layout_marginStart="0dp"
-                android:layout_marginLeft="0dp"
                 android:autoMirrored="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitXY"

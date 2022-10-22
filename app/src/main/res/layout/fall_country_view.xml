@@ -43,9 +43,7 @@
                 android:layout_column="0"
                 android:layout_columnSpan="1"
                 android:layout_marginStart="0dp"
-                android:layout_marginLeft="0dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:singleLine="true"
                 android:textIsSelectable="true"
                 android:textSize="14sp"
@@ -74,7 +72,6 @@
                 android:layout_columnSpan="1"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="52dp"
-                android:layout_marginLeft="52dp"
                 android:gravity="center"
                 android:orientation="vertical">
 

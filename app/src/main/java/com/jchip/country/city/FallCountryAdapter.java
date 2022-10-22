@@ -104,10 +104,10 @@ public class FallCountryAdapter extends RecyclerView.Adapter<FallCountryAdapter.
             this.bottomImage = itemView.findViewById(R.id.bottom_image);
             this.topText = itemView.findViewById(R.id.top_text);
             this.bottomText = itemView.findViewById(R.id.bottom_text);
-            this.topImage.setOnClickListener((v) -> ((FallCountryActivity) context).onSelect(item));
-            this.bottomImage.setOnClickListener((v) -> ((FallCountryActivity) context).onSelect(item));
-            this.topText.setOnClickListener((v) -> ((FallCountryActivity) context).onSelect(item));
-            this.bottomText.setOnClickListener((v) -> ((FallCountryActivity) context).onSelect(item));
+            this.topImage.setOnClickListener((v) -> ((FallCountryActivity) context).onSelect(itemView, item));
+            this.bottomImage.setOnClickListener((v) -> ((FallCountryActivity) context).onSelect(itemView, item));
+            this.topText.setOnClickListener((v) -> ((FallCountryActivity) context).onSelect(itemView, item));
+            this.bottomText.setOnClickListener((v) -> ((FallCountryActivity) context).onSelect(itemView, item));
         }
     }
 }

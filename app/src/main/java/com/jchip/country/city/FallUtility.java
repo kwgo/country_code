@@ -115,7 +115,7 @@ public abstract class FallUtility {
         }
     }
 
-    public static PopupWindow popupWindow(View popupView) {
+    public static PopupWindow popupWindow(View view, View popupView) {
         PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         try {
             popupView.setOnTouchListener((v, e) -> {
@@ -128,7 +128,7 @@ public abstract class FallUtility {
                         return true;
                     }
             );
-            popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         } catch (Exception ex) {
         }
         return popupWindow;

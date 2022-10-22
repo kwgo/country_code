@@ -68,8 +68,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitXY"
                 android:src="@drawable/grid_dots"
-                android:layout_alignLeft="@id/grid_sort"
-                android:layout_marginLeft="0dp" />
+                android:layout_alignLeft="@id/grid_sort" />
 
         </RelativeLayout>
     </LinearLayout>

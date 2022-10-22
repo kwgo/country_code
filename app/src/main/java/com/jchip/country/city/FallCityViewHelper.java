@@ -8,11 +8,11 @@ public abstract class FallCityViewHelper extends FallCityHelper {
     public static final int LANDSCAPE_INPUT_COUNT = 32;
 
     public static final int[] detailIndexes = new int[]{
-            CITY_ASCII, CITY, CAPITAL, ADMIN_NAME, LAT, LNG, POPULATION
+            /* CITY_ASCII,*/ CITY, CAPITAL, ADMIN_NAME, LAT, LNG, POPULATION
     };
 
     public static final int[] headerIndexes = new int[]{
-            R.string.head_city_ascii,
+            //R.string.head_city_ascii,
             R.string.head_city_name,
             R.string.head_city_capital,
             R.string.head_city_admin,
@@ -29,14 +29,25 @@ public abstract class FallCityViewHelper extends FallCityHelper {
         return isPortrait ? PORTRAIT_INPUT_COUNT : LANDSCAPE_INPUT_COUNT;
     }
 
-    public static String getNumberItem(String[] city, int index) {
-        int number = FallUtility.parseInteger(city[index], 0);
-        if (number < 10) {
-            return number <= 0 ? "" : String.valueOf(number);
-        } else {
-            number = number < 1000 ? number / 10 * 10 : number / 100 * 100;
-            return new DecimalFormat("###,###,###").format(number);
+    public static String getNumberItem(String value) {
+        try {
+            int number = FallUtility.parseInteger(value, 0);
+            if (number < 10) {
+                return number <= 0 ? "" : String.valueOf(number);
+            } else {
+                number = number < 1000 ? number / 10 * 10 : number / 100 * 100;
+                return new DecimalFormat("###,###,###").format(number);
+            }
+        } catch (Exception ignore) {
+            return "";
         }
+    }
+
+    public static String getCapitalizeItem(String value) {
+        if (value != null && value.length() > 0) {
+            return value.substring(0, 1).toUpperCase() + value.substring(1);
+        }
+        return value == null ? "" : value;
     }
 
     public static boolean isEmpty(String[] city, int index) {

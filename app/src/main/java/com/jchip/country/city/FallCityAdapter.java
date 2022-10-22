@@ -71,8 +71,8 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
             } else {
                 cityName = city[FallCityViewHelper.CITY_ASCII];
             }
-            String population = FallCityViewHelper.getNumberItem(city, FallCityViewHelper.POPULATION);
-            String adminName = city[FallCityViewHelper.ADMIN_NAME].trim();
+            String population = FallCityViewHelper.getNumberItem(city[FallCityViewHelper.POPULATION]);
+            String adminName = city[FallCityViewHelper.ADMIN_NAME];
 
             this.textTag.setText(tag);
             this.textCity.setText(cityName);
@@ -102,11 +102,11 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
             this.textAdmin = itemView.findViewById(R.id.item_admin);
             this.textLocation = itemView.findViewById(R.id.item_location);
 
-            this.textTag.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(city));
-            this.textCity.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(city));
-            this.textPopulation.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(city));
-            this.textAdmin.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(city));
-            this.textLocation.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(city));
+            this.textTag.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(itemView, city));
+            this.textCity.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(itemView, city));
+            this.textPopulation.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(itemView, city));
+            this.textAdmin.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(itemView, city));
+            this.textLocation.setOnClickListener((v) -> ((FallCityActivity) context).onDetail(itemView, city));
         }
     }
 }
