@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,7 +134,12 @@ public class FallCityActivity extends AppCompatActivity {
     private void onSort() {
         int sortIndex = this.sortSpinner.getSelectedItemPosition();
         this.indexInfo = FallCityHelper.sortCities(this.cities, sortIndex);
+        Log.d("pp", "xx after sorted cities indexInfo == " + indexInfo);
+
         this.gridInfo = new ArrayList<>(this.indexInfo);
+
+        Log.d("pp", "xx after sorted cities gridInfo == " + gridInfo);
+
     }
 
     private void onSearch() {

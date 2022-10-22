@@ -35,7 +35,7 @@
     <string name="head_city_population">Población</string>
 
     <string-array name="grid_city_sort_items">
-        <elemento>Todo</elemento>
+        <item>Todo</item>
         <item>Ordenar</item>
         <item>Administrador</item>
         <item>Más grande</item>

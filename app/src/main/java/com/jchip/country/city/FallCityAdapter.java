@@ -15,8 +15,8 @@ import java.util.List;
 public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHolder> {
     public static final String CITY_PRIMARY_TAG = "☆";
     public static final String CITY_ADMIN = "✧";
-    public static final String CITY_NORMAL_TAG = "";
-    public static final String CITY_MINOR_TAG = "⭑";
+    public static final String CITY_NORMAL_TAG = "✦";
+    public static final String CITY_MINOR_TAG = "";
 
     protected Context context;
     private final List<String[]> cities;
@@ -56,7 +56,8 @@ public class FallCityAdapter extends RecyclerView.Adapter<FallCityAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public void bind(int row, int col) {
-            this.city = cities.get(row);
+            int index = gridInfo.get(row);
+            this.city = cities.get(index);
             String tag = FallCityViewHelper.isPrimary(city) ? CITY_PRIMARY_TAG :
                     FallCityViewHelper.isAdmin(city) ? CITY_ADMIN :
                             FallCityViewHelper.isMinor(city) ? CITY_MINOR_TAG : CITY_NORMAL_TAG;

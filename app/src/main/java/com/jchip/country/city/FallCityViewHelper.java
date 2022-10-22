@@ -40,7 +40,7 @@ public abstract class FallCityViewHelper extends FallCityHelper {
     }
 
     public static boolean isEmpty(String[] city, int index) {
-        return !(city[index] != null && city[index].trim().length() > 0);
+        return city[index] == null || city[index].trim().length() <= 0;
     }
 
     public static boolean isPrimary(String[] city) {

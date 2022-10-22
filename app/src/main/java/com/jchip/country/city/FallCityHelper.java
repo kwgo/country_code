@@ -1,12 +1,13 @@
 package com.jchip.country.city;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class FallCityHelper {
@@ -23,13 +24,13 @@ public abstract class FallCityHelper {
     public static final int ID = 10;
 
     public static final int SORT_ALL_CITY = 0;
-    public static final int SORT_ADMIN_CITY = 1;
-    public static final int SORT_LARGER_CITY = 2;
+    public static final int SORT_SORT_CITY = 1;
+    public static final int SORT_ADMIN_CITY = 2;
+    public static final int SORT_LARGER_CITY = 3;
 
-    public static List<Integer> sortCities(List<String[]> cities, int sortIndex) {
+    public static List<Integer> sortCities(final List<String[]> cities, final int sortIndex) {
         List<Integer> sortedCities = new ArrayList<>();
         if (sortIndex == SORT_ADMIN_CITY) {
-            Log.d("pp", "sortIndex == SORT_ADMIN_CITY");
             for (int index = 0; index < cities.size(); index++) {
                 String[] city = cities.get(index);
                 if (FallCityViewHelper.isPrimary(city) || FallCityViewHelper.isAdmin(city)) {
@@ -37,40 +38,59 @@ public abstract class FallCityHelper {
                 }
             }
         } else if (sortIndex == SORT_LARGER_CITY) {
-            Log.d("pp", "sortIndex == SORT_LARGER_CITY");
             for (int index = 0; index < cities.size(); index++) {
                 String[] city = cities.get(index);
-                if (FallCityViewHelper.isMinor(city)) {
+                if (!FallCityViewHelper.isMinor(city)) {
                     sortedCities.add(index);
                 }
             }
         } else {
-            Log.d("pp", "sortIndex == SORT_ALL_CITY");
             for (int index = 0; index < cities.size(); index++) {
                 sortedCities.add(index);
             }
         }
-        Log.d("pp", "sortedCities == size:" + sortedCities.size());
-
+        Collections.sort(sortedCities, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer index1, Integer index2) {
+                String[] city1 = cities.get(index1);
+                String[] city2 = cities.get(index2);
+                if (FallCityViewHelper.isPrimary(city1) && !FallCityViewHelper.isPrimary(city2)) {
+                    return -1;
+                } else if (!FallCityViewHelper.isPrimary(city1) && FallCityViewHelper.isPrimary(city2)) {
+                    return +1;
+                } else {
+                    int adminIndex = 0;
+                    if (sortIndex == SORT_SORT_CITY) {
+                        adminIndex = city1[ADMIN_NAME].compareTo(city2[ADMIN_NAME]);
+                    }
+                    if (adminIndex != 0) {
+                        return adminIndex;
+                    } else {
+                        if (FallCityViewHelper.isAdmin(city1) && !FallCityViewHelper.isAdmin(city2)) {
+                            return -1;
+                        } else if (!FallCityViewHelper.isAdmin(city1) && FallCityViewHelper.isAdmin(city2)) {
+                            return +1;
+                        } else {
+                            return city1[CITY_ASCII].compareTo(city2[CITY_ASCII]);
+                        }
+                    }
+                }
+            }
+        });
         return sortedCities;
-//        return Collections.sort(sortedCities, new Comparator<String[]>() {
-//            @Override
-//            public int compare(String[] city1, String[] city2) {
-//                return city1[0].compareTo(city2[0]);
-//            }
-//        });
     }
 
     public static List<Integer> searchCities(List<String[]> cities, List<Integer> indexInfo, String searchText) {
         List<Integer> searchCities = new ArrayList<>();
         if (!searchText.trim().isEmpty()) {
-            searchText = searchText.toUpperCase();
-            for (int item : indexInfo) {
-                int index = indexInfo.get(item);
+            searchText = searchText.trim().toUpperCase();
+            for (int index : indexInfo) {
                 String[] city = cities.get(index);
-                for (String cityItem : city) {
-                    if (cityItem.toUpperCase().contains(searchText)) {
-                        searchCities.add(index);
+                for (int itemIndex = 0; itemIndex < city.length; itemIndex++) {
+                    if (itemIndex == CITY || itemIndex == CITY_ASCII || itemIndex == LAT || itemIndex == LNG) {
+                        if (city[itemIndex].toUpperCase().contains(searchText)) {
+                            searchCities.add(index);
+                        }
                     }
                 }
             }
