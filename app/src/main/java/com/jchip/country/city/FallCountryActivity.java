@@ -171,6 +171,22 @@ public class FallCountryActivity extends AppCompatActivity {
         findViewById(R.id.grid_dots).setOnClickListener((view) -> onAbout(view));
     }
 
+    private void onSort() {
+        int sortIndex = this.sortSpinner.getSelectedItemPosition() - 1;
+        // this.gridInfo = FallCountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, sortIndex);
+        FallCountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, sortIndex);
+    }
+
+    private void onSearch() {
+        String searchText = this.searchText.getText().toString().trim().toUpperCase();
+        if (searchText.isEmpty()) {
+            this.gridInfo = FallCountryViewHelper.sortCountryInfo(info, new ArrayList<>(info.keySet()), FallCountryViewHelper.SORT_COUNTRY);
+        } else {
+            this.gridInfo = FallCountryViewHelper.searchCountryInfo(this, this.info, searchText, FallUtility.isPortrait(this));
+        }
+        this.onSort();
+    }
+
     @SuppressLint("InflateParams")
     public void onDetail(View view, String item) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -228,22 +244,6 @@ public class FallCountryActivity extends AppCompatActivity {
 
         FallUtility.closeWindow(this.detailWindow);
         this.detailWindow = FallUtility.popupWindow(view, popupView);
-    }
-
-    private void onSort() {
-        int sortIndex = this.sortSpinner.getSelectedItemPosition() - 1;
-        // this.gridInfo = FallCountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, sortIndex);
-        FallCountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, sortIndex);
-    }
-
-    private void onSearch() {
-        String searchText = this.searchText.getText().toString().trim().toUpperCase();
-        if (searchText.isEmpty()) {
-            this.gridInfo = FallCountryViewHelper.sortCountryInfo(info, new ArrayList<>(info.keySet()), FallCountryViewHelper.SORT_COUNTRY);
-        } else {
-            this.gridInfo = FallCountryViewHelper.searchCountryInfo(this, this.info, searchText, FallUtility.isPortrait(this));
-        }
-        this.onSort();
     }
 
     public void onSelect(View view, String item) {
