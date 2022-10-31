@@ -87,7 +87,10 @@ public abstract class FallCityHelper {
             for (int index : indexInfo) {
                 String[] city = cities.get(index);
                 for (int itemIndex = 0; itemIndex < city.length; itemIndex++) {
-                    if (itemIndex == CITY || itemIndex == CITY_ASCII || itemIndex == LAT || itemIndex == LNG) {
+                    if(searchCities.contains(index)) {
+                        break;
+                    }
+                    if (itemIndex == CITY || itemIndex == CITY_ASCII || itemIndex == ADMIN_NAME || itemIndex == LAT || itemIndex == LNG) {
                         if (city[itemIndex].toUpperCase().contains(searchText)) {
                             searchCities.add(index);
                         }
