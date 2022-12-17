@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/context_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CityActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/grid_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="start"
+                android:hint="@string/grid_search"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLength="12"
+                android:paddingStart="32dp"
+                android:paddingEnd="0dp"
+                android:singleLine="true"
+                android:textAlignment="viewStart"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/grid_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:autoMirrored="true"
+                android:paddingStart="12dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="12dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grid_back" />
+
+            <Spinner
+                android:id="@+id/grid_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="20dp" />
+
+            <ProgressBar
+                android:id="@+id/grid_processing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/grid_dots"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignStart="@id/grid_sort"
+                android:layout_alignLeft="@id/grid_sort"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:layout_marginStart="0dp"
+                android:autoMirrored="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/grid_dots" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/grid_city_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
