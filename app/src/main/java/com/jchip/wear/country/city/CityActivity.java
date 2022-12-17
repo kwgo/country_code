@@ -103,7 +103,7 @@ public class CityActivity extends Activity {
     }
 
     private void initSearchText() {
-        searchText = findViewById(R.id.grid_search);
+        searchText = findViewById(R.id.country_search);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -162,7 +162,7 @@ public class CityActivity extends Activity {
         TextView textView = popupView.findViewById(R.id.grid_text);
         textView.setText(text);
 
-        GridLayout detailView = popupView.findViewById(R.id.grid_view);
+        GridLayout detailView = popupView.findViewById(R.id.country_grid_view);
         GridLayout.LayoutParams leftParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_left).getLayoutParams();
         GridLayout.LayoutParams rightParams = (GridLayout.LayoutParams) popupView.findViewById(R.id.grid_text_right).getLayoutParams();
         int[] detailIndexes = CityViewHelper.detailIndexes;

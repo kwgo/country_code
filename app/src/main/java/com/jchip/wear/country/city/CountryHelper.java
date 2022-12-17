@@ -52,19 +52,6 @@ public abstract class CountryHelper {
     public static final int[] searchIndexes = new int[]{ALPHA_2, ALPHA_3, NUMERIC, CURRENCY, CALL_CODE, TIMEZONE, COUNTRY, SYMBOL, OFFICIAL, CAPITAL};
     public static final int[] detailIndexes = new int[]{COUNTRY, OFFICIAL, SOVEREIGNTY, ALPHA_2, ALPHA_3, NUMERIC, INTERNET, CAPITAL, TIMEZONE, CALL_CODE, CURRENCY, CURRENCY_NAME, FRACTION, POPULATION};
 
-    public static boolean isSortable(int sortIndex, boolean isPortrait) {
-        if (isPortrait) {
-            if (sortIndex == CountryHelper.SORT_OFFICIAL || sortIndex == CountryHelper.SORT_ALPHA_3 || sortIndex == CountryHelper.SORT_NUMERIC || sortIndex == CountryHelper.SORT_SYMBOL || sortIndex == CountryHelper.SORT_POPULATION) {
-                return false;
-            }
-        } else {
-            if (sortIndex == CountryHelper.SORT_COUNTRY) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public static List<String> sortCountryInfo(Map<String, String[]> info, List<String> listInfo, int sortIndex) {
         if (sortIndex >= 0) {
             Collections.sort(listInfo, new InfoComparator(null, info, sortIndexes[sortIndex]));
@@ -79,7 +66,7 @@ public abstract class CountryHelper {
         return listInfo;
     }
 
-    public static List<String> searchCountryInfo(Map<String, String[]> info, String searchText, boolean isPortrait) {
+    public static List<String> searchCountryInfo(Map<String, String[]> info, String searchText) {
         List<String> searchInfo = new ArrayList<>();
         if (!searchText.trim().isEmpty()) {
             for (int searchIndex : searchIndexes) {
@@ -96,7 +83,7 @@ public abstract class CountryHelper {
         return searchInfo;
     }
 
-    public static List<String> searchCountryInfo(Context context, Map<String, String[]> info, String searchText, boolean isPortrait) {
+    public static List<String> searchCountryInfo(Context context, Map<String, String[]> info, String searchText) {
         List<String> searchInfo = new ArrayList<>();
         if (!searchText.trim().isEmpty()) {
             for (int searchIndex : searchIndexes) {
@@ -114,6 +101,8 @@ public abstract class CountryHelper {
                     }
                 }
             }
+        } else {
+            searchInfo.addAll(info.keySet());
         }
         return searchInfo;
     }

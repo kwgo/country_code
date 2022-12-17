@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="backgroundColor">@android:color/black</color>
+    <color name="titleColor">#FF2094FA</color>
+    <color name="boardColor">#FF222223</color>
+    <color name="hintColor">#FF2094FA</color>
+    <color name="textColor">@android:color/white</color>
+    <color name="clearColor">@android:color/transparent</color>
+
+    <color name="accentColor">@android:color/white</color>
+    <color name="detailColor">#FFAEB4BF</color>
+
+    <color name="primaryColor">@android:color/holo_purple</color>
+    <color name="adminColor">@android:color/holo_orange_dark</color>
+    <color name="normalColor">@android:color/darker_gray</color>
+    <color name="minorColor">@android:color/transparent</color>
+
+
+
+
     <color name="title">#DEEAF6</color>
     <color name="detail">#D5883c</color>
 

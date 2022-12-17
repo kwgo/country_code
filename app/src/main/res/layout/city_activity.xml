@@ -21,7 +21,7 @@
             android:gravity="center">
 
             <EditText
-                android:id="@+id/grid_search"
+                android:id="@+id/country_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
