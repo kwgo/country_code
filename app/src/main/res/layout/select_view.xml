@@ -15,7 +15,6 @@
             android:id="@+id/country_grid_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/popup_background"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -76,8 +75,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
                     android:gravity="center"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/grid_country" />
+                    android:scaleType="fitCenter" />
 
                 <ImageView
                     android:id="@+id/grid_city"
@@ -91,8 +89,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
                     android:gravity="center"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/grid_city" />
+                    android:scaleType="fitCenter"/>
 
             </LinearLayout>
         </LinearLayout>

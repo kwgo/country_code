@@ -10,8 +10,7 @@
         android:id="@+id/country_grid_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/popup_background"
-        android:columnCount="2"
+         android:columnCount="2"
         android:padding="8dp">
 
         <TextView
@@ -180,8 +179,7 @@
             android:layout_marginBottom="0dp"
             android:adjustViewBounds="true"
             android:background="@drawable/round_game"
-            android:scaleType="fitXY"
-            android:src="@drawable/grid_about_other" />
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/grid_click"

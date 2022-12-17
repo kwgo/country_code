@@ -10,8 +10,8 @@ android {
         applicationId "com.jchip.wear.country.city"
         minSdk 23
         targetSdk 32
-        versionCode 3
-        versionName "1.3"
+        versionCode 1
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

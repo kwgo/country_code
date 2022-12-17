@@ -49,7 +49,7 @@
                 android:paddingEnd="12dp"
                 android:paddingBottom="12dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/grid_back" />
+                android:src="@drawable/image_back" />
 
             <Spinner
                 android:id="@+id/grid_sort"
@@ -68,19 +68,6 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
                 android:visibility="invisible" />
-
-            <ImageView
-                android:id="@+id/grid_dots"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignStart="@id/grid_sort"
-                android:layout_alignLeft="@id/grid_sort"
-                android:layout_centerVertical="true"
-                android:layout_gravity="end"
-                android:layout_marginStart="0dp"
-                android:autoMirrored="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/grid_dots" />
 
         </RelativeLayout>
     </LinearLayout>
