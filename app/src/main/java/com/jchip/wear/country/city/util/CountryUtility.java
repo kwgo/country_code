@@ -76,12 +76,14 @@ public abstract class CountryUtility {
     }
 
     public static int getSourceId(Context context, String item, String type, String prefix) {
-        String name = prefix + "_" + item.toLowerCase();
+        String name = (prefix != null ? prefix + "_" : "") + item.toLowerCase();
+        Log.d("XX", "look name=" + name);
+
         return context.getResources().getIdentifier(name, type, context.getPackageName());
     }
 
     public static String getSourceText(Context context, String item, String type, String prefix) {
-        int sourceId = getSourceId(context, item, type, prefix);
+         int sourceId = getSourceId(context, item, type, prefix);
         return context.getResources().getString(sourceId);
     }
 

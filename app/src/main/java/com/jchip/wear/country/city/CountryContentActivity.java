@@ -21,7 +21,7 @@ public class CountryContentActivity extends Activity {
 
     private TextView searchText;
     private RecyclerView gridView;
-    private RecyclerView.ItemDecoration itemDecoration;
+    //private RecyclerView.ItemDecoration itemDecoration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class CountryContentActivity extends Activity {
     private void refreshGridView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         this.gridView.setLayoutManager(layoutManager);
-        this.gridView.removeItemDecoration(this.itemDecoration);
+        //this.gridView.removeItemDecoration(this.itemDecoration);
         gridView.setAdapter(new CountryContentAdapter(this, this.info, this.gridInfo));
     }
 
@@ -98,11 +98,5 @@ public class CountryContentActivity extends Activity {
         Log.d("xx", "info size=" + this.gridInfo.size());
         CountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, 0);
         refreshGridView();
-    }
-
-    public void onSelect(View view, String item) {
-//             Intent intent = new Intent(this, CountryDetailActivity.class);
-//            intent.putExtra("countryCode", item);
-//            startActivity(intent);
     }
 }

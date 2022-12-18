@@ -1,7 +1,7 @@
 package com.jchip.wear.country.city;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +39,6 @@ public class CountryContentAdapter extends RecyclerView.Adapter<CountryContentAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.d("xx", "bind position=" + position);
         holder.bind(position);
     }
 
@@ -56,17 +55,12 @@ public class CountryContentAdapter extends RecyclerView.Adapter<CountryContentAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         public void bind(int row) {
             this.item = gridInfo.get(row);
-            String[] iso = info.get(this.item);
-
-            Log.d("XX", "item == " + item);
 
             int sourceId = CountryUtility.getSourceId(context, this.item, "drawable", "flag");
-            Log.d("XX", "sourceId == " + sourceId);
-
             this.countryFlag.setImageResource(sourceId);
 
-            this.countryCode.setText(iso[CountryViewHelper.ALPHA_2]);
-            this.countryCurrency.setText(iso[CountryViewHelper.CURRENCY]);
+            this.countryCode.setText(this.getItemText(CountryViewHelper.ALPHA_2));
+            this.countryCurrency.setText(this.getItemText(CountryViewHelper.CURRENCY));
 
             this.countryName.setText(CountryUtility.getSourceText(context, this.item, "string", "short"));
             this.countryCapital.setText(CountryUtility.getSourceText(context, this.item, "string", "capital"));
@@ -86,7 +80,18 @@ public class CountryContentAdapter extends RecyclerView.Adapter<CountryContentAd
             this.countryCurrency = itemView.findViewById(R.id.country_currency);
             this.countryName = itemView.findViewById(R.id.country_name);
             this.countryCapital = itemView.findViewById(R.id.country_capital);
-            itemView.setOnClickListener((v) -> ((CountryContentActivity) context).onSelect(itemView, item));
+            itemView.setOnClickListener((v) -> this.onSelect(item));
+        }
+
+        private String getItemText(int itemIndex) {
+            String itemText = info.get(this.item)[itemIndex];
+            return itemText == null || itemText.isEmpty() ? "-" : itemText;
+        }
+
+        private void onSelect(String item) {
+            Intent intent = new Intent(context, CountryDetailActivity.class);
+            intent.putExtra("country", item);
+            context.startActivity(intent);
         }
     }
 }
