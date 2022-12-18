@@ -21,7 +21,6 @@ public class CountryContentActivity extends Activity {
 
     private TextView searchText;
     private RecyclerView gridView;
-    //private RecyclerView.ItemDecoration itemDecoration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class CountryContentActivity extends Activity {
         String searchText = intent.getStringExtra("searchText");
         this.searchText.setText(searchText);
         this.findViewById(R.id.country_hint).setVisibility(searchText == null || searchText.isEmpty() ? View.VISIBLE : View.INVISIBLE);
-        
+
         this.onSearch();
     }
 
@@ -58,44 +57,12 @@ public class CountryContentActivity extends Activity {
     private void refreshGridView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         this.gridView.setLayoutManager(layoutManager);
-        //this.gridView.removeItemDecoration(this.itemDecoration);
         gridView.setAdapter(new CountryContentAdapter(this, this.info, this.gridInfo));
-    }
-
-    private void initSearchText() {
-//        searchText = findViewById(R.id.country_search);
-//        searchText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                //CountryUtility.runOnUiWorker(CountryContentActivity.this, R.id.grid_processing, () -> {
-//                    onSearch();
-//               // });
-//            }
-//        });
-//        searchText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
-//            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
-//                textView.clearFocus();
-//                InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
-//                return true;
-//            }
-//            return false;
-//        });
     }
 
     private void onSearch() {
         String searchText = this.searchText.getText().toString().trim().toUpperCase();
-        Log.d("xx", "searchText=" + searchText);
         this.gridInfo = CountryViewHelper.searchCountryInfo(this, this.info, searchText);
-        Log.d("xx", "info size=" + this.gridInfo.size());
         CountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, 0);
         refreshGridView();
     }

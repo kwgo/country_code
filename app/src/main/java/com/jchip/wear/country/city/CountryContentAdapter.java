@@ -80,7 +80,7 @@ public class CountryContentAdapter extends RecyclerView.Adapter<CountryContentAd
             this.countryCurrency = itemView.findViewById(R.id.country_currency);
             this.countryName = itemView.findViewById(R.id.country_name);
             this.countryCapital = itemView.findViewById(R.id.country_capital);
-            itemView.setOnClickListener((v) -> this.onSelect(item));
+            itemView.setOnClickListener((v) -> this.onSelect());
         }
 
         private String getItemText(int itemIndex) {
@@ -88,9 +88,9 @@ public class CountryContentAdapter extends RecyclerView.Adapter<CountryContentAd
             return itemText == null || itemText.isEmpty() ? "-" : itemText;
         }
 
-        private void onSelect(String item) {
+        private void onSelect() {
             Intent intent = new Intent(context, CountryDetailActivity.class);
-            intent.putExtra("country", item);
+            intent.putExtra("country", this.item);
             context.startActivity(intent);
         }
     }

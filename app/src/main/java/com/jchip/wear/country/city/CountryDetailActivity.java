@@ -3,7 +3,6 @@ package com.jchip.wear.country.city;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,32 +12,26 @@ import com.jchip.wear.country.city.util.CountryUtility;
 
 public class CountryDetailActivity extends Activity {
 
-    private String[] countryInfo;
+    private String countryCode;
     private RecyclerView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.country_detail_activity);
-        Log.d("xx", "222");
 
         this.gridView = findViewById(R.id.country_detail_view);
 
-
         Intent intent = this.getIntent();
-        String item = intent.getStringExtra("country");
-        if (item != null) {
-            this.countryInfo = CountryViewHelper.getISOInfo().get(item);
-        }
-
-        if (this.countryInfo.length > 0) {
-
-            int sourceId = CountryUtility.getSourceId(this, this.countryInfo[CountryHelper.ALPHA_2], "drawable", "flag");
+        this.countryCode = intent.getStringExtra("country");
+        if (this.countryCode != null && !this.countryCode.isEmpty()) {
+            int sourceId = CountryUtility.getSourceId(this, this.countryCode, "drawable", "flag");
             ImageView imageView = this.findViewById(R.id.country_icon);
             imageView.setImageResource(sourceId);
             imageView.setOnClickListener((v) -> this.finish());
 
             this.findViewById(R.id.country_back).setOnClickListener((v) -> this.finish());
+            this.findViewById(R.id.country_city).setOnClickListener((v) -> this.onSelect());
 
             this.refreshGridView();
         } else {
@@ -49,6 +42,12 @@ public class CountryDetailActivity extends Activity {
     private void refreshGridView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         this.gridView.setLayoutManager(layoutManager);
-        gridView.setAdapter(new CountryDetailAdapter(this, this.countryInfo));
+        gridView.setAdapter(new CountryDetailAdapter(this, CountryViewHelper.getISOInfo().get(countryCode)));
+    }
+
+    private void onSelect() {
+        Intent intent = new Intent(this, CityContentActivity.class);
+        intent.putExtra("country", countryCode);
+        this.startActivity(intent);
     }
 }
