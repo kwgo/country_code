@@ -21,6 +21,7 @@ public class SearchKeyboardActivity extends Activity {
         EditText textView = this.findViewById(R.id.input_text);
         textView.setText(text);
 
+        this.findViewById(R.id.key_cancel).setOnClickListener((v) -> this.onCancel());
         this.findViewById(R.id.key_done).setOnClickListener((v) -> this.onSubmit());
         this.findViewById(R.id.key_back).setOnClickListener((v) -> this.finish());
 
@@ -33,11 +34,19 @@ public class SearchKeyboardActivity extends Activity {
         textView.setText(text + key);
     }
 
-    private void onSubmit()  {
+    private void onCancel() {
+        TextView inputView = this.findViewById(R.id.input_text);
+        String inputText = inputView.getText().toString();
+        if (inputText != null && inputText.length() > 0) {
+            inputView.setText(inputText.substring(0, inputText.length() - 1));
+        }
+    }
+
+    private void onSubmit() {
         try {
-            TextView searchText = this.findViewById(R.id.input_text);
+            TextView inputView = this.findViewById(R.id.input_text);
             Intent intent = new Intent(this, Class.forName(this.className));
-            intent.putExtra("searchText", searchText.getText().toString());
+            intent.putExtra("searchText", inputView.getText().toString());
             startActivity(intent);
         } catch (Exception ignore) {
         }
