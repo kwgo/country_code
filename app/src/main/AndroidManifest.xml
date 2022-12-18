@@ -38,7 +38,9 @@
 
         <activity android:name=".CityContentActivity" />
 
-        <activity android:name=".SearchKeyboardActivity" />
+        <activity
+            android:name=".SearchKeyboardActivity"
+            android:noHistory="true" />
 
     </application>
 

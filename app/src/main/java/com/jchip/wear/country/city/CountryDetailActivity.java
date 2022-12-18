@@ -47,7 +47,7 @@ public class CountryDetailActivity extends Activity {
 
     private void onSelect() {
         Intent intent = new Intent(this, CityContentActivity.class);
-        intent.putExtra("country", countryCode);
+        intent.putExtra("country", this.countryCode);
         this.startActivity(intent);
     }
 }

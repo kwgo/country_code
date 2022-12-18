@@ -7,8 +7,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class SearchKeyboardActivity extends Activity {
-    private String className;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,8 +14,6 @@ public class SearchKeyboardActivity extends Activity {
 
         Intent intent = this.getIntent();
         String text = intent.getStringExtra("text");
-        this.className = intent.getStringExtra("class");
-
         EditText textView = this.findViewById(R.id.input_text);
         textView.setText(text);
 
@@ -43,13 +39,11 @@ public class SearchKeyboardActivity extends Activity {
     }
 
     private void onSubmit() {
-        try {
-            TextView inputView = this.findViewById(R.id.input_text);
-            Intent intent = new Intent(this, Class.forName(this.className));
-            intent.putExtra("searchText", inputView.getText().toString());
-            startActivity(intent);
-        } catch (Exception ignore) {
-        }
+        TextView inputView = this.findViewById(R.id.input_text);
+        Intent data = new Intent();
+        data.putExtra("search", inputView.getText().toString());
+        this.setResult(RESULT_OK, data);
+        this.finish();
     }
 
     private void initKeyboard() {

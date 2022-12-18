@@ -38,20 +38,7 @@ public class CountryContentActivity extends Activity {
 
         this.searchText = this.findViewById(R.id.country_search);
 
-        Intent intent = this.getIntent();
-        String searchText = intent.getStringExtra("searchText");
-        this.searchText.setText(searchText);
-        this.findViewById(R.id.country_hint).setVisibility(searchText == null || searchText.isEmpty() ? View.VISIBLE : View.INVISIBLE);
-
         this.onSearch();
-    }
-
-    private void loadKeyboard() {
-        TextView searchText = this.findViewById(R.id.country_search);
-        Intent intent = new Intent(this, SearchKeyboardActivity.class);
-        intent.putExtra("text", searchText.getText().toString());
-        intent.putExtra("class", this.getClass().getName());
-        startActivity(intent);
     }
 
     private void refreshGridView() {
@@ -65,5 +52,22 @@ public class CountryContentActivity extends Activity {
         this.gridInfo = CountryViewHelper.searchCountryInfo(this, this.info, searchText);
         CountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, 0);
         refreshGridView();
+    }
+
+    private void loadKeyboard() {
+        TextView searchText = this.findViewById(R.id.country_search);
+        Intent intent = new Intent(this, SearchKeyboardActivity.class);
+        intent.putExtra("text", searchText.getText().toString());
+        this.startActivityForResult(intent, 100);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == 100) {
+            String search = data.getStringExtra("search");
+            this.searchText.setText(search);
+            this.findViewById(R.id.country_hint).setVisibility(search == null || search.isEmpty() ? View.VISIBLE : View.INVISIBLE);
+            this.onSearch();
+        }
     }
 }

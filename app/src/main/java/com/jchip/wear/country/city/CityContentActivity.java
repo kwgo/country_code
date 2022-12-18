@@ -32,8 +32,10 @@ public class CityContentActivity extends Activity {
         setContentView(R.layout.city_content_activity);
 
         this.gridView = findViewById(R.id.city_grid_view);
+        this.searchText = this.findViewById(R.id.city_search);
 
-        this.countryCode = this.getIntent().getStringExtra("country");
+        Intent intent = this.getIntent();
+        this.countryCode = intent.getStringExtra("country");
         Log.d("xx", "country code =" + countryCode);
         if (this.countryCode != null && !this.countryCode.isEmpty()) {
             this.cities = CityHelper.getCities(this, this.countryCode);
@@ -43,12 +45,9 @@ public class CityContentActivity extends Activity {
             }
             this.gridInfo = new ArrayList<>(this.indexInfo);
 
-            this.searchText = this.findViewById(R.id.city_search);
 
-            Intent intent = this.getIntent();
-            String searchText = intent.getStringExtra("searchText");
-            this.searchText.setText(searchText);
-            this.findViewById(R.id.city_hint).setVisibility(searchText == null || searchText.isEmpty() ? View.VISIBLE : View.INVISIBLE);
+            //      String search = intent.getStringExtra("search");
+            //    this.searchText.setText(search);
             this.findViewById(R.id.city_title).setOnClickListener((v) -> loadKeyboard());
             this.findViewById(R.id.city_back).setOnClickListener((v) -> this.finish());
 
@@ -64,14 +63,6 @@ public class CityContentActivity extends Activity {
         gridView.setAdapter(new CityContentAdapter(this, this.cities, this.gridInfo));
     }
 
-    private void loadKeyboard() {
-        TextView searchText = this.findViewById(R.id.city_search);
-        Intent intent = new Intent(this, SearchKeyboardActivity.class);
-        intent.putExtra("text", searchText.getText().toString());
-        intent.putExtra("class", this.getClass().getName());
-        startActivity(intent);
-    }
-
     private void onSearch() {
         String searchText = this.searchText.getText().toString().trim().toUpperCase();
         this.gridInfo = CityViewHelper.searchCities(this.cities, this.indexInfo, searchText);
@@ -80,5 +71,22 @@ public class CityContentActivity extends Activity {
 
         //this.gridInfo = new ArrayList<>(this.indexInfo);
         this.refreshGridView();
+    }
+
+    private void loadKeyboard() {
+        TextView searchText = this.findViewById(R.id.city_search);
+        Intent intent = new Intent(this, SearchKeyboardActivity.class);
+        intent.putExtra("text", searchText.getText().toString());
+        this.startActivityForResult(intent, 100);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == 100) {
+            String search = data.getStringExtra("search");
+            this.searchText.setText(search);
+            this.findViewById(R.id.city_hint).setVisibility(search == null || search.isEmpty() ? View.VISIBLE : View.INVISIBLE);
+            this.onSearch();
+        }
     }
 }
