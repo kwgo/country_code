@@ -35,7 +35,7 @@ public class CountryDetailActivity extends Activity {
 
             this.refreshGridView();
         } else {
-            this.finish();
+            startActivity(new Intent(this, CountryContentActivity.class));
         }
     }
 

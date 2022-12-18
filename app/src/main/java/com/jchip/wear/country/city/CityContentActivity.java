@@ -34,6 +34,7 @@ public class CityContentActivity extends Activity {
         this.gridView = findViewById(R.id.city_grid_view);
 
         this.countryCode = this.getIntent().getStringExtra("country");
+        Log.d("xx", "country code =" + countryCode);
         if (this.countryCode != null && !this.countryCode.isEmpty()) {
             this.cities = CityHelper.getCities(this, this.countryCode);
             this.indexInfo = new ArrayList<>();
@@ -53,7 +54,7 @@ public class CityContentActivity extends Activity {
 
             this.onSearch();
         } else {
-            this.finish();
+            startActivity(new Intent(this, CountryContentActivity.class));
         }
     }
 
@@ -78,5 +79,6 @@ public class CityContentActivity extends Activity {
         Log.d("pp", "xx after sorted cities indexInfo == " + indexInfo);
 
         //this.gridInfo = new ArrayList<>(this.indexInfo);
+        this.refreshGridView();
     }
 }
