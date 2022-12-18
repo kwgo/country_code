@@ -76,10 +76,12 @@ public class CountryDetailAdapter extends RecyclerView.Adapter<CountryDetailAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public void bind(int row) {
-            int sourceId = CountryUtility.getSourceId(context, this.item, "drawable", "flag");
-            this.countryFlag.setImageResource(sourceId);
-
             int itemIndex = CountryDetailAdapter.itemIndexes[row];
+            if (itemIndex == CountryHelper.FLAG_RATIO) {
+                int sourceId = CountryUtility.getSourceId(context, this.item, "drawable", "good");
+                this.countryFlag.setImageResource(sourceId);
+                this.countryFlag.setVisibility(View.VISIBLE);
+            }
             this.countryHeader.setText(CountryUtility.getSourceText(context, headerItems[itemIndex], "string", null));
             this.countryDetail.setText(this.getItemText(itemIndex));
         }

@@ -6,6 +6,8 @@
     <string name="widget_ratio">Proporción Bandera</string>
 
     <string name="grid_search">Buscar</string>
+    <string name="city_search">City</string>
+    <string name="key_search">Done</string>
 
     <string name="head_country_name">Nombre del país</string>
     <string name="head_official_name">Nombre oficial</string>

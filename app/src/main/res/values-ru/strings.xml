@@ -5,6 +5,8 @@
     <string name="widget_ratio">Соотношение Флаг</string>
 
     <string name="grid_search">Поиск</string>
+    <string name="city_search">City</string>
+    <string name="key_search">Done</string>
 
     <string name="head_country_name">Название страны</string>
     <string name="head_official_name">Официальное</string>

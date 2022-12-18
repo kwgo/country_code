@@ -5,6 +5,8 @@
     <string name="widget_ratio">العلم النسبة</string>
 
     <string name="grid_search">بحث</string>
+    <string name="city_search">City</string>
+    <string name="key_search">Done</string>
 
     <string name="head_country_name">اسم الدولة</string>
     <string name="head_official_name">اسم رسمي</string>

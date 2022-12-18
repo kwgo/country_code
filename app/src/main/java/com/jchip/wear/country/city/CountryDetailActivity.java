@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.jchip.wear.country.city.util.CountryUtility;
 
 public class CountryDetailActivity extends Activity {
 
@@ -29,6 +32,14 @@ public class CountryDetailActivity extends Activity {
         }
 
         if (this.countryInfo.length > 0) {
+
+            int sourceId = CountryUtility.getSourceId(this, this.countryInfo[CountryHelper.ALPHA_2], "drawable", "flag");
+            ImageView imageView = this.findViewById(R.id.country_icon);
+            imageView.setImageResource(sourceId);
+            imageView.setOnClickListener((v) -> this.finish());
+
+            this.findViewById(R.id.country_back).setOnClickListener((v) -> this.finish());
+
             this.refreshGridView();
         } else {
             this.finish();

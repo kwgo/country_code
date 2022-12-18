@@ -5,6 +5,8 @@
     <string name="widget_ratio">Ratio Drapeau</string>
 
     <string name="grid_search">Chercher</string>
+    <string name="city_search">City</string>
+    <string name="key_search">Done</string>
 
     <string name="head_country_name">Nom du pays</string>
     <string name="head_official_name">Nom officiel</string>
