@@ -77,7 +77,6 @@ public abstract class CountryUtility {
 
     public static int getSourceId(Context context, String item, String type, String prefix) {
         String name = (prefix != null ? prefix + "_" : "") + item.toLowerCase();
-       Log.d("vv", "source name=" +name);
         return context.getResources().getIdentifier(name, type, context.getPackageName());
     }
 

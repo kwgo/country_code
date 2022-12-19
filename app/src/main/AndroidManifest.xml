@@ -36,6 +36,8 @@
 
         <activity android:name=".CountryDetailActivity" />
 
+        <activity android:name=".CountryFlagActivity" />
+
         <activity android:name=".CityContentActivity" />
 
         <activity android:name=".CityDetailActivity" />

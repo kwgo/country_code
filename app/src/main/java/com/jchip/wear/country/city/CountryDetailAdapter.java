@@ -81,6 +81,7 @@ public class CountryDetailAdapter extends RecyclerView.Adapter<CountryDetailAdap
                 int sourceId = CountryUtility.getSourceId(context, this.item, "drawable", "good");
                 this.countryFlag.setImageResource(sourceId);
                 this.countryFlag.setVisibility(View.VISIBLE);
+                this.countryFlag.setOnClickListener((v) -> ((CountryDetailActivity) context).onFlag());
             }
             this.countryHeader.setText(CountryUtility.getSourceText(context, headerItems[itemIndex], "string", null));
             this.countryDetail.setText(this.getItemText(itemIndex));

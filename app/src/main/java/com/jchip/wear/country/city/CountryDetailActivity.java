@@ -3,12 +3,14 @@ package com.jchip.wear.country.city;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jchip.wear.country.city.util.CountryUtility;
+import com.jchip.wear.country.city.util.GestureDetector;
 
 public class CountryDetailActivity extends Activity {
 
@@ -28,7 +30,15 @@ public class CountryDetailActivity extends Activity {
             int sourceId = CountryUtility.getSourceId(this, this.countryCode, "drawable", "flag");
             ImageView imageView = this.findViewById(R.id.country_icon);
             imageView.setImageResource(sourceId);
-            imageView.setOnClickListener((v) -> this.finish());
+            imageView.setOnTouchListener((v, e) -> {
+                return new GestureDetector(this) {
+                    @Override
+                    public boolean onDoubleTap(MotionEvent event) {
+                        onFlag();
+                        return true;
+                    }
+                }.onTouchEvent(v, e);
+            });
 
             this.findViewById(R.id.country_back).setOnClickListener((v) -> this.finish());
             this.findViewById(R.id.country_city).setOnClickListener((v) -> this.onSelect());
@@ -47,6 +57,12 @@ public class CountryDetailActivity extends Activity {
 
     private void onSelect() {
         Intent intent = new Intent(this, CityContentActivity.class);
+        intent.putExtra("country", this.countryCode);
+        this.startActivity(intent);
+    }
+
+    public void onFlag() {
+        Intent intent = new Intent(this, CountryFlagActivity.class);
         intent.putExtra("country", this.countryCode);
         this.startActivity(intent);
     }
