@@ -1,30 +1,23 @@
 package com.jchip.wear.country.city;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.jchip.wear.country.city.util.CountryUtility;
 
 import java.util.List;
 
 public class CityContentAdapter extends RecyclerView.Adapter<CityContentAdapter.ViewHolder> {
 
     private Context context;
-    private List<String[]> cities;
-    private List<Integer> gridInfo;
+    private List<String[]> gridInfo;
 
 
-    public CityContentAdapter(Context context, List<String[]> cities, List<Integer> gridInfo) {
+    public CityContentAdapter(Context context, List<String[]> gridInfo) {
         this.context = context;
-        this.cities = cities;
         this.gridInfo = gridInfo;
     }
 
@@ -55,19 +48,30 @@ public class CityContentAdapter extends RecyclerView.Adapter<CityContentAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public void bind(int row) {
-            int index = gridInfo.get(row);
-            this.city = cities.get(index);
+            this.city= gridInfo.get(row);
 
-            this.cityName.setText(this.getItemText(CityHelper.CITY));
+            this.cityName.setText(this.getItemText(CityHelper.CITY_ASCII));
             this.cityAdmin.setText(this.getItemText(CityHelper.ADMIN_NAME));
+
+            int resourceId = R.drawable.image_city_normal;
+            if (CityViewHelper.isPrimary(city)) {
+                resourceId = R.drawable.image_city_primary;
+            } else if (CityViewHelper.isAdmin(city)) {
+                resourceId = R.drawable.image_city_admin;
+            } else if (CityViewHelper.isMinor(city)) {
+                resourceId = R.drawable.image_city_minor;
+            }
+            cityType.setBackgroundResource(resourceId);
         }
 
         private String[] city;
+        private View cityType;
         private TextView cityName;
         private TextView cityAdmin;
 
         ViewHolder(View itemView) {
             super(itemView);
+            this.cityType = itemView.findViewById(R.id.city_type);
             this.cityName = itemView.findViewById(R.id.city_name);
             this.cityAdmin = itemView.findViewById(R.id.city_admin);
             itemView.setOnClickListener((v) -> this.onSelect());

@@ -32,7 +32,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/grid_board"
+            android:background="@drawable/image_board"
             android:orientation="vertical">
 
             <com.jchip.wear.country.city.util.RoundImageView
@@ -57,7 +57,7 @@
             android:id="@+id/country_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/grid_board"
+            android:background="@drawable/image_board"
             android:orientation="horizontal"
             android:paddingTop="5dp"
             android:paddingBottom="5dp">

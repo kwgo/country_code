@@ -33,7 +33,7 @@
             android:id="@+id/city_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/grid_board"
+            android:background="@drawable/image_board"
             android:orientation="horizontal"
             android:paddingBottom="2dp">
 

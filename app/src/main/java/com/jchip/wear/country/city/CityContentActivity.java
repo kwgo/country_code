@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,8 +19,8 @@ public class CityContentActivity extends Activity {
 
     private List<String[]> cities;
 
-    private List<Integer> indexInfo;
-    private List<Integer> gridInfo;
+    //private List<Integer> indexInfo;
+    private List<String[]> gridInfo;
 
     private RecyclerView gridView;
     private TextView searchText;
@@ -39,11 +38,11 @@ public class CityContentActivity extends Activity {
         Log.d("xx", "country code =" + countryCode);
         if (this.countryCode != null && !this.countryCode.isEmpty()) {
             this.cities = CityHelper.getCities(this, this.countryCode);
-            this.indexInfo = new ArrayList<>();
-            for (int index = 0; index < this.cities.size(); index++) {
-                this.indexInfo.add(index);
-            }
-            this.gridInfo = new ArrayList<>(this.indexInfo);
+//            this.gridInfo = new ArrayList<>();
+//            for (int index = 0; index < this.cities.size(); index++) {
+//                this.gridInfo.add(index);
+//            }
+           // this.gridInfo = new ArrayList<>(this.indexInfo);
 
 
             //      String search = intent.getStringExtra("search");
@@ -60,16 +59,13 @@ public class CityContentActivity extends Activity {
     private void refreshGridView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         this.gridView.setLayoutManager(layoutManager);
-        gridView.setAdapter(new CityContentAdapter(this, this.cities, this.gridInfo));
+        gridView.setAdapter(new CityContentAdapter(this, this.gridInfo));
     }
 
     private void onSearch() {
         String searchText = this.searchText.getText().toString().trim().toUpperCase();
-        this.gridInfo = CityViewHelper.searchCities(this.cities, this.indexInfo, searchText);
-        //this.indexInfo = CityHelper.sortCities(this.gridInfo, 0);
-        Log.d("pp", "xx after sorted cities indexInfo == " + indexInfo);
-
-        //this.gridInfo = new ArrayList<>(this.indexInfo);
+        this.gridInfo = CityViewHelper.searchCities(this.cities, searchText);
+        this.gridInfo = CityHelper.sortCities(gridInfo, 0);
         this.refreshGridView();
     }
 

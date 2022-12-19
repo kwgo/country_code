@@ -28,32 +28,28 @@ public abstract class CityHelper {
     public static final int SORT_ADMIN_CITY = 2;
     public static final int SORT_LARGER_CITY = 3;
 
-    public static List<Integer> sortCities(final List<String[]> cities, final int sortIndex) {
-        List<Integer> sortedCities = new ArrayList<>();
+    public static List<String[]> sortCities(final List<String[]> cities, final int sortIndex) {
+        List<String[]> sortedCities = new ArrayList<>();
         if (sortIndex == SORT_ADMIN_CITY) {
             for (int index = 0; index < cities.size(); index++) {
                 String[] city = cities.get(index);
                 if (CityViewHelper.isPrimary(city) || CityViewHelper.isAdmin(city)) {
-                    sortedCities.add(index);
+                    sortedCities.add(city);
                 }
             }
         } else if (sortIndex == SORT_LARGER_CITY) {
             for (int index = 0; index < cities.size(); index++) {
                 String[] city = cities.get(index);
                 if (!CityViewHelper.isMinor(city)) {
-                    sortedCities.add(index);
+                    sortedCities.add(city);
                 }
             }
         } else {
-            for (int index = 0; index < cities.size(); index++) {
-                sortedCities.add(index);
-            }
+            sortedCities.addAll(cities);
         }
-        Collections.sort(sortedCities, new Comparator<Integer>() {
+        Collections.sort(sortedCities, new Comparator<String[]>() {
             @Override
-            public int compare(Integer index1, Integer index2) {
-                String[] city1 = cities.get(index1);
-                String[] city2 = cities.get(index2);
+            public int compare( String[] city1,  String[] city2) {
                 if (CityViewHelper.isPrimary(city1) && !CityViewHelper.isPrimary(city2)) {
                     return -1;
                 } else if (!CityViewHelper.isPrimary(city1) && CityViewHelper.isPrimary(city2)) {
@@ -80,25 +76,22 @@ public abstract class CityHelper {
         return sortedCities;
     }
 
-    public static List<Integer> searchCities(List<String[]> cities, List<Integer> indexInfo, String searchText) {
-        List<Integer> searchCities = new ArrayList<>();
+    public static List<String[]> searchCities(List<String[]> cities, String searchText) {
+        List<String[]> searchCities = new ArrayList<>();
         if (!searchText.trim().isEmpty()) {
             searchText = searchText.trim().toUpperCase();
-            for (int index : indexInfo) {
-                String[] city = cities.get(index);
-                for (int itemIndex = 0; itemIndex < city.length; itemIndex++) {
-                    if(searchCities.contains(index)) {
-                        break;
-                    }
-                    if (itemIndex == CITY || itemIndex == CITY_ASCII || itemIndex == ADMIN_NAME || itemIndex == LAT || itemIndex == LNG) {
-                        if (city[itemIndex].toUpperCase().contains(searchText)) {
-                            searchCities.add(index);
+            for (String[] city : cities) {
+                for (int searchIndex = 0; searchIndex < city.length; searchIndex++) {
+                    if (searchIndex == CITY || searchIndex == CITY_ASCII || searchIndex == ADMIN_NAME || searchIndex == LAT || searchIndex == LNG) {
+                        if (city[searchIndex].toUpperCase().contains(searchText)) {
+                            searchCities.add(city);
+                            break;
                         }
                     }
                 }
             }
         } else {
-            searchCities = new ArrayList<>(indexInfo);
+            searchCities.addAll(cities);
         }
         return searchCities;
     }
