@@ -35,6 +35,11 @@
     <string name="head_city_lng">經度</string>
     <string name="head_city_population">人口</string>
 
+    <string name="city_type_primary">Primary</string>
+    <string name="city_type_admin">Admin</string>
+    <string name="city_type_minor">Minor</string>
+    <string name="city_type_">Normal</string>
+
     <string-array name="grid_city_sort_items">
         <item>所有城市</item>
         <item>排序城市</item>

@@ -35,6 +35,11 @@
     <string name="head_city_lng">خط الطول</string>
     <string name="head_city_population">السكان</string>
 
+    <string name="city_type_primary">Primary</string>
+    <string name="city_type_admin">Admin</string>
+    <string name="city_type_minor">Minor</string>
+    <string name="city_type_">Normal</string>
+
     <string-array name="grid_city_sort_items">
         <item>الكل</item>
         <item>فرز</item>

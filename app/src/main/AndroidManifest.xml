@@ -38,6 +38,8 @@
 
         <activity android:name=".CityContentActivity" />
 
+        <activity android:name=".CityDetailActivity" />
+
         <activity
             android:name=".SearchKeyboardActivity"
             android:noHistory="true" />

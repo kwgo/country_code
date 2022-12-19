@@ -1,6 +1,7 @@
 package com.jchip.wear.country.city;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class CityContentAdapter extends RecyclerView.Adapter<CityContentAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public void bind(int row) {
-            this.city= gridInfo.get(row);
+            this.city = gridInfo.get(row);
 
             this.cityName.setText(this.getItemText(CityHelper.CITY_ASCII));
             this.cityAdmin.setText(this.getItemText(CityHelper.ADMIN_NAME));
@@ -61,7 +62,7 @@ public class CityContentAdapter extends RecyclerView.Adapter<CityContentAdapter.
             } else if (CityViewHelper.isMinor(city)) {
                 resourceId = R.drawable.image_city_minor;
             }
-            cityType.setBackgroundResource(resourceId);
+            this.cityType.setBackgroundResource(resourceId);
         }
 
         private String[] city;
@@ -83,9 +84,9 @@ public class CityContentAdapter extends RecyclerView.Adapter<CityContentAdapter.
         }
 
         private void onSelect() {
-//        Intent intent = new Intent(context, CityDetailActivity.class);
-//        intent.putExtra("city", this.city);
-//        context.startActivity(intent);
+            Intent intent = new Intent(context, CityDetailActivity.class);
+            intent.putExtra("city", this.city);
+            context.startActivity(intent);
         }
     }
 }
