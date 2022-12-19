@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Код Страна</string>
+    <string name="app_name">Страна и Город</string>
     <string name="app_author">JChip Game</string>
     <string name="widget_flag">Флаг</string>
     <string name="widget_ratio">Соотношение Флаг</string>
 
     <string name="grid_search">Поиск</string>
-    <string name="city_search">City</string>
-    <string name="key_search">Done</string>
+    <string name="city_search">Город</string>
+    <string name="key_search">Поиск</string>
 
     <string name="head_country_name">Название страны</string>
     <string name="head_official_name">Официальное</string>
@@ -35,10 +35,10 @@
     <string name="head_city_lng">Долгота</string>
     <string name="head_city_population">Население</string>
 
-    <string name="city_type_primary">Primary</string>
-    <string name="city_type_admin">Admin</string>
-    <string name="city_type_minor">Minor</string>
-    <string name="city_type_">Normal</string>
+    <string name="city_type_primary">Основной</string>
+    <string name="city_type_admin">Админ</string>
+    <string name="city_type_minor">Незначительный</string>
+    <string name="city_type_">Обычный</string>
 
     <string-array name="grid_city_sort_items">
         <item>Все</item>

@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">الرقم الدولة</string>
+    <string name="app_name">الدولة والمدينة</string>
     <string name="app_author">JChip Game</string>
     <string name="widget_flag">العلم الوطني</string>
     <string name="widget_ratio">العلم النسبة</string>
 
     <string name="grid_search">بحث</string>
-    <string name="city_search">City</string>
-    <string name="key_search">Done</string>
+    <string name="city_search">مدينة</string>
+    <string name="key_search">بحث</string>
 
     <string name="head_country_name">اسم الدولة</string>
     <string name="head_official_name">اسم رسمي</string>
@@ -35,10 +35,10 @@
     <string name="head_city_lng">خط الطول</string>
     <string name="head_city_population">السكان</string>
 
-    <string name="city_type_primary">Primary</string>
-    <string name="city_type_admin">Admin</string>
-    <string name="city_type_minor">Minor</string>
-    <string name="city_type_">Normal</string>
+    <string name="city_type_primary">أساسي</string>
+    <string name="city_type_admin">المسؤول</string>
+    <string name="city_type_minor">ثانوي</string>
+    <string name="city_type_">عادي</string>
 
     <string-array name="grid_city_sort_items">
         <item>الكل</item>

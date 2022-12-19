@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Code Pays</string>
+    <string name="app_name">Pays et Ville</string>
     <string name="app_author">JChip Game</string>
     <string name="widget_flag">Drapeau</string>
     <string name="widget_ratio">Ratio Drapeau</string>
 
     <string name="grid_search">Chercher</string>
-    <string name="city_search">City</string>
-    <string name="key_search">Done</string>
+    <string name="city_search">Ville</string>
+    <string name="key_search">Chercher</string>
 
     <string name="head_country_name">Nom du pays</string>
     <string name="head_official_name">Nom officiel</string>
@@ -35,9 +35,9 @@
     <string name="head_city_lng">Longitude</string>
     <string name="head_city_population">Population</string>
 
-    <string name="city_type_primary">Primary</string>
-    <string name="city_type_admin">Admin</string>
-    <string name="city_type_minor">Minor</string>
+    <string name="city_type_primary">Primaire</string>
+    <string name="city_type_admin">Administrateur</string>
+    <string name="city_type_minor">Mineur</string>
     <string name="city_type_">Normal</string>
 
     <string-array name="grid_city_sort_items">

@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jchip.wear.country.city.util.CountryUtility;
 
+import java.util.Locale;
+
 public class CountryDetailAdapter extends RecyclerView.Adapter<CountryDetailAdapter.ViewHolder> {
 
     protected Context context;
@@ -109,12 +111,14 @@ public class CountryDetailAdapter extends RecyclerView.Adapter<CountryDetailAdap
             if (itemIndex == CountryHelper.COUNTRY || itemIndex == CountryHelper.OFFICIAL || itemIndex == CountryHelper.CAPITAL) {
                 String text = CountryUtility.getSourceText(context, item, "string", itemIndex == CountryHelper.CAPITAL ? "capital" : itemIndex == CountryHelper.OFFICIAL ? "official" : "short");
                 itemText = text + (isEnglish() ? "" : "\n" + itemText);
+            } else if (itemIndex == CountryHelper.SOVEREIGNTY) {
+                itemText = CountryUtility.getSourceText(context, itemText.toLowerCase().replace(" ", "_"), "string", "sovereignty");
             }
             return itemText == null || itemText.isEmpty() ? "-" : itemText;
         }
     }
 
     private boolean isEnglish() {
-        return true;
+        return Locale.getDefault().getLanguage().contentEquals("en");
     }
 }

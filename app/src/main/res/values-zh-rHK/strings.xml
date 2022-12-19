@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">國家代碼</string>
+    <string name="app_name">國家與城市</string>
     <string name="app_author">JChip Game</string>
     <string name="widget_flag">國旗</string>
     <string name="widget_ratio">國旗(原比例)</string>
 
     <string name="grid_search">搜索</string>
-    <string name="city_search">City</string>
-    <string name="key_search">Done</string>
+    <string name="city_search">城市</string>
+    <string name="key_search">搜索</string>
 
     <string name="head_country_name">國家名字</string>
     <string name="head_official_name">官方名字</string>

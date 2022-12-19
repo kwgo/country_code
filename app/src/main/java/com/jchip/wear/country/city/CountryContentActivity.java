@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jchip.wear.country.city.util.CountryUtility;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ public class CountryContentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.country_content_activity);
 
-        // FallUtility.setApplicationLanguage(this, "ar");
+        CountryUtility.setApplicationLanguage(this, "ar");
 
         this.gridView = findViewById(R.id.country_grid_view);
 
