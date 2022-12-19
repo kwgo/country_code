@@ -16,11 +16,20 @@ public class CountryDetailActivity extends Activity {
 
     private String countryCode;
     private RecyclerView gridView;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.country_detail_activity);
+
+        this.gestureDetector = new GestureDetector(this) {
+            @Override
+            public boolean onDoubleTap(MotionEvent event) {
+                onFlag();
+                return true;
+            }
+        };
 
         this.gridView = findViewById(R.id.country_detail_view);
 
@@ -30,15 +39,7 @@ public class CountryDetailActivity extends Activity {
             int sourceId = CountryUtility.getSourceId(this, this.countryCode, "drawable", "flag");
             ImageView imageView = this.findViewById(R.id.country_icon);
             imageView.setImageResource(sourceId);
-            imageView.setOnTouchListener((v, e) -> {
-                return new GestureDetector(this) {
-                    @Override
-                    public boolean onDoubleTap(MotionEvent event) {
-                        onFlag();
-                        return true;
-                    }
-                }.onTouchEvent(v, e);
-            });
+            imageView.setOnTouchListener((v, e) -> gestureDetector.onTouchEvent(v, e));
 
             this.findViewById(R.id.country_back).setOnClickListener((v) -> this.finish());
             this.findViewById(R.id.country_city).setOnClickListener((v) -> this.onSelect());
