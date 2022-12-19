@@ -76,14 +76,11 @@ public class CityDetailAdapter extends RecyclerView.Adapter<CityDetailAdapter.Vi
                 }
                 this.cityType.setBackgroundResource(resourceId);
                 this.cityType.setVisibility(View.VISIBLE);
+            } else {
+                this.cityType.setVisibility(View.INVISIBLE);
             }
-            Log.d("xxxx", "row=="+row);
-            Log.d("xxxx", "key=="+headerItems[row]);
-            Log.d("xxxx", "111");
             this.cityHeader.setText(CountryUtility.getSourceText(context, headerItems[row], "string", null));
-            Log.d("xxxx", "222");
             this.cityDetail.setText(this.getItemText(itemIndex));
-            Log.d("xxxx", "333");
         }
 
         private View cityType;

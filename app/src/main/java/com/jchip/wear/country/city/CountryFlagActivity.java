@@ -3,7 +3,6 @@ package com.jchip.wear.country.city;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,15 +48,17 @@ public class CountryFlagActivity extends Activity {
     }
 
     private void doImage() {
-        Log.d("Oo", "position==="+position);
+        this.imageView.setRotation(0.0f);
+        this.imageView.setRotationX(0.0f);
+        this.imageView.setRotationY(0.0f);
         if (this.position == 0) {
-            this.imageView.setRotation(0.0f);
         } else if (this.position == 1) {
             this.imageView.setRotation(90.0f);
         } else if (this.position == 2) {
-            this.imageView.setRotation(180.0f);
+            this.imageView.setRotationY(180.0f);
         } else if (this.position == 3) {
-            this.imageView.setRotation(-90.0f);
+            this.imageView.setRotation(90.0f);
+            this.imageView.setRotationY(180.0f);
         }
     }
 }

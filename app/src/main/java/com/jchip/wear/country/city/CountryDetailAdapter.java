@@ -1,6 +1,7 @@
 package com.jchip.wear.country.city;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,10 @@ public class CountryDetailAdapter extends RecyclerView.Adapter<CountryDetailAdap
                 this.countryFlag.setImageResource(sourceId);
                 this.countryFlag.setVisibility(View.VISIBLE);
                 this.countryFlag.setOnClickListener((v) -> ((CountryDetailActivity) context).onFlag());
+            } else {
+                this.countryFlag.setVisibility(View.GONE);
             }
+
             this.countryHeader.setText(CountryUtility.getSourceText(context, headerItems[itemIndex], "string", null));
             this.countryDetail.setText(this.getItemText(itemIndex));
         }
