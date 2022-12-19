@@ -3,7 +3,9 @@ package com.jchip.wear.country.city;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jchip.wear.country.city.util.CountryUtility;
 
@@ -25,6 +27,9 @@ public class CountryFlagActivity extends Activity {
             this.imageView = this.findViewById(R.id.country_flag);
             this.imageView.setImageResource(sourceId);
 
+            TextView textView = this.findViewById(R.id.flag_ratio);
+            textView.setText(CountryHelper.getISOInfo().get(this.countryCode)[CountryHelper.FLAG_RATIO]);
+
             this.findViewById(R.id.country_back).setOnClickListener((v) -> this.finish());
             this.findViewById(R.id.country_flip).setOnClickListener((v) -> this.onFlip());
             this.findViewById(R.id.country_rotate).setOnClickListener((v) -> this.onRotate());
@@ -44,14 +49,15 @@ public class CountryFlagActivity extends Activity {
     }
 
     private void doImage() {
+        Log.d("Oo", "position==="+position);
         if (this.position == 0) {
-            this.imageView.setRotation(90.0f);
-        } else if (this.position == 1) {
-            this.imageView.setRotation(180.0f);
-        } else if (this.position == 2) {
-            this.imageView.setRotation(-90.0f);
-        } else if (this.position == 3) {
             this.imageView.setRotation(0.0f);
+        } else if (this.position == 1) {
+            this.imageView.setRotation(90.0f);
+        } else if (this.position == 2) {
+            this.imageView.setRotation(180.0f);
+        } else if (this.position == 3) {
+            this.imageView.setRotation(-90.0f);
         }
     }
 }
