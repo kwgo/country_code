@@ -15,31 +15,4 @@
     <color name="normalColor">@android:color/darker_gray</color>
     <color name="minorColor">@android:color/transparent</color>
 
-
-
-
-    <color name="title">#DEEAF6</color>
-    <color name="detail">#D5883c</color>
-
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-
-    <color name="spark_primary_color">#FFFFC107</color>
-    <color name="spark_secondary_color">#FFFF5722</color>
-    <color name="spark_image_tint">#00000000</color>
-
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-
-
-    <color name="colorPrimary">@android:color/black</color>
-    <color name="colorPrimaryDark">@android:color/black</color>
-    <color name="windowBackground">@android:color/black</color>
-    <color name="colorIcon">@android:color/white</color>
-    <color name="colorTitle">@android:color/white</color>
-    <color name="colorMarker">@android:color/white</color>
-    <color name="colorDetail">@android:color/white</color>
-</resources>
+  </resources>
