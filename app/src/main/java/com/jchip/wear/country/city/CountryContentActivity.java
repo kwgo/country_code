@@ -28,8 +28,7 @@ public class CountryContentActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.country_content_activity);
-
-        CountryUtility.setApplicationLanguage(this, "ar");
+        // CountryUtility.setApplicationLanguage(this, "zh");
 
         this.gridView = findViewById(R.id.country_grid_view);
 
