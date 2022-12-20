@@ -42,9 +42,10 @@ public class CountryDetailAdapter extends RecyclerView.Adapter<CountryDetailAdap
 
     private static final int[] itemIndexes = {
             CountryHelper.COUNTRY, CountryHelper.OFFICIAL, CountryHelper.SOVEREIGNTY,
-            CountryHelper.CAPITAL, CountryHelper.FLAG_RATIO, CountryHelper.ALPHA_2, CountryHelper.ALPHA_3,
+            CountryHelper.CAPITAL, CountryHelper.ALPHA_2, CountryHelper.ALPHA_3,
             CountryHelper.NUMERIC, CountryHelper.INTERNET, CountryHelper.TIMEZONE, CountryHelper.CALL_CODE,
-            CountryHelper.CURRENCY, CountryHelper.CURRENCY_NAME, CountryHelper.FRACTION, CountryHelper.POPULATION
+            CountryHelper.CURRENCY, CountryHelper.CURRENCY_NAME, CountryHelper.FRACTION,
+            CountryHelper.POPULATION, CountryHelper.FLAG_RATIO
     };
 
     public CountryDetailAdapter(Context context, String[] countryInfo) {
