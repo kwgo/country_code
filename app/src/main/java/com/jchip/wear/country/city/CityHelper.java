@@ -2,9 +2,12 @@ package com.jchip.wear.country.city;
 
 import android.content.Context;
 
+import com.jchip.wear.country.city.util.CountryUtility;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,14 +36,14 @@ public abstract class CityHelper {
         if (sortIndex == SORT_ADMIN_CITY) {
             for (int index = 0; index < cities.size(); index++) {
                 String[] city = cities.get(index);
-                if (CityViewHelper.isPrimary(city) || CityViewHelper.isAdmin(city)) {
+                if (CityHelper.isPrimary(city) || CityHelper.isAdmin(city)) {
                     sortedCities.add(city);
                 }
             }
         } else if (sortIndex == SORT_LARGER_CITY) {
             for (int index = 0; index < cities.size(); index++) {
                 String[] city = cities.get(index);
-                if (!CityViewHelper.isMinor(city)) {
+                if (!CityHelper.isMinor(city)) {
                     sortedCities.add(city);
                 }
             }
@@ -49,10 +52,10 @@ public abstract class CityHelper {
         }
         Collections.sort(sortedCities, new Comparator<String[]>() {
             @Override
-            public int compare( String[] city1,  String[] city2) {
-                if (CityViewHelper.isPrimary(city1) && !CityViewHelper.isPrimary(city2)) {
+            public int compare(String[] city1, String[] city2) {
+                if (CityHelper.isPrimary(city1) && !CityHelper.isPrimary(city2)) {
                     return -1;
-                } else if (!CityViewHelper.isPrimary(city1) && CityViewHelper.isPrimary(city2)) {
+                } else if (!CityHelper.isPrimary(city1) && CityHelper.isPrimary(city2)) {
                     return +1;
                 } else {
                     int adminIndex = 0;
@@ -62,9 +65,9 @@ public abstract class CityHelper {
                     if (adminIndex != 0) {
                         return adminIndex;
                     } else {
-                        if (CityViewHelper.isAdmin(city1) && !CityViewHelper.isAdmin(city2)) {
+                        if (CityHelper.isAdmin(city1) && !CityHelper.isAdmin(city2)) {
                             return -1;
-                        } else if (!CityViewHelper.isAdmin(city1) && CityViewHelper.isAdmin(city2)) {
+                        } else if (!CityHelper.isAdmin(city1) && CityHelper.isAdmin(city2)) {
                             return +1;
                         } else {
                             return city1[CITY_ASCII].compareTo(city2[CITY_ASCII]);
@@ -115,4 +118,29 @@ public abstract class CityHelper {
         return cities;
     }
 
+    public static String getNumberItem(String value) {
+        try {
+            int number = CountryUtility.parseInteger(value, 0);
+            if (number < 10) {
+                return number <= 0 ? "" : String.valueOf(number);
+            } else {
+                number = number < 1000 ? number / 10 * 10 : number / 100 * 100;
+                return new DecimalFormat("###,###,###").format(number);
+            }
+        } catch (Exception ignore) {
+            return "";
+        }
+    }
+
+    public static boolean isPrimary(String[] city) {
+        return "primary".equals(city[CityHelper.CAPITAL]);
+    }
+
+    public static boolean isAdmin(String[] city) {
+        return "admin".equals(city[CityHelper.CAPITAL]);
+    }
+
+    public static boolean isMinor(String[] city) {
+        return "minor".equals(city[CityHelper.CAPITAL]);
+    }
 }

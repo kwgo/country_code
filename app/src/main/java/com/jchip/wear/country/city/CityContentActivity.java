@@ -64,7 +64,7 @@ public class CityContentActivity extends Activity {
 
     private void onSearch() {
         String searchText = this.searchText.getText().toString().trim().toUpperCase();
-        this.gridInfo = CityViewHelper.searchCities(this.cities, searchText);
+        this.gridInfo = CityHelper.searchCities(this.cities, searchText);
         this.gridInfo = CityHelper.sortCities(gridInfo, 0);
         this.refreshGridView();
     }

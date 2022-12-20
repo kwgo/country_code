@@ -67,11 +67,11 @@ public class CityDetailAdapter extends RecyclerView.Adapter<CityDetailAdapter.Vi
             int itemIndex = CityDetailAdapter.itemIndexes[row];
             if (itemIndex == CityHelper.CITY) {
                 int resourceId = R.drawable.image_city_normal;
-                if (CityViewHelper.isPrimary(cityInfo)) {
+                if (CityHelper.isPrimary(cityInfo)) {
                     resourceId = R.drawable.image_city_primary;
-                } else if (CityViewHelper.isAdmin(cityInfo)) {
+                } else if (CityHelper.isAdmin(cityInfo)) {
                     resourceId = R.drawable.image_city_admin;
-                } else if (CityViewHelper.isMinor(cityInfo)) {
+                } else if (CityHelper.isMinor(cityInfo)) {
                     resourceId = R.drawable.image_city_minor;
                 }
                 this.cityType.setBackgroundResource(resourceId);
@@ -97,7 +97,7 @@ public class CityDetailAdapter extends RecyclerView.Adapter<CityDetailAdapter.Vi
         private String getItemText(int itemIndex) {
             String itemText = cityInfo[itemIndex];
             if (itemIndex == CityHelper.POPULATION) {
-                itemText = CityViewHelper.getNumberItem(itemText);
+                itemText = CityHelper.getNumberItem(itemText);
             } else if (itemIndex == CityHelper.CAPITAL) {
                 itemText = CountryUtility.getSourceText(context, itemText.trim(), "string", "city_type");
             }

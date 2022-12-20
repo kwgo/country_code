@@ -55,11 +55,11 @@ public class CityContentAdapter extends RecyclerView.Adapter<CityContentAdapter.
             this.cityAdmin.setText(this.getItemText(CityHelper.ADMIN_NAME));
 
             int resourceId = R.drawable.image_city_normal;
-            if (CityViewHelper.isPrimary(city)) {
+            if (CityHelper.isPrimary(city)) {
                 resourceId = R.drawable.image_city_primary;
-            } else if (CityViewHelper.isAdmin(city)) {
+            } else if (CityHelper.isAdmin(city)) {
                 resourceId = R.drawable.image_city_admin;
-            } else if (CityViewHelper.isMinor(city)) {
+            } else if (CityHelper.isMinor(city)) {
                 resourceId = R.drawable.image_city_minor;
             }
             this.cityType.setBackgroundResource(resourceId);
