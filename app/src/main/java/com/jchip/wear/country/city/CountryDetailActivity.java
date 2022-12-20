@@ -53,7 +53,7 @@ public class CountryDetailActivity extends Activity {
     private void refreshGridView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         this.gridView.setLayoutManager(layoutManager);
-        gridView.setAdapter(new CountryDetailAdapter(this, CountryViewHelper.getISOInfo().get(countryCode)));
+        gridView.setAdapter(new CountryDetailAdapter(this, CountryHelper.getISOInfo().get(countryCode)));
     }
 
     private void onSelect() {

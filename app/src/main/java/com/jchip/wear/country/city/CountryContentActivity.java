@@ -32,7 +32,7 @@ public class CountryContentActivity extends Activity {
 
         this.gridView = findViewById(R.id.country_grid_view);
 
-        this.info = CountryViewHelper.getISOInfo();
+        this.info = CountryHelper.getISOInfo();
         this.gridInfo = new ArrayList<>(this.info.keySet());
 
         this.findViewById(R.id.country_title).setOnClickListener((v) -> loadKeyboard());
@@ -50,8 +50,8 @@ public class CountryContentActivity extends Activity {
 
     private void onSearch() {
         String searchText = this.searchText.getText().toString().trim().toUpperCase();
-        this.gridInfo = CountryViewHelper.searchCountryInfo(this, this.info, searchText);
-        CountryViewHelper.sortCountryInfo(this, this.info, this.gridInfo, 0);
+        this.gridInfo = CountryHelper.searchCountryInfo(this, this.info, searchText);
+        CountryHelper.sortCountryInfo(this, this.info, this.gridInfo, 0);
         refreshGridView();
     }
 

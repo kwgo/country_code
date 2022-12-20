@@ -59,8 +59,8 @@ public class CountryContentAdapter extends RecyclerView.Adapter<CountryContentAd
             int sourceId = CountryUtility.getSourceId(context, this.item, "drawable", "flag");
             this.countryFlag.setImageResource(sourceId);
 
-            this.countryCode.setText(this.getItemText(CountryViewHelper.ALPHA_2));
-            this.countryCurrency.setText(this.getItemText(CountryViewHelper.CURRENCY));
+            this.countryCode.setText(this.getItemText(CountryHelper.ALPHA_2));
+            this.countryCurrency.setText(this.getItemText(CountryHelper.CURRENCY));
 
             this.countryName.setText(CountryUtility.getSourceText(context, this.item, "string", "short"));
             this.countryCapital.setText(CountryUtility.getSourceText(context, this.item, "string", "capital"));

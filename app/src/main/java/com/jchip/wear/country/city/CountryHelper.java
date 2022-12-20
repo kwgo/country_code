@@ -92,7 +92,7 @@ public abstract class CountryHelper {
                         String[] phases = info.get(item);
                         String phaseText = phases[searchIndex];
                         if (searchIndex == COUNTRY || searchIndex == OFFICIAL || searchIndex == CAPITAL) {
-                            String prefix = (searchIndex == CountryViewHelper.CAPITAL ? "capital" : (searchIndex == CountryViewHelper.OFFICIAL ? "official" : "short"));
+                            String prefix = (searchIndex == CountryHelper.CAPITAL ? "capital" : (searchIndex == CountryHelper.OFFICIAL ? "official" : "short"));
                             phaseText = CountryUtility.getSourceText(context, item, "string", prefix);
                         }
                         if (phaseText.toUpperCase().contains(searchText)) {
@@ -121,8 +121,8 @@ public abstract class CountryHelper {
         public int compare(String key1, String key2) {
             if (index == COUNTRY || index == OFFICIAL || index == CAPITAL) {
                 if (context != null && context.getResources() != null) {
-                    String item1 = (index == CountryViewHelper.CAPITAL ? "capital_" : (index == CountryViewHelper.OFFICIAL ? "official_" : "short_")) + key1.toLowerCase();
-                    String item2 = (index == CountryViewHelper.CAPITAL ? "capital_" : (index == CountryViewHelper.OFFICIAL ? "official_" : "short_")) + key2.toLowerCase();
+                    String item1 = (index == CountryHelper.CAPITAL ? "capital_" : (index == CountryHelper.OFFICIAL ? "official_" : "short_")) + key1.toLowerCase();
+                    String item2 = (index == CountryHelper.CAPITAL ? "capital_" : (index == CountryHelper.OFFICIAL ? "official_" : "short_")) + key2.toLowerCase();
                     int sourceId1 = context.getResources().getIdentifier(item1, "string", context.getPackageName());
                     int sourceId2 = context.getResources().getIdentifier(item2, "string", context.getPackageName());
                     Locale locale;

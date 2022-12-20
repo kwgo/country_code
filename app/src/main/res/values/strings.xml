@@ -6,7 +6,7 @@
 
     <string name="grid_search">Search</string>
     <string name="city_search">City</string>
-    <string name="key_search">Done</string>
+    <string name="key_search">Search</string>
 
     <string name="head_country_name">Country name</string>
     <string name="head_official_name">Official name</string>
